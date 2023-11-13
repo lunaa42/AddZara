@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.example.addzara.FirebaseServices;
 import com.example.addzara.SignupFragment;
-import com.example.addzara.databinding.FragmentLoginBinding;
+import com.example.addzara.databinding.FragmentLogin2Binding;
 
 import com.example.addzara.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,176 +32,103 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 public class LoginFragment extends Fragment {
-    private EditText etUsername,etPassword;
-    private Button btnLogin;
-    private FirebaseServices fbs;
-    private TextView tvSignupLink;
+        private EditText etUsername,etPassword;
+        private Button btnLogin;
+        private FirebaseServices fbs;
+        private TextView tvSignupLink;
 
-    private LoginViewModel loginViewModel;
-    private FragmentLoginBinding binding;
+        // TODO: Rename parameter arguments, choose names that match
+        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+        private static final String ARG_PARAM1 = "param1";
+        private static final String ARG_PARAM2 = "param2";
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+        // TODO: Rename and change types of parameters
+        private String mParam1;
+        private String mParam2;
 
-        binding = FragmentLoginBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
-
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
-        final ProgressBar loadingProgressBar = binding.loading;
-
-        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
-            }
-        });
-
-        loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-            }
-        });
-
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        });
-    }
-
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        public LoginFragment() {
+            // Required empty public constructor
         }
-    }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
-        if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(
-                    getContext().getApplicationContext(),
-                    errorString,
-                    Toast.LENGTH_LONG).show();
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment LoginFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        public static LoginFragment newInstance(String param1, String param2) {
+            LoginFragment fragment = new LoginFragment();
+            Bundle args = new Bundle();
+            args.putString(ARG_PARAM1, param1);
+            args.putString(ARG_PARAM2, param2);
+            fragment.setArguments(args);
+            return fragment;
         }
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-    private void gotoSignupFragment() {
-        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.FramelayoutMain,new SignupFragment());
-        ft.commit();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // connecting components
-        fbs =  FirebaseServices.getInstance();
-        etUsername = getView().findViewById(R.id.etUsernameLogin);
-        etPassword = getView().findViewById(R.id.etPasswordLogin);
-        btnLogin = getView().findViewById(R.id.btnloginLogin);
-        tvSignupLink = getView().findViewById(R.id.tvSignupLink);
-        tvSignupLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gotoSignupFragment();
-
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            if (getArguments() != null) {
+                mParam1 = getArguments().getString(ARG_PARAM1);
+                mParam2 = getArguments().getString(ARG_PARAM2);
             }
         }
-        );
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Data validation
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                if (username.trim().isEmpty() && password.trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                // Login procedure
-                Task<AuthResult> authResultTask = fbs.getAuth().signInWithEmailAndPassword(username, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getActivity(), "You have successfully logged in!", Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            Toast.makeText(getActivity(), "Failed to login! Check user or password..", Toast.LENGTH_SHORT).show();
-                        }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            // Inflate the layout for this fragment
+            return inflater.inflate(R.layout.fragment_login2, container, false);
+        }
+        @Override
+        public void onStart() {
+            super.onStart();
+            // connecting components
+            fbs =  FirebaseServices.getInstance();
+            etUsername = getView().findViewById(R.id.etUsernameLogin);
+            etPassword = getView().findViewById(R.id.etPasswordLogin);
+            btnLogin = getView().findViewById(R.id.btnloginLogin);
+            tvSignupLink = getView().findViewById(R.id.tvSignupLink);
+            tvSignupLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    gotoSignupFragment();
+
+                }
+            });
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Data validation
+                    String username = etUsername.getText().toString();
+                    String password = etPassword.getText().toString();
+                    if(username.trim().isEmpty() && password.trim().isEmpty()){
+                        Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                });
+                    // Login procedure
+                    Task<AuthResult> authResultTask = fbs.getAuth().signInWithEmailAndPassword(username, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getActivity(), "You have successfully logged in!", Toast.LENGTH_SHORT).show();
 
-            }
-        });
-    };}
+                            } else
+                            {
+                                Toast.makeText(getActivity(), "Failed to login! Check user or password..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            });
+
+        }
+        private void gotoSignupFragment() {
+            FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.FramelayoutMain,new SignupFragment());
+            ft.commit();
+        }
+    }

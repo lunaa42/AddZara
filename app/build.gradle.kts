@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.addzara"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.addzara"
-        minSdk = 30
-        targetSdk = 33
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -35,6 +35,9 @@ android {
         viewBinding = true
     }
 }
+
+
+
 
 dependencies {
 

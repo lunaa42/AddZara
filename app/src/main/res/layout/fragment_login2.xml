@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/framelayoutlogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginFragment">
@@ -13,7 +14,7 @@
         <EditText
             android:id="@+id/etUsernameLogin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="213dp"
             android:ems="10"
@@ -27,12 +28,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="331dp"
+            android:layout_marginBottom="46dp"
             android:ems="10"
             android:hint="PASSWORD.."
             android:inputType="textPassword"
+            app:layout_constraintBottom_toTopOf="@+id/tvforgotpasswordLogin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUsernameLogin" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnloginLogin"
@@ -50,7 +53,7 @@
             android:id="@+id/tvSignupLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="396dp"
+            android:layout_marginTop="424dp"
             android:layout_marginEnd="356dp"
             android:text="sign up"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,9 +63,14 @@
             android:id="@+id/tvforgotpasswordLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="288dp"
+            android:layout_marginBottom="285dp"
             android:text="Forgot Password"
-            tools:layout_editor_absoluteX="13dp"
-            tools:layout_editor_absoluteY="427dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin" />
+        <!-- fragment_your.xml -->
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
