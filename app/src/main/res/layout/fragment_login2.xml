@@ -13,62 +13,72 @@
 
         <EditText
             android:id="@+id/etUsernameLogin"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="213dp"
             android:ems="10"
             android:hint="EMAIL.."
             android:inputType="textEmailAddress"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="184dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOG IN TO YOUR ACCOUNT"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="84dp" />
 
         <EditText
             android:id="@+id/etPasswordLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="331dp"
-            android:layout_marginBottom="46dp"
             android:ems="10"
             android:hint="PASSWORD.."
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/tvforgotpasswordLogin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="277dp" />
 
         <Button
             android:id="@+id/btnloginLogin"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="127dp"
-            android:layout_marginTop="68dp"
+            android:background="#FFFFF"
+            android:backgroundTint="@color/white"
             android:text="LOG IN"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.239"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin" />
+            android:textColor="@color/black"
+            tools:layout_editor_absoluteX="147dp"
+            tools:layout_editor_absoluteY="366dp" />
 
         <TextView
             android:id="@+id/tvSignupLink"
+            style="@style/Widget.AppCompat.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="424dp"
-            android:layout_marginEnd="356dp"
-            android:text="sign up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="REGISTER"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="574dp" />
 
         <TextView
             android:id="@+id/tvforgotpasswordLogin"
+            style="@style/Widget.AppCompat.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="288dp"
-            android:layout_marginBottom="285dp"
-            android:text="Forgot Password"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin" />
+            android:text="Have you forgotten your password?"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="443dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEED AN ACCOUNT?"
+            tools:layout_editor_absoluteX="15dp"
+            tools:layout_editor_absoluteY="518dp" />
         <!-- fragment_your.xml -->
 
 

@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/Framelayoutmain4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="113dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
