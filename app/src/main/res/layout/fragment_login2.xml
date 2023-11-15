@@ -19,17 +19,8 @@
             android:ems="10"
             android:hint="EMAIL.."
             android:inputType="textEmailAddress"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="184dp" />
-
-        <TextView
-            android:id="@+id/textView"
-            style="@style/Widget.AppCompat.TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LOG IN TO YOUR ACCOUNT"
-            tools:layout_editor_absoluteX="10dp"
-            tools:layout_editor_absoluteY="84dp" />
+            tools:layout_editor_absoluteX="-2dp"
+            tools:layout_editor_absoluteY="266dp" />
 
         <EditText
             android:id="@+id/etPasswordLogin"
@@ -38,8 +29,8 @@
             android:ems="10"
             android:hint="PASSWORD.."
             android:inputType="textPassword"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="277dp" />
+            tools:layout_editor_absoluteX="-2dp"
+            tools:layout_editor_absoluteY="372dp" />
 
         <Button
             android:id="@+id/btnloginLogin"
@@ -50,8 +41,8 @@
             android:backgroundTint="@color/white"
             android:text="LOG IN"
             android:textColor="@color/black"
-            tools:layout_editor_absoluteX="147dp"
-            tools:layout_editor_absoluteY="366dp" />
+            tools:layout_editor_absoluteX="150dp"
+            tools:layout_editor_absoluteY="460dp" />
 
         <TextView
             android:id="@+id/tvSignupLink"
@@ -59,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="REGISTER"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="574dp" />
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="592dp" />
 
         <TextView
             android:id="@+id/tvforgotpasswordLogin"
@@ -68,17 +59,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Have you forgotten your password?"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="443dp" />
+            tools:layout_editor_absoluteX="186dp"
+            tools:layout_editor_absoluteY="592dp" />
 
-        <TextView
-            android:id="@+id/textView2"
-            style="@style/Widget.AppCompat.TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NEED AN ACCOUNT?"
-            tools:layout_editor_absoluteX="15dp"
-            tools:layout_editor_absoluteY="518dp" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="410dp"
+            android:layout_height="249dp"
+            android:src="@drawable/zaralogo"
+            tools:layout_editor_absoluteX="-2dp"
+            tools:layout_editor_absoluteY="1dp" />
+
         <!-- fragment_your.xml -->
 
 
