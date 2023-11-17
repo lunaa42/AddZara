@@ -121,8 +121,10 @@ public class LoginFragment extends Fragment {
         }
         private void gotoSignupFragment() {
             FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.FramelayoutMain,new SignupFragment());
+            ft.replace(R.id.Framelayoutmain4,new SignupFragment());
             ft.commit();
         }
+
+
     }
 
