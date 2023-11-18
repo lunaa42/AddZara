@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.addzara.FirebaseServices;
+import com.example.addzara.ForgotPasswordFragment;
 import com.example.addzara.SignupFragment;
 import com.example.addzara.databinding.FragmentLogin2Binding;
 
@@ -36,6 +37,7 @@ public class LoginFragment extends Fragment {
         private Button btnLogin;
         private FirebaseServices fbs;
         private TextView tvSignupLink;
+        private TextView forgotpass;
 
         // TODO: Rename parameter arguments, choose names that match
         // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,10 +94,19 @@ public class LoginFragment extends Fragment {
             etPassword = getView().findViewById(R.id.etPasswordLogin);
             btnLogin = getView().findViewById(R.id.btnloginLogin);
             tvSignupLink = getView().findViewById(R.id.tvSignupLink);
+            forgotpass = getView().findViewById(R.id.tvforgotpasswordLogin);
+
             tvSignupLink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     gotoSignupFragment();
+
+                }
+            });
+            forgotpass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    gotoForgotPassFragment();
 
                 }
             });
@@ -128,7 +139,12 @@ public class LoginFragment extends Fragment {
         }
         private void gotoSignupFragment() {
             FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.FramelayoutMain,new SignupFragment());
+            ft.replace(R.id.Framelayoutmain4,new SignupFragment());
             ft.commit();
         }
+        private void gotoForgotPassFragment() {
+        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain4,new ForgotPasswordFragment());
+        ft.commit();
+    }
     }
