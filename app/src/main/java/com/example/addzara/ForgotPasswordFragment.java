@@ -75,7 +75,7 @@ public class ForgotPasswordFragment extends Fragment {
         super.onStart();
         // connecting components
         fbs =  FirebaseServices.getInstance();
-        etEmail = getView().findViewById(R.id.tvresetforgorpass);
+        etEmail = getView().findViewById(R.id.etresetforgorpass);
         btnReset = getView().findViewById(R.id.resetbtn);
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
