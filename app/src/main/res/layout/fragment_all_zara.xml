@@ -11,9 +11,18 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="53dp"
+            android:layout_height="207dp"
+            android:layout_marginEnd="60dp"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="57dp" />
+            tools:layout_editor_absoluteY="262dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="231dp"
+            android:layout_height="129dp"
+            android:src="@drawable/images"
+            tools:layout_editor_absoluteX="6dp"
+            tools:layout_editor_absoluteY="46dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

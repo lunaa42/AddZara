@@ -14,20 +14,21 @@
             android:id="@+id/etPasswordSignUp"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="427dp"
             android:ems="10"
             android:hint="NEW PASSWORD"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/editTextText"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUsernameSignUp" />
+            app:layout_constraintTop_toBottomOf="@+id/imgbacksignup" />
 
         <Button
             android:id="@+id/btSignupSignup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="140dp"
+            android:background="#003E2727"
             android:text="CREATE ACCOUNT"
             android:textColor="#000000"
             android:textColorHighlight="#FFFFFFFF"
@@ -94,6 +95,18 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/etUsernameSignUp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgbacksignup"
+            android:layout_width="40dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="204dp"
+            android:src="?attr/actionModeCloseDrawable"
+            app:layout_constraintBottom_toTopOf="@+id/etPasswordSignUp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

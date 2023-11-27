@@ -43,7 +43,7 @@
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="103dp"
             android:layout_height="37dp"
-            android:background="#FFFFFF"
+            android:background="#00FFFFFF"
             android:text="LOG IN"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
