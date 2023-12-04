@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,48 +14,70 @@
             android:id="@+id/etProductAddZaraFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="105dp"
+            android:layout_marginBottom="30dp"
             android:ems="10"
             android:hint="Product.."
             android:inputType="text"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="105dp" />
+            app:layout_constraintBottom_toTopOf="@+id/etSIzeAddZaraFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/etSIzeAddZaraFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="33dp"
             android:ems="10"
-            android:hint="SIze.."
+            android:hint="Size.."
             android:inputType="text"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="180dp" />
+            app:layout_constraintBottom_toTopOf="@+id/etColourAddZaraFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etProductAddZaraFragment" />
 
         <EditText
-            android:id="@+id/etAddressAddZaraFragment"
+            android:id="@+id/etColourAddZaraFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="40dp"
             android:ems="10"
-            android:hint="Address.."
+            android:hint="Colour.."
             android:inputType="text"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="258dp" />
+            app:layout_constraintBottom_toTopOf="@+id/etPhoneAddZaraFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSIzeAddZaraFragment" />
 
         <EditText
             android:id="@+id/etPhoneAddZaraFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="64dp"
             android:ems="10"
             android:hint="Phone.."
             android:inputType="phone"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="352dp" />
+            app:layout_constraintBottom_toTopOf="@+id/btnAddAddZaraFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etColourAddZaraFragment" />
 
         <Button
             android:id="@+id/btnAddAddZaraFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            tools:layout_editor_absoluteX="159dp"
-            tools:layout_editor_absoluteY="452dp" />
+            android:layout_width="93dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="156dp"
+            android:layout_marginEnd="156dp"
+            android:layout_marginBottom="223dp"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#0C0C0C"
+            android:text="ADD"
+            android:textColor="#101010"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/etPhoneAddZaraFragment"
+            app:layout_constraintTop_toBottomOf="@+id/etPhoneAddZaraFragment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

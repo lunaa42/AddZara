@@ -5,6 +5,8 @@
 
         import androidx.annotation.NonNull;
         import androidx.fragment.app.Fragment;
+        import androidx.recyclerview.widget.LinearLayoutManager;
+        import androidx.recyclerview.widget.RecyclerView;
 
         import android.util.Log;
         import android.view.LayoutInflater;
@@ -27,7 +29,10 @@
 public class AllZaraFragment extends Fragment {
 
     private FirebaseServices fbs;
-    private ArrayList<Zara> zara;
+    private ArrayList<Zara> zaras;
+    private RecyclerView rvZaras;
+    private ZaraAdapter adapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,24 +84,31 @@ public class AllZaraFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+            fbs = FirebaseServices.getInstance();
+            zaras = new ArrayList<>();
+          rvZaras = getView().findViewById(R.id.rvZaraFragment);
+            adapter = new ZaraAdapter(getActivity(), zaras);
+            rvZaras.setAdapter(adapter);
+            rvZaras.setHasFixedSize(true);
+            rvZaras.setLayoutManager(new LinearLayoutManager(getActivity()));
+            fbs.getFire().collection("products").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-        fbs = FirebaseServices.getInstance();
-        zara = new ArrayList<>();
-        fbs.getFire().collection("restaurants").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
-                    Zara zara1 = dataSnapshot.toObject(Zara.class);
+                    for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
+                        Zara rest = dataSnapshot.toObject(Zara.class);
 
-                    zara.add(zara1);
+                        zaras.add(rest);
+                    }
+
+                    adapter.notifyDataSetChanged();
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
-                Log.e("AllRestaurantsFragment", e.getMessage());
-            }
-        });
-    }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
+                    Log.e("AllZaraFragment", e.getMessage());
+                }
+            });
+        }
 }

@@ -3,13 +3,13 @@ package com.example.addzara;
 public class Zara {
     private String product;
     private String size;
-    private String address;
+    private String colour;
     private String phone;
 
-    public Zara(String product, String size, String address, String phone) {
+    public Zara(String product, String size, String colour, String phone) {
         this.product = product;
         this.size = size;
-        this.address = address;
+        this.colour = colour;
         this.phone = phone;
     }
 
@@ -30,11 +30,11 @@ public class Zara {
     }
 
     public String getAddress() {
-        return address;
+        return colour;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.colour = address;
     }
 
     public String getPhone() {
@@ -43,6 +43,16 @@ public class Zara {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "Zara{" +
+                "product='" + product + '\'' +
+                ", size='" + size + '\'' +
+                ", colour='" + colour + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 
     public Zara() {

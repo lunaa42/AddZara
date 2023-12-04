@@ -86,6 +86,11 @@ public class ForgotPasswordFragment extends Fragment {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String email = etEmail.getText().toString();
+                if(email.trim().isEmpty()){
+                    Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 fbs.getAuth().sendPasswordResetEmail(etEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -99,11 +104,13 @@ public class ForgotPasswordFragment extends Fragment {
                 });
             }
         });
-
+        backsymb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4, new LoginFragment());
+                ft.commit();
+            }
+        });
 }
-
-    public void gotologin(View view) {
-        Intent i = new Intent(getActivity(), LoginFragment.class);
-        startActivity(i);
-    }
 }

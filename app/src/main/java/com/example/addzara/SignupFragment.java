@@ -29,6 +29,9 @@ public class SignupFragment extends Fragment {
     private Button btnSignup;
     private FirebaseServices fbs;
     private ImageView backsymbSignup;
+    private EditText firstname;
+    private EditText lastname;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,6 +90,8 @@ public class SignupFragment extends Fragment {
         etPassword = getView().findViewById(R.id.etPasswordSignUp);
         btnSignup = getView().findViewById(R.id.btSignupSignup);
         backsymbSignup = getView().findViewById(R.id.imgbacksignup);
+        firstname = getView().findViewById(R.id.firstnamesignup);
+        lastname = getView().findViewById(R.id.lastnamesignup);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,17 +117,13 @@ public class SignupFragment extends Fragment {
                 });
             }
         });
-        return backsymbSignup.setOnClickListener(new View.OnClickListener() {
+        backsymbSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gotoLogin();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4, new LoginFragment());
+                ft.commit();
             }
-
-        }
-        private void gotoLogin() {
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.Framelayoutmain4, new LoginFragment());
-            ft.commit();
-        }
-    }
+    });
+}
 }

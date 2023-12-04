@@ -3,7 +3,9 @@ package com.example.addzara;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 public class AddZaraFragment extends Fragment {
     private FirebaseServices fbs;
-    private EditText etProduct,etSize,etAddress,etPhone;
+    private EditText etProduct,etSize,etcolour,etPhone;
     private Button btnAdd;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -87,48 +89,51 @@ public class AddZaraFragment extends Fragment {
         fbs = FirebaseServices.getInstance();
         etProduct = getView().findViewById(R.id.etProductAddZaraFragment);
         etSize = getView().findViewById(R.id.etSIzeAddZaraFragment);
-        etAddress = getView().findViewById(R.id.etAddressAddZaraFragment);
+        etcolour = getView().findViewById(R.id.etColourAddZaraFragment);
         etPhone = getView().findViewById(R.id.etPhoneAddZaraFragment);
         btnAdd = getView().findViewById(R.id.btnAddAddZaraFragment);
 
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 // TODO: add data to firebase
                 // get data from screen
                 String product = etProduct.getText().toString();
                 String size = etSize.getText().toString();
-                String address = etAddress.getText().toString();
+                String colour = etcolour.getText().toString();
                 String phone = etPhone.getText().toString();
 
 
                 if (product.isEmpty() || size.isEmpty() ||
-                        address.isEmpty() || phone.isEmpty())
+                        colour.isEmpty() || phone.isEmpty())
                 {
                     Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
 
-                AddZaraFragment zara = new AddZaraFragment(product, size, address, phone);
+                Zara zara = new Zara(product, size, colour, phone);
 
 
-                fbs.getFire().collection("restaurants").add(zara).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                fbs.getFire().collection("products").add(zara).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-
-
+                        Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();
+                           /* FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.Framelayoutmain4,new AllZaraFragment());
+                            ft.commit();*/
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        Log.e("Failure AddZara: ", e.getMessage());
 
                     }
                 });
             }
         });
     }
+
 }
 

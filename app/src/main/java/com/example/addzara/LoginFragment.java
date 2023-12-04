@@ -117,8 +117,7 @@ public class LoginFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "You have successfully logged in!", Toast.LENGTH_SHORT).show();
-                                gotoAllzara();
-
+                                gotoAddzara();
 
                             } else
                             {
@@ -140,9 +139,9 @@ public class LoginFragment extends Fragment {
         ft.replace(R.id.Framelayoutmain4,new ForgotPasswordFragment());
         ft.commit();
         }
-    private void gotoAllzara() {
+    private void gotoAddzara() {
         FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain4,new AllZaraFragment());
+        ft.replace(R.id.Framelayoutmain4,new AddZaraFragment());
         ft.commit();
     }
 
