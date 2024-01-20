@@ -120,9 +120,9 @@ public class AddZaraFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();
-                           /* FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+                           FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.Framelayoutmain4,new AllZaraFragment());
-                            ft.commit();*/
+                            ft.commit();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -131,9 +131,12 @@ public class AddZaraFragment extends Fragment {
 
                     }
                 });
+
             }
+
         });
     }
+
 
 }
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgprofileprofile"
+            android:layout_width="60dp"
+            android:layout_height="53dp"
+            android:src="@drawable/user__1_"
+            tools:layout_editor_absoluteX="348dp"
+            tools:layout_editor_absoluteY="35dp" />
+
+        <ImageView
+            android:id="@+id/imgbacksymbprofile"
+            android:layout_width="36dp"
+            android:layout_height="47dp"
+            android:src="@drawable/back_symbol"
+            tools:layout_editor_absoluteX="4dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <EditText
+            android:id="@+id/etEmailprofile"
+            android:layout_width="407dp"
+            android:layout_height="57dp"
+            android:ems="10"
+            android:hint="E-MAIL"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="217dp" />
+
+        <EditText
+            android:id="@+id/etFirstnameprofile"
+            android:layout_width="402dp"
+            android:layout_height="63dp"
+            android:ems="10"
+            android:hint="FIRST NAME"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="3dp"
+            tools:layout_editor_absoluteY="291dp" />
+
+        <EditText
+            android:id="@+id/etLastnameprofile"
+            android:layout_width="400dp"
+            android:layout_height="64dp"
+            android:ems="10"
+            android:hint="LAST NAME"
+            android:inputType="text"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="376dp" />
+
+        <EditText
+            android:id="@+id/etPhoneprofile"
+            android:layout_width="398dp"
+            android:layout_height="65dp"
+            android:ems="10"
+            android:hint="PHONE"
+            android:inputType="number"
+            tools:layout_editor_absoluteX="3dp"
+            tools:layout_editor_absoluteY="456dp" />
+
+        <TextView
+            android:id="@+id/tvdetailsprofile"
+            style="@android:style/Widget.Holo.TextView.SpinnerItem"
+            android:layout_width="263dp"
+            android:layout_height="58dp"
+            android:text="PROFILE DETAILS"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="96dp"
+            tools:layout_editor_absoluteY="136dp" />
+
+        <TextView
+            android:id="@+id/tvdoneprofile"
+            style="@android:style/Widget.Holo.TextView.SpinnerItem"
+            android:layout_width="83dp"
+            android:layout_height="36dp"
+            android:text="DONE"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="174dp"
+            tools:layout_editor_absoluteY="572dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
