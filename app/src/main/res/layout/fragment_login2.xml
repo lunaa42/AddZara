@@ -11,12 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomnavlogin"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSignupLink"
+            app:menu="@menu/bottom_nav" />
+
         <EditText
             android:id="@+id/etUsernameLogin"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="213dp"
-            android:layout_height="106dp"
-            android:layout_marginBottom="29dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="66dp"
             android:ems="10"
             android:hint="EMAIL.."
             android:inputType="textEmailAddress"
@@ -31,40 +42,39 @@
         <EditText
             android:id="@+id/etPasswordLogin"
             android:layout_width="225dp"
-            android:layout_height="64dp"
-            android:layout_marginBottom="228dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="81dp"
+            android:layout_marginBottom="50dp"
             android:ems="10"
             android:hint="PASSWORD.."
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/tvforgotpasswordLogin"
+            app:layout_constraintBottom_toTopOf="@+id/btnloginLogin"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etUsernameLogin" />
 
         <Button
             android:id="@+id/btnloginLogin"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="129dp"
+            android:layout_width="128dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="130dp"
+            android:layout_marginBottom="64dp"
             android:background="#00FFFFFF"
             android:text="LOG IN"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/tvSignupLink"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin" />
 
         <TextView
             android:id="@+id/tvSignupLink"
             style="@style/Widget.AppCompat.TextView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="152dp"
-            android:layout_marginBottom="66dp"
+            android:layout_marginEnd="141dp"
+            android:layout_marginBottom="71dp"
             android:text="REGISTER"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottomnavlogin"
             app:layout_constraintEnd_toStartOf="@+id/tvforgotpasswordLogin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnloginLogin" />
@@ -73,24 +83,24 @@
             android:id="@+id/tvforgotpasswordLogin"
             style="@style/Widget.AppCompat.TextView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="60dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="128dp"
+            android:layout_marginBottom="129dp"
             android:text="FORGOT PASSWORD"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvSignupLink"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin" />
+            app:layout_constraintTop_toTopOf="@+id/btnloginLogin" />
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="462dp"
-            android:layout_height="141dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="26dp"
-            android:layout_marginBottom="232dp"
+            android:layout_width="415dp"
+            android:layout_height="124dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="54dp"
             android:src="@drawable/screenshot__19___1__removebg_preview"
-            app:layout_constraintBottom_toTopOf="@+id/btnloginLogin"
+            app:layout_constraintBottom_toTopOf="@+id/etUsernameLogin"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

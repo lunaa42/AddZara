@@ -3,20 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/homenav2"
         android:icon="@drawable/home"
        />
     <item
-        android:id="@+id/menu"
+        android:id="@+id/menunav2"
         android:icon="@drawable/hamburger"
 
        />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profilenav2"
         android:icon="@drawable/user"
        />
     <item
-        android:id="@+id/fav"
+        android:id="@+id/favnav2"
         android:icon="@drawable/bookmark" />
 
 </menu>

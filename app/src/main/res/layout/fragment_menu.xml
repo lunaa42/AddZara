@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="412dp"
+            android:layout_height="169dp"
+            android:src="@drawable/remo"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="1dp" />
+
+        <View
+            android:id="@+id/horizontalLine2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="227dp" />
+
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFF"
+            android:text="WOMEN"
+            android:textColor="#121212"
+            tools:layout_editor_absoluteX="19dp"
+            tools:layout_editor_absoluteY="170dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFF"
+            android:text="MEN"
+            android:textColor="#040303"
+            tools:layout_editor_absoluteX="163dp"
+            tools:layout_editor_absoluteY="170dp" />
+
+        <Button
+            android:id="@+id/btnbeautymenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFF"
+            android:text="BEAUTY"
+            android:textColor="#000000"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorLink="#FFFFFF"
+            tools:layout_editor_absoluteX="297dp"
+            tools:layout_editor_absoluteY="170dp" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="212dp"
+            android:layout_height="147dp"
+            android:src="@drawable/clothingw5_removebg_preview"
+            tools:layout_editor_absoluteX="199dp"
+            tools:layout_editor_absoluteY="410dp" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="180dp"
+            android:layout_height="181dp"
+            android:src="@drawable/clothingw6_removebg_preview"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="133dp" />
+
+        <View
+            android:id="@+id/verticalFlippedLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:rotationY="180"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="410dp" />
+
+        <ScrollView
+            android:layout_width="320dp"
+            android:layout_height="494dp"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="236dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="195dp"
+                    android:layout_height="180dp"
+                    android:src="@drawable/clothinhw1_removebg_preview" />
+
+                <View
+                    android:id="@+id/horizontalLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="198dp"
+                    android:layout_height="148dp"
+                    android:src="@drawable/clothingw4_removebg_preview" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="210dp"
+            android:layout_height="176dp"
+            android:src="@drawable/clothingw2_removebg_preview"
+            tools:layout_editor_absoluteX="195dp"
+            tools:layout_editor_absoluteY="245dp" />
+
+        <LinearLayout
+            android:layout_width="303dp"
+            android:layout_height="486dp"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="245dp">
+
+
+        </LinearLayout>
+
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

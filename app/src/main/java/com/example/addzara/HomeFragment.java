@@ -1,17 +1,25 @@
 package com.example.addzara;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.VideoView;
+
+import com.example.addzara.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +36,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private BottomNavigationView bottomNavigationView;
     private ImageView zaralogo;
     private FirebaseServices fbs;
     private VideoView v4;
@@ -64,9 +72,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Initialize VideoView
@@ -79,10 +85,47 @@ public class HomeFragment extends Fragment {
         // Start video playback
         v4.start();
 
+        // Find and initialize the BottomNavigationView
+        bottomNavigationView = view.findViewById(R.id.bottomnavHome);
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
+                if (item.getItemId() == R.id.homenav2) {
+                    selectedFragment = new HomeFragment();
+                } else if (item.getItemId() == R.id.menunav2) {
+                    selectedFragment = new AddZaraFragment();
+                } else if (item.getItemId() == R.id.profilenav2) {
+                    selectedFragment = new LoginFragment();
+                } else if (item.getItemId() == R.id.favnav2) {
+                    selectedFragment = new FavFragment();
+                }
+
+                if (selectedFragment != null) {
+                    // Replace the current fragment with the selected one
+                    requireActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.Framelayoutmain4, selectedFragment)
+                            .addToBackStack(null) // Optional: Add to back stack if you want to navigate back
+                            .commit();
+                }
+
+                return true;
+            }
+        });
+
         return view;
-        // Inflate the layout for this fragment
-       // return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
+
+
+
+
+
+    // Inflate the layout for this fragment
+       // return inflater.inflate(R.layout.fragment_home, container, false);
+
 
     public void onStart() {
         super.onStart();
@@ -125,6 +168,7 @@ public class HomeFragment extends Fragment {
             super.onDestroy();
         }*/
 
+
     }
 
-}
+};
