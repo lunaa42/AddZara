@@ -2,11 +2,16 @@ package com.example.addzara;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +28,7 @@ public class MenuFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private BottomNavigationView bottomNavigationView;
 
     public MenuFragment() {
         // Required empty public constructor
@@ -56,9 +62,38 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_login2, container, false);
+
+        // Initialize BottomNavigationView
+        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottomnavlogin);
+
+        // Set up item selection listener
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
+                if (item.getItemId() == R.id.homenav2) {
+                    selectedFragment = new HomeFragment();
+                } else if (item.getItemId() == R.id.menunav2) {
+                    selectedFragment = new AddZaraFragment();
+                } else if (item.getItemId() == R.id.favnav2) {
+                    selectedFragment = new FavFragment();
+                }
+
+                if (selectedFragment != null) {
+                    // Replace the current fragment with the selected one
+                    requireActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.Framelayoutmain4, selectedFragment)
+                            .addToBackStack(null) // Optional: Add to back stack if you want to navigate back
+                            .commit();
+                }
+
+                return true;
+            }
+        });
+
+        return view;
     }
 }

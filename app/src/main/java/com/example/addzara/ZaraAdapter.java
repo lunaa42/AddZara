@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ public class ZaraAdapter extends RecyclerView.Adapter implements ZaraAdapter1 {
         Context context;
         ArrayList<Zara> zaList;
         private FirebaseServices fbs;
+        private ImageView img;
+
 
         public ZaraAdapter(Context context, ArrayList<Zara> zaList) {
             this.context = context;

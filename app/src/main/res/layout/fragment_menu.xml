@@ -10,12 +10,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomnavlogin"
+            android:layout_width="412dp"
+            android:layout_height="66dp"
+            android:background="#FFFFFF"
+            app:backgroundTint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav" />
+        <!-- res/layout/item_clothing_pair.xml -->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="226dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="186dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_addimg" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_addimg" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="412dp"
             android:layout_height="169dp"
             android:src="@drawable/remo"
-            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteX="-1dp"
             tools:layout_editor_absoluteY="1dp" />
 
         <View
@@ -59,84 +111,33 @@
             tools:layout_editor_absoluteX="297dp"
             tools:layout_editor_absoluteY="170dp" />
 
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="212dp"
-            android:layout_height="147dp"
-            android:src="@drawable/clothingw5_removebg_preview"
-            tools:layout_editor_absoluteX="199dp"
-            tools:layout_editor_absoluteY="410dp" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="180dp"
-            android:layout_height="181dp"
-            android:src="@drawable/clothingw6_removebg_preview"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="133dp" />
-
         <View
             android:id="@+id/verticalFlippedLine"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"
             android:rotationY="180"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="410dp" />
-
-        <ScrollView
-            android:layout_width="320dp"
-            android:layout_height="494dp"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="236dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="195dp"
-                    android:layout_height="180dp"
-                    android:src="@drawable/clothinhw1_removebg_preview" />
-
-                <View
-                    android:id="@+id/horizontalLine"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="198dp"
-                    android:layout_height="148dp"
-                    android:src="@drawable/clothingw4_removebg_preview" />
-
-            </LinearLayout>
-
-        </ScrollView>
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="442dp" />
 
         <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="210dp"
-            android:layout_height="176dp"
-            android:src="@drawable/clothingw2_removebg_preview"
-            tools:layout_editor_absoluteX="195dp"
-            tools:layout_editor_absoluteY="245dp" />
-
-        <LinearLayout
-            android:layout_width="303dp"
-            android:layout_height="486dp"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="245dp">
+            android:id="@+id/imageView1"
+            android:layout_width="411dp"
+            android:layout_height="210dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder_image"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="227dp" /><![CDATA[
 
 
-        </LinearLayout>
+
+
 
         />
 
+
+
+    ]]>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
