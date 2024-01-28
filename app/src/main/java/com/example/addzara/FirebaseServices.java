@@ -1,7 +1,5 @@
 package com.example.addzara;
 
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -20,33 +18,20 @@ public class FirebaseServices {
     private FirebaseFirestore fire;
     private FirebaseStorage storage;
     private User currentUser;
-    private Uri selectedImageURL;
 
     public FirebaseServices(){
         auth = FirebaseAuth.getInstance();
         fire = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
-        selectedImageURL = null;
     }
     public static FirebaseServices getInstance() {
         if (instance == null)
             instance = new FirebaseServices();
         return instance;
     }
-    public void setSelectedImageURL(Uri selectedImageURL) {
-        this.selectedImageURL = selectedImageURL;
-    }
 
     public FirebaseAuth getAuth() {
         return auth;
-    }
-    public User getCurrentUser()
-    {
-        return this.currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
     }
 
     public FirebaseFirestore getFire() {
@@ -56,11 +41,6 @@ public class FirebaseServices {
     public FirebaseStorage getStorage() {
         return storage;
     }
-
-    public Uri getSelectedImageURL() {
-        return selectedImageURL;
-    }
-
   /*  public void getCurrentObjectUser(UserCallback callback) {        ArrayList<User> usersInternal = new ArrayList<>();
         fire.collection("users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
