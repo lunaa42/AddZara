@@ -1,23 +1,31 @@
 package com.example.addzara;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,8 +34,12 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 public class AddZaraFragment extends Fragment {
     private FirebaseServices fbs;
-    private EditText etProduct,etSize,etcolour,etPhone;
+    private EditText etProduct, etSize, etcolour, etPrice, etDescripton;
+    private static final int GALLERY_REQUEST_CODE = 123;
+    private ImageView img;
+    private String imageStr;
     private Button btnAdd;
+    private Utils utils;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,6 +90,7 @@ public class AddZaraFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_zara, container, false);
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -87,11 +100,14 @@ public class AddZaraFragment extends Fragment {
 
     private void connectComponents() {
         fbs = FirebaseServices.getInstance();
+        utils = Utils.getInstance();
         etProduct = getView().findViewById(R.id.etProductAddZaraFragment);
         etSize = getView().findViewById(R.id.etSIzeAddZaraFragment);
         etcolour = getView().findViewById(R.id.etColourAddZaraFragment);
-        etPhone = getView().findViewById(R.id.etPhoneAddZaraFragment);
+        etPrice = getView().findViewById(R.id.etPriceAddZaraFragment);
         btnAdd = getView().findViewById(R.id.btnAddAddZaraFragment);
+        etDescripton = getView().findViewById(R.id.etDescriptionAddZaraFragment);
+        img = getView().findViewById(R.id.ivImgAddZaraFragment);
 
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -102,41 +118,116 @@ public class AddZaraFragment extends Fragment {
                 String product = etProduct.getText().toString();
                 String size = etSize.getText().toString();
                 String colour = etcolour.getText().toString();
-                String phone = etPhone.getText().toString();
+                String price = etPrice.getText().toString();
+                String description = etDescripton.getText().toString();
 
 
                 if (product.isEmpty() || size.isEmpty() ||
-                        colour.isEmpty() || phone.isEmpty())
-                {
+                        colour.isEmpty() || price.isEmpty() || description.isEmpty()) {
                     Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
 
-                Zara zara = new Zara(product, size, colour, phone);
+                Zara zara;
+                if (fbs.getSelectedImageURL() == null) {
+                    zara = new Zara(product, size, colour, price, description, "");
+
+                } else {
+                    zara = new Zara(product, size, colour, price, description, fbs.getSelectedImageURL().toString());
 
 
-                fbs.getFire().collection("products").add(zara).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();
-                           FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.Framelayoutmain4,new AllZaraFragment());
-                            ft.commit();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("Failure AddZara: ", e.getMessage());
+                    fbs.getFire().collection("products").add(zara).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();
+                            gotomenu();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("Failure Add: ", e.getMessage());
 
-                    }
-                });
+                        }
+                    });
+
+                }
+
 
             }
-
         });
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+        ((MainActivity) getActivity()).pushFragment(new AddZaraFragment());
     }
 
 
+    public void gotomenu() {
+
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain4, new MenuFragment());
+        ft.commit();
+    }
+
+    private void openGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == getActivity().RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            img.setImageURI(selectedImageUri);
+            utils.uploadImage(getActivity(), selectedImageUri);
+        }
+    }
+
+    public void uploadImage(Uri selectedImageUri) {
+        if (selectedImageUri != null) {
+            imageStr = "images/" + UUID.randomUUID() + ".jpg"; //+ selectedImageUri.getLastPathSegment();
+            StorageReference imageRef = fbs.getStorage().getReference().child(imageStr);
+
+            if (selectedImageUri != null) {
+                Log.d("ImageUpload", "Selected Image URI: " + selectedImageUri.toString());
+                UploadTask uploadTask = imageRef.putFile(selectedImageUri);
+                Log.d("ImageUpload", "Firebase Storage Path: " + imageStr);
+
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                //selectedImageUri = uri;
+                                fbs.setSelectedImageURL(uri);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@androidx.annotation.NonNull Exception e) {
+
+                            }
+                        });
+                        Toast.makeText(getActivity(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@androidx.annotation.NonNull Exception e) {
+                        Toast.makeText(getActivity(), "Failed to upload image", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(getActivity(), "Please choose an image first", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
 }
+
 

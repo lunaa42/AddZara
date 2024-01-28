@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/scrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- ImageView for Car Image -->
+
+        <ImageView
+            android:id="@+id/ivProductdeta"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="Car Image"
+            android:onClick="toBigImg"/>
+
+
+        <!-- product Name -->
+        <TextView
+            android:id="@+id/tvproductDeta"
+            style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem"
+            android:layout_width="380dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="20dp"
+            android:text="PRODUCT :"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvproduct2Deta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="-20dp"
+            />
+
+        <TextView
+            android:id="@+id/tvsizeDeta"
+            android:layout_width="387dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="20sp"
+            android:text="SIZE:"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvsize2Deta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="-20dp" />
+
+        <!-- Year of Car -->
+        <TextView
+            android:id="@+id/tvcolourDeta"
+            android:layout_width="377dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="20dp"
+            android:text="COLOUR:"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvcolour2Deta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="-20dp"/>
+
+        <TextView
+            android:id="@+id/tvdescriDeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="DESCRIPTION:"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tvdescri2Deta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="-20dp"/>
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/tvpriceDeta"
+            style="@android:style/Widget.Holo.TextView"
+            android:layout_width="387dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="Price:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvprice2Deta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="-20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!-- Buttons for SMS, WhatsApp, and Call -->
+
+            <Button
+                android:id="@+id/btnBuydetail"
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="#FFFCFC"
+                android:text="BUY"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <!-- Buttons for actions -->
+
+    </LinearLayout>
+</ScrollView>

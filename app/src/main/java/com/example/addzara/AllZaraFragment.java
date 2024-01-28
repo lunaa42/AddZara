@@ -5,6 +5,7 @@
 
         import androidx.annotation.NonNull;
         import androidx.fragment.app.Fragment;
+        import androidx.fragment.app.FragmentTransaction;
         import androidx.recyclerview.widget.LinearLayoutManager;
         import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,9 +15,12 @@
         import android.view.ViewGroup;
         import android.widget.Toast;
 
+        import com.google.android.gms.tasks.OnCompleteListener;
         import com.google.android.gms.tasks.OnFailureListener;
         import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.android.gms.tasks.Task;
         import com.google.firebase.firestore.DocumentSnapshot;
+        import com.google.firebase.firestore.QueryDocumentSnapshot;
         import com.google.firebase.firestore.QuerySnapshot;
 
         import java.util.ArrayList;
@@ -29,7 +33,7 @@
 public class AllZaraFragment extends Fragment {
 
     private FirebaseServices fbs;
-    private ArrayList<Zara> zaras;
+    private ArrayList<ZaraItem> product;
     private RecyclerView rvZaras;
     private ZaraAdapter adapter;
 
@@ -84,31 +88,61 @@ public class AllZaraFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-            fbs = FirebaseServices.getInstance();
-            zaras = new ArrayList<>();
-          rvZaras = getView().findViewById(R.id.rvZaraFragment);
-            adapter = new ZaraAdapter(getActivity(), zaras);
-            rvZaras.setAdapter(adapter);
-            rvZaras.setHasFixedSize(true);
-            rvZaras.setLayoutManager(new LinearLayoutManager(getActivity()));
-            fbs.getFire().collection("products").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+        rvZaras = getView().findViewById(R.id.rvZaraFragment);
+        fbs = FirebaseServices.getInstance();
+        /*if (fbs.getAuth().getCurrentUser() == null)
+            fbs.setCurrentUser(fbs.getCurrentObjectUser()); */
+        product = new ArrayList<>();
+        rvZaras.setHasFixedSize(true);
+        rvZaras.setLayoutManager(new LinearLayoutManager(getActivity()));
+        product = getProduct();
+        adapter = new ZaraAdapter(getActivity(), product);
+        adapter.setOnItemClickListener(new ZaraAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Handle item click here
+                String selectedItem = product.get(position).getProduct();
+                Toast.makeText(getActivity(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show();
+                Bundle args = new Bundle();
+                args.putParcelable("product", product.get(position)); // or use Parcelable for better performance
+                DetailsFragment de = new DetailsFragment();
+                de.setArguments(args);
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4, de);
+                ft.commit();
+            }
+        });
+    }
+    public ArrayList<ZaraItem> getProduct()
+    {
+        ArrayList<ZaraItem> products = new ArrayList<>();
 
-                    for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
-                        Zara rest = dataSnapshot.toObject(Zara.class);
+        try {
+            products.clear();
+            fbs.getFire().collection("product4")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    products.add(document.toObject(ZaraItem.class));
+                                }
 
-                        zaras.add(rest);
-                    }
-
-                    adapter.notifyDataSetChanged();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
-                    Log.e("AllZaraFragment", e.getMessage());
-                }
-            });
+                                ZaraAdapter adapter = new ZaraAdapter(getActivity(), products);
+                                rvZaras.setAdapter(adapter);
+                                //addUserToCompany(companies, user);
+                            } else {
+                                //Log.e("AllRestActivity: readData()", "Error getting documents.", task.getException());
+                            }
+                        }
+                    });
         }
+        catch (Exception e)
+        {
+            Log.e("getCompaniesMap(): ", e.getMessage());
+        }
+
+        return products;
+    }
 }

@@ -15,12 +15,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="105dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="110dp"
             android:ems="10"
             android:hint="Product.."
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/etSIzeAddZaraFragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,11 +27,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginBottom="33dp"
+            android:layout_marginTop="28dp"
             android:ems="10"
             android:hint="Size.."
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/etColourAddZaraFragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etProductAddZaraFragment" />
 
@@ -42,42 +39,72 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="35dp"
             android:ems="10"
             android:hint="Colour.."
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/etPhoneAddZaraFragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etSIzeAddZaraFragment" />
 
         <EditText
-            android:id="@+id/etPhoneAddZaraFragment"
+            android:id="@+id/etPriceAddZaraFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginTop="35dp"
+            android:autoText="false"
             android:ems="10"
-            android:hint="Phone.."
-            android:inputType="phone"
-            app:layout_constraintBottom_toTopOf="@+id/btnAddAddZaraFragment"
+            android:hint="Price.."
+            android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etColourAddZaraFragment" />
 
-        <Button
-            android:id="@+id/btnAddAddZaraFragment"
-            android:layout_width="93dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="156dp"
-            android:layout_marginEnd="156dp"
-            android:layout_marginBottom="223dp"
-            android:background="#00FFFFFF"
-            android:backgroundTint="#0C0C0C"
-            android:text="ADD"
-            android:textColor="#101010"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:layout_marginBottom="82dp"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/etPhoneAddZaraFragment"
-            app:layout_constraintTop_toBottomOf="@+id/etPhoneAddZaraFragment" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etDescriptionAddZaraFragment">
+
+            <TextView
+                android:layout_width="120sp"
+                android:layout_height="40sp"
+                android:text="insert a image:->"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivImgAddZaraFragment"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_launcher_background" />
+
+            <Button
+                android:id="@+id/btnAddAddZaraFragment"
+                android:layout_width="93dp"
+                android:layout_height="47dp"
+                android:background="#00FFFFFF"
+                android:backgroundTint="#0C0C0C"
+                android:text="ADD"
+                android:textColor="#101010" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etDescriptionAddZaraFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPriceAddZaraFragment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
