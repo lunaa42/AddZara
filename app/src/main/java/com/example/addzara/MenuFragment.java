@@ -84,7 +84,6 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login2, container, false);
 
         // Initialize BottomNavigationView
-        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottomnavlogin);
 
         // Set up item selection listener
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -117,6 +116,7 @@ public class MenuFragment extends Fragment {
     public void onStart() {
         super.onStart();
         rvZaras = getView().findViewById(R.id.rvZaraFragment);
+        bottomNavigationView = getView().findViewById(R.id.bottomnavmenu  );
         fbs = FirebaseServices.getInstance();
         /*if (fbs.getAuth().getCurrentUser() == null)
             fbs.setCurrentUser(fbs.getCurrentObjectUser()); */

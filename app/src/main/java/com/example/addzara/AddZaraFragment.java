@@ -108,54 +108,17 @@ public class AddZaraFragment extends Fragment {
         btnAdd = getView().findViewById(R.id.btnAddAddZaraFragment);
         etDescripton = getView().findViewById(R.id.etDescriptionAddZaraFragment);
         img = getView().findViewById(R.id.ivImgAddZaraFragment);
-
+// Enable the button
+        btnAdd.setEnabled(true);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: add data to firebase
-                // get data from screen
-                String product = etProduct.getText().toString();
-                String size = etSize.getText().toString();
-                String colour = etcolour.getText().toString();
-                String price = etPrice.getText().toString();
-                String description = etDescripton.getText().toString();
-
-
-                if (product.isEmpty() || size.isEmpty() ||
-                        colour.isEmpty() || price.isEmpty() || description.isEmpty()) {
-                    Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-
-                Zara zara;
-                if (fbs.getSelectedImageURL() == null) {
-                    zara = new Zara(product, size, colour, price, description, "");
-
-                } else {
-                    zara = new Zara(product, size, colour, price, description, fbs.getSelectedImageURL().toString());
-
-
-                    fbs.getFire().collection("products").add(zara).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getActivity(), "Successfully added your product!", Toast.LENGTH_SHORT).show();
-                            gotomenu();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("Failure Add: ", e.getMessage());
-
-                        }
-                    });
-
-                }
-
-
+                Log.d("OnClickListener", "Button clicked");
+                addToFirestore();
             }
         });
+
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,12 +129,79 @@ public class AddZaraFragment extends Fragment {
     }
 
 
-    public void gotomenu() {
+    public void addToFirestore() {
+        Log.d("addToFirestore", "Started");
+            String productname, size, colour, description,price ;
 
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain4, new MenuFragment());
-        ft.commit();
-    }
+//get data from screen
+
+            productname=etProduct.getText().toString();
+            size=etSize.getText().toString();
+            colour=etcolour.getText().toString();
+            description = etDescripton.getText().toString();
+            price=etPrice.getText().toString();
+
+            if (productname.trim().isEmpty() ||
+                    size.trim().isEmpty() ||
+                    colour.trim().isEmpty()||
+                    description.trim().isEmpty()||
+                    price.trim().isEmpty())
+
+            {
+                Toast.makeText(getActivity(), "sorry some data missing incorrect !", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Zara product1;
+            ZaraItem product2;
+            if (fbs.getSelectedImageURL() == null)
+            {
+                product1= new Zara(productname, size, colour, price, description ,"");
+                product2 = new ZaraItem(productname, size, colour, price, description ,"");
+            }
+            else {
+                product1= new Zara(productname, size, colour, price, description , fbs.getSelectedImageURL().toString());
+                product2 = new ZaraItem(productname, size, colour, price, description ,fbs.getSelectedImageURL().toString());
+
+            }
+
+            fbs.getFire().collection("products").add(product1)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getActivity(), "ADD product is Succeed ", Toast.LENGTH_SHORT).show();
+                            Log.e("addToFirestore() - add to collection: ", "Successful!");
+                            gotomenu();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@androidx.annotation.NonNull Exception e) {
+                            Log.e("addToFirestore() - add to collection: ", e.getMessage());
+                        }
+                    });
+
+            try {
+                fbs.getFire().collection("product2").add(product2)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                //Toast.makeText(getActivity(), "ADD Car is Succesed ", Toast.LENGTH_SHORT).show();
+                                Log.e("addToFirestore() - add to collection: ", "Successful!");
+                                gotomenu();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@androidx.annotation.NonNull Exception e) {
+                                Log.e("addToFirestore() - add to collection: ", e.getMessage());
+                            }
+                        });
+            }
+            catch (Exception ex)
+            {
+                Log.e("AddZaraFragment: addToFirestore()", ex.getMessage());
+            }
+        }
+
 
     private void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -188,8 +218,13 @@ public class AddZaraFragment extends Fragment {
             utils.uploadImage(getActivity(), selectedImageUri);
         }
     }
-
-    public void uploadImage(Uri selectedImageUri) {
+    public void gotomenu(){
+        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain4,new MenuFragment());
+        ft.commit();
+    }
+/*
+  public void uploadImage(Uri selectedImageUri) {
         if (selectedImageUri != null) {
             imageStr = "images/" + UUID.randomUUID() + ".jpg"; //+ selectedImageUri.getLastPathSegment();
             StorageReference imageRef = fbs.getStorage().getReference().child(imageStr);
@@ -227,7 +262,7 @@ public class AddZaraFragment extends Fragment {
             }
         }
 
-    }
+    }*/
 }
 
 
