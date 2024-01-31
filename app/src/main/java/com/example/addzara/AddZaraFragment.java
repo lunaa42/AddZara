@@ -149,7 +149,6 @@ public class AddZaraFragment extends Fragment {
 
             {
                 Toast.makeText(getActivity(), "sorry some data missing incorrect !", Toast.LENGTH_SHORT).show();
-                return;
             }
 
             Zara product1;
