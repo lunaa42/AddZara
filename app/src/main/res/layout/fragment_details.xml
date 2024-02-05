@@ -93,7 +93,7 @@
 
         <!-- Price -->
         <TextView
-            android:id="@+id/tvpriceDeta"
+            android:id="@+id/tvpriceZaraitem"
             style="@android:style/Widget.Holo.TextView"
             android:layout_width="387dp"
             android:layout_height="48dp"

@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,7 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
         Context context;
         ArrayList<ZaraItem> zaList;
         private FirebaseServices fbs;
-    private ZaraAdapter.OnItemClickListener itemClickListener;
+         private ZaraAdapter.OnItemClickListener itemClickListener;
         public ZaraAdapter(Context context, ArrayList<ZaraItem> zaList) {
             this.context = context;
             this.zaList = zaList;
@@ -43,8 +42,13 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
                 }
             } ;
         }
+    public void setZaraItems(ArrayList<ZaraItem> zaraItems) {
+        this.zaList = zaraItems;
+        notifyDataSetChanged();
+    }
 
-        @NonNull
+
+    @NonNull
         @Override
         public ZaraAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
             View v= LayoutInflater.from(context).inflate(R.layout.zara_item,parent,false);
@@ -54,16 +58,19 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
     @Override
         public void onBindViewHolder(@NonNull ZaraAdapter.MyViewHolder holder, int position) {
         ZaraItem produ= zaList.get(position);
+        // Set product name
+
+        // Use a library like Picasso or Glide to load images into ImageView
+
         User u = fbs.getCurrentUser();
-        /*if (u != null)
-        {
-            if (u.getFavorites().contains(produ.get()))
-                Picasso.get().load(R.drawable.favcheck).into(holder.ivFavourite);
-            else
-                Picasso.get().load(R.drawable.ic_fav).into(holder.ivFavourite);
-        }*/
+        if (produ.getPhoto() == null || produ.getPhoto().isEmpty()) {
+            Picasso.get().load(R.drawable.clothingw5_removebg_preview).into(holder.ivphoto);
+        } else {
+            Picasso.get().load(produ.getPhoto()).into(holder.ivphoto);
+        }
         holder.tvProduct.setText(produ.getProduct());
-        holder.tvPrice.setText(produ.getPrice() + " ₪");
+        Picasso.get().load(produ.getPhoto()).into(holder.ivphoto);
+       /* holder.tvPrice.setText(produ.getPrice() + " ₪");
         holder.tvSize.setText(produ.getSize());
         holder.tvColour.setText(produ.getColour());
         holder.tvDescription.setText(produ.getDescription());
@@ -71,20 +78,15 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
             if (itemClickListener != null) {
                 itemClickListener.onItemClick(position);
             }
-        });
+        });*/
 /*
         holder.carName.setOnClickListener(v -> {
             if (clickListener != null) {
                 clickListener.setOnItemClick(position);
             }
         }); */
-        if (produ.getPhoto() == null || produ.getPhoto().isEmpty())
-        {
-            Picasso.get().load(R.drawable.clothingw5_removebg_preview).into(holder.ivphoto);
-        }
-        else {
-            Picasso.get().load(produ.getPhoto()).into(holder.ivphoto);
-        }
+
+
       /*  holder.ivFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

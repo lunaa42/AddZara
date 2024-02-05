@@ -1,30 +1,24 @@
 package com.example.addzara;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
+import static com.example.addzara.R.id.bottomnavProfile;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.UUID;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,13 +35,19 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private EditText etFirstName, etLastName, etEmail, etPhone;
+    private TextView tvFirstName, tvLastName, tvEmail, tvPhone,tvSignout;
+    private String stFirstName, stLastName, stEmail, stPhone;
     private static final int GALLERY_REQUEST_CODE = 134;
-    private TextView tvDone,tvDetails;
-    private ImageView imgback,imgprofile;
+    private ImageView imgprofile;
     private FirebaseServices fbs;
+    private FirebaseFirestore db;
+    private FirebaseAuth mauth;
+    private BottomNavigationView bottomNavigationView;
 
     private boolean flagAlreadyFilled = false;
+    private LayoutInflater inflater;
+    private ViewGroup container;
+    private Bundle savedInstanceState;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -79,13 +79,42 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    /*
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+   @Override
+       public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+       // Inflate the layout for this fragment
+       View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+       // Initialize BottomNavigationView
+       BottomNavigationView bottomNavigationView = view.findViewById(bottomnavProfile);
+
+       // Set up item selection listener
+       bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+           @Override
+           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+               Fragment selectedFragment = null;
+               if (item.getItemId() == R.id.homenav2) {
+                   selectedFragment = new HomeFragment();
+               } else if (item.getItemId() == R.id.menunav2) {
+                   selectedFragment = new AddZaraFragment();
+               } else if (item.getItemId() == R.id.favnav2) {
+                   selectedFragment = new FavFragment();
+               }
+
+               if (selectedFragment != null) {
+                   // Replace the current fragment with the selected one
+                   requireActivity().getSupportFragmentManager().beginTransaction()
+                           .replace(R.id.Framelayoutmain4, selectedFragment)
+                           .addToBackStack(null) // Optional: Add to back stack if you want to navigate back
+                           .commit();
+               }
+
+               return true;
+           }
+       });
+
+       return view;
     }
     @Override
     public void onStart() {
@@ -96,64 +125,30 @@ public class ProfileFragment extends Fragment {
     private void init()
     {
         fbs = FirebaseServices.getInstance();
-        etFirstName=getView().findViewById(R.id.etFirstnameprofile);
-        etLastName=getView().findViewById(R.id.etLastnameprofile);
-        etEmail=getView().findViewById(R.id.etEmailprofile);
-        etPhone=getView().findViewById(R.id.etPhoneprofile);
-        imgback=getView().findViewById(R.id.imgbacksymbprofile);
+        tvFirstName=getView().findViewById(R.id.tvfirstnameprofile);
+        tvLastName=getView().findViewById(R.id.ConstrainLayout);
+        tvEmail=getView().findViewById(R.id.tvemailProfile);
+        tvPhone=getView().findViewById(R.id.tvphoneprofile);
+        bottomNavigationView = getView().findViewById(R.id.bottomnavProfile);
         imgprofile=getView().findViewById(R.id.imgprofileprofile);
-        tvDetails=getView().findViewById(R.id.tvdetailsprofile);
-        tvDone=getView().findViewById(R.id.tvdoneprofile);
+        tvSignout= getView().findViewById(R.id.tvsignoutprofile);
+        db = FirebaseFirestore.getInstance();
+        mauth = FirebaseAuth.getInstance();
 
-        tvDone.setOnClickListener(new View.OnClickListener() {
+        tvSignout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Data validation
-                String firstname = etFirstName.getText().toString();
-                String lastname = etLastName.getText().toString();
-                String email = etEmail.getText().toString();
-                String phone = etPhone.getText().toString();
-                if (firstname.trim().isEmpty() || lastname.trim().isEmpty() || email.trim().isEmpty() ||
-                        phone.trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "some fields are empty", Toast.LENGTH_SHORT).show();
-                    return;
+                mauth.signOut();
+                FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4,new HomeFragment());
+                ft.commit();
                 }
-
-                User current = fbs.getCurrentUser();
-                if (current != null)
-                {
-                    if (!current.getFirstName().equals(firstname)  ||
-                            !current.getLastName().equals(lastname)    ||
-                            !current.getEmail().equals(email)      ||
-                            !current.getPhone().equals(phone))
-                    {
-                        User user;
-                        if (fbs.getSelectedImageURL() != null)
-                            user = new User(firstname, lastname, fbs.getAuth().getCurrentUser().getEmail(), address, phone, fbs.getSelectedImageURL().toString());
-                        else
-                            user = new User(firstname, lastname, fbs.getAuth().getCurrentUser().getEmail(), address, phone,"");
-
-                        fbs.updateUser(user);
-                        utils.showMessageDialog(getActivity(), "Data updated succesfully!");
-                        fbs.reloadInstance();
-                    }
-                    else
-                    {
-                        utils.showMessageDialog(getActivity(), "No changes!");
-                    }
-                }
-            }
-        });
-        ivUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
-        fillUserData();
-        flagAlreadyFilled = true;
+            });
     }
 
+
+/*
     private void fillUserData() {
         if (flagAlreadyFilled)
             return;
@@ -162,81 +157,10 @@ public class ProfileFragment extends Fragment {
         {
             etFirstName.setText(current.getFirstName());
             etLastName.setText(current.getLastName());
-            etAddress.setText(current.getAddress());
+            etEmail.setText(current.getEmail());
             etPhone.setText(current.getPhone());
-            if (current.getPhoto() != null && !current.getPhoto().isEmpty()) {
-                Picasso.get().load(current.getPhoto()).into(ivUser);
-                fbs.setSelectedImageURL(Uri.parse(current.getPhoto()));
-            }
         }
-    }
+    }*/
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-    }
-
-    public void openGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                btnUpdate.setEnabled(false);
-                // Get the image's URI
-                final android.net.Uri imageUri = data.getData();
-
-                // Load the image into the ImageView using an asynchronous task or a library like Glide or Picasso
-                // For example, using Glide:
-                Glide.with(this).load(imageUri).into(ivUser);
-                uploadImage(imageUri);
-            }
-        }
-    }
-
-    public void uploadImage(Uri selectedImageUri) {
-        if (selectedImageUri != null) {
-            imageStr = "images/" + UUID.randomUUID() + ".jpg"; //+ selectedImageUri.getLastPathSegment();
-            StorageReference imageRef = fbs.getStorage().getReference().child("images/" + selectedImageUri.getLastPathSegment());
-
-            UploadTask uploadTask = imageRef.putFile(selectedImageUri);
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            //selectedImageUri = uri;
-                            fbs.setSelectedImageURL(uri);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-
-                        }
-                    });
-                    Toast.makeText(getActivity(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
-                    btnUpdate.setEnabled(true);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Failed to upload image", Toast.LENGTH_SHORT).show();
-                    btnUpdate.setEnabled(true);
-                }
-            });
-        } else {
-            Toast.makeText(getActivity(), "Please choose an image first", Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
 
 }

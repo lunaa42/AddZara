@@ -8,54 +8,34 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvmenu"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="72dp"
+            android:background="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivlogomenu" />
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="412dp"
-            android:layout_height="169dp"
+            android:id="@+id/ivlogomenu"
+            android:layout_width="395dp"
+            android:layout_height="151dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="17dp"
             android:src="@drawable/remo"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="1dp" />
+            app:layout_constraintBottom_toTopOf="@+id/rvmenu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/horizontalLine2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="227dp" />
-
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:text="WOMEN"
-            android:textColor="#121212"
-            tools:layout_editor_absoluteX="19dp"
-            tools:layout_editor_absoluteY="170dp" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:text="MEN"
-            android:textColor="#040303"
-            tools:layout_editor_absoluteX="163dp"
-            tools:layout_editor_absoluteY="170dp" />
-
-        <Button
-            android:id="@+id/btnbeautymenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:text="BEAUTY"
-            android:textColor="#000000"
-            tools:layout_editor_absoluteX="297dp"
-            tools:layout_editor_absoluteY="170dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomnavmenu"
@@ -63,32 +43,12 @@
             android:layout_height="66dp"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
-            android:background="#00FFFFFF"
+            android:background="#FFFFFF"
+            app:backgroundTint="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav" />
-
-        <LinearLayout
-            android:layout_width="410dp"
-            android:layout_height="447dp"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="225dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-        </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

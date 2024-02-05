@@ -7,84 +7,117 @@
     tools:context=".ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstrainLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
         <ImageView
             android:id="@+id/imgprofileprofile"
             android:layout_width="60dp"
-            android:layout_height="53dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="48dp"
             android:src="@drawable/user__1_"
-            tools:layout_editor_absoluteX="348dp"
-            tools:layout_editor_absoluteY="35dp" />
-
-        <ImageView
-            android:id="@+id/imgbacksymbprofile"
-            android:layout_width="36dp"
-            android:layout_height="47dp"
-            android:src="@drawable/back_symbol"
-            tools:layout_editor_absoluteX="4dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <EditText
-            android:id="@+id/etEmailprofile"
-            android:layout_width="407dp"
-            android:layout_height="57dp"
-            android:ems="10"
-            android:hint="E-MAIL"
-            android:inputType="text"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="217dp" />
-
-        <EditText
-            android:id="@+id/etFirstnameprofile"
-            android:layout_width="402dp"
-            android:layout_height="63dp"
-            android:ems="10"
-            android:hint="FIRST NAME"
-            android:inputType="text"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="291dp" />
-
-        <EditText
-            android:id="@+id/etLastnameprofile"
-            android:layout_width="400dp"
-            android:layout_height="64dp"
-            android:ems="10"
-            android:hint="LAST NAME"
-            android:inputType="text"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="376dp" />
-
-        <EditText
-            android:id="@+id/etPhoneprofile"
-            android:layout_width="398dp"
-            android:layout_height="65dp"
-            android:ems="10"
-            android:hint="PHONE"
-            android:inputType="number"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="456dp" />
+            app:layout_constraintBottom_toTopOf="@+id/tvdetailsprofile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvdetailsprofile"
             style="@android:style/Widget.Holo.TextView.SpinnerItem"
             android:layout_width="263dp"
-            android:layout_height="58dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="52dp"
+            android:layout_marginBottom="35dp"
             android:text="PROFILE DETAILS"
             android:textSize="24sp"
-            tools:layout_editor_absoluteX="96dp"
-            tools:layout_editor_absoluteY="136dp" />
+            app:layout_constraintBottom_toTopOf="@+id/tvemailProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgprofileprofile" />
 
         <TextView
-            android:id="@+id/tvdoneprofile"
+            android:id="@+id/tvsignoutprofile"
             style="@android:style/Widget.Holo.TextView.SpinnerItem"
-            android:layout_width="83dp"
-            android:layout_height="36dp"
-            android:text="DONE"
+            android:layout_width="105dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
+            android:text="SIGN OUT"
+            android:textColor="#AE0909"
             android:textSize="20sp"
-            tools:layout_editor_absoluteX="174dp"
-            tools:layout_editor_absoluteY="572dp" />
+            app:layout_constraintBottom_toTopOf="@+id/bottomnavProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvphoneprofile" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomnavProfile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvsignoutprofile"
+            app:menu="@menu/bottom_nav" />
+
+        <TextView
+            android:id="@+id/tvemailProfile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="23dp"
+            android:hint="E-MAIL"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvfirstnameprofile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvdetailsprofile" />
+
+        <TextView
+            android:id="@+id/tvfirstnameprofile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="18dp"
+            android:hint="FIRST NAME"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvlastnameProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvemailProfile" />
+
+        <TextView
+            android:id="@+id/tvphoneprofile"
+            android:layout_width="363dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginBottom="53dp"
+            android:hint="PHONE"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvsignoutprofile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvlastnameProfile" />
+
+        <TextView
+            android:id="@+id/tvlastnameProfile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="18dp"
+            android:hint="LAST NAME"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvphoneprofile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvfirstnameprofile" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

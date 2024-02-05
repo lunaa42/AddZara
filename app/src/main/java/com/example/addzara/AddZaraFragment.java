@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
@@ -129,77 +130,75 @@ public class AddZaraFragment extends Fragment {
     }
 
 
+
     public void addToFirestore() {
         Log.d("addToFirestore", "Started");
-            String productname, size, colour, description,price ;
+        String productname, size, colour, description, price;
 
-//get data from screen
+        // get data from screen
+        productname = etProduct.getText().toString();
+        size = etSize.getText().toString();
+        colour = etcolour.getText().toString();
+        description = etDescripton.getText().toString();
+        price = etPrice.getText().toString();
 
-            productname=etProduct.getText().toString();
-            size=etSize.getText().toString();
-            colour=etcolour.getText().toString();
-            description = etDescripton.getText().toString();
-            price=etPrice.getText().toString();
-
-            if (productname.trim().isEmpty() ||
-                    size.trim().isEmpty() ||
-                    colour.trim().isEmpty()||
-                    description.trim().isEmpty()||
-                    price.trim().isEmpty())
-
-            {
-                Toast.makeText(getActivity(), "sorry some data missing incorrect !", Toast.LENGTH_SHORT).show();
-            }
-
-            Zara product1;
-            ZaraItem product2;
-            if (fbs.getSelectedImageURL() == null)
-            {
-                product1= new Zara(productname, size, colour, price, description ,"");
-                product2 = new ZaraItem(productname, size, colour, price, description ,"");
-            }
-            else {
-                product1= new Zara(productname, size, colour, price, description , fbs.getSelectedImageURL().toString());
-                product2 = new ZaraItem(productname, size, colour, price, description ,fbs.getSelectedImageURL().toString());
-
-            }
-
-            fbs.getFire().collection("products").add(product1)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getActivity(), "ADD product is Succeed ", Toast.LENGTH_SHORT).show();
-                            Log.e("addToFirestore() - add to collection: ", "Successful!");
-                            gotomenu();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@androidx.annotation.NonNull Exception e) {
-                            Log.e("addToFirestore() - add to collection: ", e.getMessage());
-                        }
-                    });
-
-            try {
-                fbs.getFire().collection("product2").add(product2)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                //Toast.makeText(getActivity(), "ADD Car is Succesed ", Toast.LENGTH_SHORT).show();
-                                Log.e("addToFirestore() - add to collection: ", "Successful!");
-                                gotomenu();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@androidx.annotation.NonNull Exception e) {
-                                Log.e("addToFirestore() - add to collection: ", e.getMessage());
-                            }
-                        });
-            }
-            catch (Exception ex)
-            {
-                Log.e("AddZaraFragment: addToFirestore()", ex.getMessage());
-            }
+        if (productname.trim().isEmpty() ||
+                size.trim().isEmpty() ||
+                colour.trim().isEmpty() ||
+                description.trim().isEmpty() ||
+                price.trim().isEmpty()) {
+            Toast.makeText(getActivity(), "Sorry, some data is missing or incorrect!", Toast.LENGTH_SHORT).show();
+            return;  // Add a return statement to exit the method if data is missing
         }
+
+        Zara product1;
+        ZaraItem product2;
+        if (fbs.getSelectedImageURL() == null) {
+            product1 = new Zara(productname, size, colour, price, description, "");
+            product2 = new ZaraItem(productname, size, colour, price, description, "");
+        } else {
+            product1 = new Zara(productname, size, colour, price, description, fbs.getSelectedImageURL().toString());
+            product2 = new ZaraItem(productname, size, colour, price, description, fbs.getSelectedImageURL().toString());
+        }
+
+        fbs.getFire().collection("products").add(product1)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getActivity(), "ADD product is Succeed ", Toast.LENGTH_SHORT).show();
+                        Log.e("addToFirestore() - add to collection: ", "Successful!");
+                        gotomenu();
+
+                        // Move the try-catch block here
+                        try {
+                            fbs.getFire().collection("product2").add(product2)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Log.e("addToFirestore() - add to collection: ", "Successful!");
+                                            gotomenu();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@androidx.annotation.NonNull Exception e) {
+                                            Log.e("addToFirestore() - add to collection: ", e.getMessage());
+                                        }
+                                    });
+                        } catch (Exception ex) {
+                            Log.e("AddZaraFragment: addToFirestore()", ex.getMessage());
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@androidx.annotation.NonNull Exception e) {
+                        Log.e("addToFirestore() - add to collection: ", e.getMessage());
+                    }
+                });
+    }
+
+
 
 
     private void openGallery() {
@@ -217,11 +216,28 @@ public class AddZaraFragment extends Fragment {
             utils.uploadImage(getActivity(), selectedImageUri);
         }
     }
-    public void gotomenu(){
-        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain4,new MenuFragment());
-        ft.commit();
+    public void gotomenu() {
+        // Check if the fragment is attached to an activity
+        if (getActivity() != null) {
+            // Ensure that getSupportFragmentManager() is not null
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+            if (fragmentManager != null) {
+                // Now you can safely use fragmentManager to perform fragment transactions
+                fragmentManager.beginTransaction()
+                        .replace(R.id.Framelayoutmain4, new MenuFragment())
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                // Handle the case when getSupportFragmentManager() is null
+                Log.e("YourFragment", "FragmentManager is null");
+            }
+        } else {
+            // Handle the case when the fragment is not attached to any activity
+            Log.e("YourFragment", "Fragment is not attached to any activity");
+        }
     }
+
 /*
   public void uploadImage(Uri selectedImageUri) {
         if (selectedImageUri != null) {
