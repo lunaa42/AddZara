@@ -160,15 +160,33 @@ public class AddZaraFragment extends Fragment {
             product1 = new Zara(productname, size, colour, price, description, fbs.getSelectedImageURL().toString());
             product2 = new ZaraItem(productname, size, colour, price, description, fbs.getSelectedImageURL().toString());
         }
-
-        fbs.getFire().collection("products").add(product1)
+/*
+        fbs.getFire().collection("product2").add(product2)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getActivity(), "ADD product is Succeed ", Toast.LENGTH_SHORT).show();
                         Log.e("addToFirestore() - add to collection: ", "Successful!");
                         gotomenu();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@androidx.annotation.NonNull Exception e) {
+                        Log.e("addToFirestore() - add to collection: ", e.getMessage());
+                    }
+                });
 
+*/
+        try {
+            fbs.getFire().collection("products").add(product1)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getActivity(), "ADD product is Succeed ", Toast.LENGTH_SHORT).show();
+                            Log.e("addToFirestore() - add to collection: ", "Successful!");
+                            gotomenu();
+
+                        /*
                         // Move the try-catch block here
                         try {
                             fbs.getFire().collection("product2").add(product2)
@@ -188,14 +206,21 @@ public class AddZaraFragment extends Fragment {
                         } catch (Exception ex) {
                             Log.e("AddZaraFragment: addToFirestore()", ex.getMessage());
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@androidx.annotation.NonNull Exception e) {
-                        Log.e("addToFirestore() - add to collection: ", e.getMessage());
-                    }
-                });
+
+                         */
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@androidx.annotation.NonNull Exception e) {
+                            Log.e("addToFirestore() - add to collection: ", e.getMessage());
+                        }
+                    });
+        }
+        catch (Exception ex)
+        {
+            Log.e("", ex.getMessage());
+        }
     }
 
 

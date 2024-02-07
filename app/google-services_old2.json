@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "512867481790",
-    "project_id": "newzarabqalbel3amara",
-    "storage_bucket": "newzarabqalbel3amara.appspot.com"
+    "project_number": "9272630325",
+    "project_id": "newzara-675bc",
+    "storage_bucket": "newzara-675bc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:512867481790:android:eae41b51042a23581ac6ef",
+        "mobilesdk_app_id": "1:9272630325:android:059adab7139d581a43e57c",
         "android_client_info": {
           "package_name": "com.example.addzara"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDtgUPA9kKRa0CLvUwuJpz_jzgDWKxDwoc"
+          "current_key": "AIzaSyAvBDhftuWQnu7klP_IKruLdag15dN3f1M"
         }
       ],
       "services": {
