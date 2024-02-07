@@ -15,121 +15,80 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder>  {
-        Context context;
-        ArrayList<ZaraItem> zaList;
-        private FirebaseServices fbs;
-         private ZaraAdapter.OnItemClickListener itemClickListener;
-        public ZaraAdapter(Context context, ArrayList<ZaraItem> zaList) {
-            this.context = context;
-            this.zaList = zaList;
-            this.fbs = FirebaseServices.getInstance();
-            this.itemClickListener = new OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                /*
-                String selectedItem = filteredList.get(position).getNameCar();
-                Toast.makeText(getActivity(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show(); */
-                    Bundle args = new Bundle();
-                    args.putParcelable("car", zaList.get(position)); // or use Parcelable for better performance
-                    DetailsFragment pd = new DetailsFragment();
-                    pd.setArguments(args);
-                    FragmentTransaction ft= ((MainActivity)context).getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.Framelayoutmain4,pd);
-                    ft.commit();
-                }
-            } ;
-        }
+public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> {
+    Context context;
+    List<ZaraItem> zaList;
+    private FirebaseServices fbs;
+    private OnItemClickListener itemClickListener;
+
+    public ZaraAdapter(Context context, ArrayList<ZaraItem> zaList) {
+        this.context = context;
+        this.zaList = zaList;
+        this.fbs = FirebaseServices.getInstance();
+    }
+
     public void setZaraItems(ArrayList<ZaraItem> zaraItems) {
         this.zaList = zaraItems;
         notifyDataSetChanged();
     }
 
-
     @NonNull
-        @Override
-        public ZaraAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-            View v= LayoutInflater.from(context).inflate(R.layout.zara_item,parent,false);
-            return  new ZaraAdapter.MyViewHolder(v);
-        }
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(context).inflate(R.layout.zara_item, parent, false);
+        return new MyViewHolder(v);
+    }
 
     @Override
-        public void onBindViewHolder(@NonNull ZaraAdapter.MyViewHolder holder, int position) {
-        ZaraItem produ= zaList.get(position);
-        // Set product name
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        ZaraItem zaraItem = zaList.get(position);
+        holder.bind(zaraItem);
+    }
 
-        // Use a library like Picasso or Glide to load images into ImageView
+    @Override
+    public int getItemCount() {
+        return zaList.size();
+    }
 
-        User u = fbs.getCurrentUser();
-        if (produ.getPhoto() == null || produ.getPhoto().isEmpty()) {
-            Picasso.get().load(R.drawable.clothingw5_removebg_preview).into(holder.ivphoto);
-        } else {
-            Picasso.get().load(produ.getPhoto()).into(holder.ivphoto);
-        }
-        holder.tvProduct.setText(produ.getProduct());
-        Picasso.get().load(produ.getPhoto()).into(holder.ivphoto);
-       /* holder.tvPrice.setText(produ.getPrice() + " ₪");
-        holder.tvSize.setText(produ.getSize());
-        holder.tvColour.setText(produ.getColour());
-        holder.tvDescription.setText(produ.getDescription());
-        holder.tvPrice.setOnClickListener(v -> {
-            if (itemClickListener != null) {
-                itemClickListener.onItemClick(position);
-            }
-        });*/
-/*
-        holder.carName.setOnClickListener(v -> {
-            if (clickListener != null) {
-                clickListener.setOnItemClick(position);
-            }
-        }); */
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView productNameTextView;
+        private ImageView productImageView;
 
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            productNameTextView = itemView.findViewById(R.id.tvProductName);
+            productImageView = itemView.findViewById(R.id.ivzaraItem); // Initialize ImageView
 
-      /*  holder.ivFavourite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isFavorite(car) == true)
-                {
-                    removeStar(car, holder);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            itemClickListener.onItemClick(position);
+                        }
+                    }
                 }
-                else
-                {
-                    addStar(car, holder);
-                }
-                fbs.setUserChangeFlag(true);
-                //setFavourite(holder, car);
-            }
-        });*/
+            });
         }
 
-        @Override
-        public int getItemCount(){
-            return zaList.size();
-        }
+        public void bind(ZaraItem item) {
+            productNameTextView.setText(item.getProduct());
 
-        public static class MyViewHolder extends RecyclerView.ViewHolder{
-            TextView  tvProduct,tvSize,tvColour,tvDescription,tvPrice;
-            ImageView ivphoto;
-            public MyViewHolder(@NonNull View itemView) {
-                super(itemView);
-                tvProduct=itemView.findViewById(R.id.etProductAddZaraFragment);
-                tvSize=itemView.findViewById(R.id.etSIzeAddZaraFragment);
-                tvColour=itemView.findViewById(R.id.etColourAddZaraFragment);
-                tvDescription=itemView.findViewById(R.id.etDescriptionAddZaraFragment);
-                tvPrice=itemView.findViewById(R.id.etPriceAddZaraFragment);
-                ivphoto=itemView.findViewById(R.id.ivImgAddZaraFragment);
-
-            }
+            // Load image using a library like Picasso or Glide
+            Picasso.get().load(item.getPhoto()).into(productImageView);
         }
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(ZaraAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.itemClickListener = listener;
     }
-    }
-
+}
 
