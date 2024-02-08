@@ -160,23 +160,7 @@ public class AddZaraFragment extends Fragment {
             product1 = new Zara(productname, size, colour, price, description, fbs.getSelectedImageURL().toString());
             product2 = new ZaraItem(productname, size, colour, price, description, fbs.getSelectedImageURL().toString());
         }
-/*
-        fbs.getFire().collection("product2").add(product2)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.e("addToFirestore() - add to collection: ", "Successful!");
-                        gotomenu();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@androidx.annotation.NonNull Exception e) {
-                        Log.e("addToFirestore() - add to collection: ", e.getMessage());
-                    }
-                });
 
-*/
         try {
             fbs.getFire().collection("products").add(product1)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

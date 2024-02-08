@@ -32,6 +32,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -58,28 +59,41 @@ public class MenuFragment extends Fragment {
 
         fbs = FirebaseServices.getInstance();
         product = new ArrayList<>();
+        rvZaras.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ZaraAdapter(getContext(), product);
         rvZaras.setAdapter(adapter);
-        rvZaras.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Assuming you have retrieved product data from Firestore and stored it in a List<ZaraItem> productList
+        adapter.setZaraItems(product);
+
+
 
         // Load data from Firestore
         loadDataFromFirestore();
 
         bottomNavigationView = view.findViewById(R.id.bottomnavmenu);
         // Set BottomNavigationView listener
-        // Implement item selection logic here
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Handle item selection here
+                return true;
+            }
+        });
     }
+
 
     private void loadDataFromFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference productsRef = db.collection("products");
 
         productsRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                ZaraItem productItem = documentSnapshot.toObject(ZaraItem.class);
+            for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()) {
+                ZaraItem productItem = dataSnapshot.toObject(ZaraItem.class);
                 product.add(productItem);
+                Toast.makeText(getActivity(), "we got in", Toast.LENGTH_SHORT).show();
             }
-            adapter.notifyDataSetChanged(); // Notify adapter of data changes
+            adapter.notifyItemInserted(product.size() - 1); // Notify adapter of the inserted item
+
         }).addOnFailureListener(e -> {
             Toast.makeText(getActivity(), "Failed to load data", Toast.LENGTH_SHORT).show();
             Log.e("MenuFragment", "Error: " + e.getMessage());

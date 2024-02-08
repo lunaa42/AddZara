@@ -19,18 +19,16 @@ import java.util.List;
 
 
 public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> {
-    Context context;
-    List<ZaraItem> zaList;
-    private FirebaseServices fbs;
+    private Context context;
+    private List<ZaraItem> zaList;
     private OnItemClickListener itemClickListener;
 
-    public ZaraAdapter(Context context, ArrayList<ZaraItem> zaList) {
+    public ZaraAdapter(Context context, List<ZaraItem> zaList) {
         this.context = context;
         this.zaList = zaList;
-        this.fbs = FirebaseServices.getInstance();
     }
 
-    public void setZaraItems(ArrayList<ZaraItem> zaraItems) {
+    public void setZaraItems(List<ZaraItem> zaraItems) {
         this.zaList = zaraItems;
         notifyDataSetChanged();
     }
@@ -91,4 +89,3 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
         this.itemClickListener = listener;
     }
 }
-
