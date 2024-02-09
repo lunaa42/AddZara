@@ -56,31 +56,7 @@ public class MenuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        fbs = FirebaseServices.getInstance();
-        product = new ArrayList<>();
-        rvZaras.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new ZaraAdapter(getContext(), product);
-        rvZaras.setAdapter(adapter);
-        // Assuming you have retrieved product data from Firestore and stored it in a List<ZaraItem> productList
-        adapter.setZaraItems(product);
-
-
-
-        // Load data from Firestore
-        loadDataFromFirestore();
-
-        bottomNavigationView = view.findViewById(R.id.bottomnavmenu);
-        // Set BottomNavigationView listener
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // Handle item selection here
-                return true;
-            }
-        });
     }
-
 
     private void loadDataFromFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -92,11 +68,37 @@ public class MenuFragment extends Fragment {
                 product.add(productItem);
                 Toast.makeText(getActivity(), "we got in", Toast.LENGTH_SHORT).show();
             }
-            adapter.notifyItemInserted(product.size() - 1); // Notify adapter of the inserted item
-
+            //adapter.notifyItemInserted(product.size() - 1); // Notify adapter of the inserted item
+            adapter.notifyDataSetChanged();
         }).addOnFailureListener(e -> {
             Toast.makeText(getActivity(), "Failed to load data", Toast.LENGTH_SHORT).show();
             Log.e("MenuFragment", "Error: " + e.getMessage());
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        fbs = FirebaseServices.getInstance();
+        product = new ArrayList<>();
+        rvZaras.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new ZaraAdapter(getContext(), product);
+        rvZaras.setAdapter(adapter);
+        // Assuming you have retrieved product data from Firestore and stored it in a List<ZaraItem> productList
+        //adapter.setZaraItems(product);
+
+        // Load data from Firestore
+        loadDataFromFirestore();
+
+        bottomNavigationView = getView().findViewById(R.id.bottomnavmenu);
+        // Set BottomNavigationView listener
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Handle item selection here
+                return true;
+            }
         });
     }
 }

@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.Framelayoutmain4, new AddZaraFragment());
+                    ft.replace(R.id.Framelayoutmain4, new MenuFragment());
                     ft.commit();                }
     }
     public void onBackPressed() {

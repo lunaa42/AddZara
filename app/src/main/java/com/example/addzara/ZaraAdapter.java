@@ -77,7 +77,8 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
             productNameTextView.setText(item.getProduct());
 
             // Load image using a library like Picasso or Glide
-            Picasso.get().load(item.getPhoto()).into(productImageView);
+            //if (item.getPhoto() != null)
+                //Picasso.get().load(item.getPhoto()).into(productImageView);
         }
     }
 
