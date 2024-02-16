@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.squareup.picasso.Picasso;
 
 import java.util.Stack;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     @Override
             protected void onCreate(Bundle savedInstanceState) {
+              Picasso.setSingletonInstance(new Picasso.Builder(this).build());
 
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_main);
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.Framelayoutmain4, new MenuFragment());
                     ft.commit();                }
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain4, new HomeFragment());
+        ft.commit();
     }
     public void onBackPressed() {
         if (fragmentStack.size() > 1) {

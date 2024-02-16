@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TraditionalTextStyle">
+        <item name="android:fontFamily">serif</item> <!-- Serif font style -->
+        <item name="android:textColor">#666666</item> <!-- Gray color -->
+        <item name="android:textSize">14sp</item> <!-- Medium-small text size -->
+        <item name="android:textStyle">italic</item> <!-- Italic font style -->
+        <item name="android:lineSpacingMultiplier">1.2</item> <!-- Slightly increased line spacing -->
+    </style>
+
+
+</resources>

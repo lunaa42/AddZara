@@ -89,12 +89,19 @@ public class LoginFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
+                boolean itemSelected = false;
                 if (item.getItemId() == R.id.homenav2) {
                     selectedFragment = new HomeFragment();
+                    itemSelected = true;
                 } else if (item.getItemId() == R.id.menunav2) {
-                    selectedFragment = new AddZaraFragment();
+                    selectedFragment = new MenuFragment();
+                    itemSelected = true;
+                } else if (item.getItemId() == R.id.profilenav2) {
+                    selectedFragment = new LoginFragment();
+                    itemSelected = true;
                 } else if (item.getItemId() == R.id.favnav2) {
                     selectedFragment = new FavFragment();
+                    itemSelected = true;
                 }
 
                 if (selectedFragment != null) {
@@ -103,6 +110,12 @@ public class LoginFragment extends Fragment {
                             .replace(R.id.Framelayoutmain4, selectedFragment)
                             .addToBackStack(null) // Optional: Add to back stack if you want to navigate back
                             .commit();
+                }
+
+                // Check if the item was selected
+                if (itemSelected) {
+                    // Set the selected item in the bottom navigation bar
+                    item.setChecked(true);
                 }
 
                 return true;
@@ -154,7 +167,7 @@ public class LoginFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "You have successfully logged in!", Toast.LENGTH_SHORT).show();
-                                gotoAddzara();
+                                gotoProfile();
 
                             } else
                             {
@@ -166,7 +179,14 @@ public class LoginFragment extends Fragment {
             });
 
         }
-        private void gotoSignupFragment() {
+
+    private void gotoProfile() {
+        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain4,new ProfileFragment());
+        ft.commit();
+    }
+
+    private void gotoSignupFragment() {
             FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.Framelayoutmain4,new SignupFragment());
             ft.commit();
@@ -176,11 +196,6 @@ public class LoginFragment extends Fragment {
         ft.replace(R.id.Framelayoutmain4,new ForgotPasswordFragment());
         ft.commit();
         }
-    private void gotoAddzara() {
-        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain4,new AddZaraFragment());
-        ft.commit();
-    }
 
 
     }

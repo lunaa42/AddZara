@@ -1,6 +1,5 @@
 package com.example.addzara;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,24 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.Nullable;
+
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.addzara.DetailsFragment;
-import com.example.addzara.FirebaseServices;
-import com.example.addzara.ZaraAdapter;
-import com.example.addzara.ZaraItem;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -43,6 +33,8 @@ public class MenuFragment extends Fragment {
     private RecyclerView rvZaras;
     private ZaraAdapter adapter;
     private BottomNavigationView bottomNavigationView;
+    private ImageView addP;
+
 
     // Constructor and newInstance() method remain the same
 
@@ -58,6 +50,20 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    public void onItemClick(ZaraItem item){
+        DetailsFragment detailsFragment = new DetailsFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("products", item);
+        detailsFragment.setArguments(args);
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.Framelayoutmain4, detailsFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+
     private void loadDataFromFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference productsRef = db.collection("products");
@@ -66,27 +72,25 @@ public class MenuFragment extends Fragment {
             for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()) {
                 ZaraItem productItem = dataSnapshot.toObject(ZaraItem.class);
                 product.add(productItem);
-                Toast.makeText(getActivity(), "we got in", Toast.LENGTH_SHORT).show();
+
             }
-            //adapter.notifyItemInserted(product.size() - 1); // Notify adapter of the inserted item
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemInserted(product.size() - 1); // Notify adapter of the inserted item
+
         }).addOnFailureListener(e -> {
             Toast.makeText(getActivity(), "Failed to load data", Toast.LENGTH_SHORT).show();
             Log.e("MenuFragment", "Error: " + e.getMessage());
         });
     }
-
-    @Override
     public void onStart() {
         super.onStart();
-
         fbs = FirebaseServices.getInstance();
+        addP = getView().findViewById(R.id.addProductMenu);
         product = new ArrayList<>();
         rvZaras.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ZaraAdapter(getContext(), product);
         rvZaras.setAdapter(adapter);
         // Assuming you have retrieved product data from Firestore and stored it in a List<ZaraItem> productList
-        //adapter.setZaraItems(product);
+        adapter.setZaraItems(product);
 
         // Load data from Firestore
         loadDataFromFirestore();
@@ -96,9 +100,47 @@ public class MenuFragment extends Fragment {
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // Handle item selection here
+                Fragment selectedFragment = null;
+                boolean itemSelected = false;
+                if (item.getItemId() == R.id.homenav2) {
+                    selectedFragment = new HomeFragment();
+                    itemSelected = true;
+                } else if (item.getItemId() == R.id.menunav2) {
+                    selectedFragment = new MenuFragment();
+                    itemSelected = true;
+                } else if (item.getItemId() == R.id.profilenav2) {
+                    selectedFragment = new LoginFragment();
+                    itemSelected = true;
+                } else if (item.getItemId() == R.id.favnav2) {
+                    selectedFragment = new FavFragment();
+                    itemSelected = true;
+                }
+
+                if (selectedFragment != null) {
+                    // Replace the current fragment with the selected one
+                    requireActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.Framelayoutmain4, selectedFragment)
+                            .addToBackStack(null) // Optional: Add to back stack if you want to navigate back
+                            .commit();
+                }
+
+                // Check if the item was selected
+                if (itemSelected) {
+                    // Set the selected item in the bottom navigation bar
+                    item.setChecked(true);
+                }
+
                 return true;
             }
         });
+        addP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4,new AddZaraFragment());
+                ft.commit();
+            }
+        });
     }
+
 }

@@ -5,6 +5,7 @@ import static com.example.addzara.R.id.bottomnavProfile;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -79,8 +80,40 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // Initialize UI elements
+        tvFirstName = view.findViewById(R.id.tvfirstnameprofile);
+        tvLastName = view.findViewById(R.id.ConstrainLayout);
+        tvEmail = view.findViewById(R.id.tvemailProfile);
+        tvPhone = view.findViewById(R.id.tvphoneprofile);
+        imgprofile = view.findViewById(R.id.imgprofileprofile);
+        tvSignout = view.findViewById(R.id.tvsignoutprofile);
+        bottomNavigationView = view.findViewById(R.id.bottomnavProfile);
 
-   @Override
+        // Fill user details
+        fillUserDetails();
+    }
+
+    private void fillUserDetails() {
+        // Check if user details are already filled
+        if (flagAlreadyFilled) {
+            return;
+        }
+
+        // Retrieve current user information
+        User current = fbs.getCurrentUser();
+        if (current != null) {
+            tvFirstName.setText(current.getFirstName());
+            tvLastName.setText(current.getLastName());
+            tvEmail.setText(current.getUsername());
+            tvPhone.setText(current.getPhone());
+
+        }
+    }
+
+    @Override
        public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        // Inflate the layout for this fragment
@@ -97,7 +130,7 @@ public class ProfileFragment extends Fragment {
                if (item.getItemId() == R.id.homenav2) {
                    selectedFragment = new HomeFragment();
                } else if (item.getItemId() == R.id.menunav2) {
-                   selectedFragment = new AddZaraFragment();
+                   selectedFragment = new MenuFragment();
                } else if (item.getItemId() == R.id.favnav2) {
                    selectedFragment = new FavFragment();
                }
@@ -134,6 +167,10 @@ public class ProfileFragment extends Fragment {
         tvSignout= getView().findViewById(R.id.tvsignoutprofile);
         db = FirebaseFirestore.getInstance();
         mauth = FirebaseAuth.getInstance();
+        String firstname = tvFirstName.getText().toString();
+        String lastname = tvLastName.getText().toString();
+        String email = tvEmail.getText().toString();
+        String phone = tvPhone.getText().toString();
 
         tvSignout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,21 +183,5 @@ public class ProfileFragment extends Fragment {
                 }
             });
     }
-
-
-/*
-    private void fillUserData() {
-        if (flagAlreadyFilled)
-            return;
-        User current = fbs.getCurrentUser();
-        if (current != null)
-        {
-            etFirstName.setText(current.getFirstName());
-            etLastName.setText(current.getLastName());
-            etEmail.setText(current.getEmail());
-            etPhone.setText(current.getPhone());
-        }
-    }*/
-
 
 }

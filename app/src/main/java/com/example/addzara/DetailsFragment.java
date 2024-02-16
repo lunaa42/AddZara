@@ -3,7 +3,9 @@ package com.example.addzara;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +26,9 @@ public class DetailsFragment extends Fragment {
     private FirebaseServices fbs;
     private TextView tvproduct,tvsize,tvcolour,tvdescription,tvprice;
     private ImageView ivproductPhoto;
+    private ImageView GoBack;
     private ZaraItem myproduct;
     private Button btnBuy;
-    private boolean isEnlarged = false;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -44,17 +46,13 @@ public class DetailsFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment DetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailsFragment newInstance(String param1, String param2) {
+    public static DetailsFragment newInstance(ZaraItem item) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable("products", item);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,51 +70,45 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false);
-    }
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+
+        // Initialize views here
+        tvproduct = view.findViewById(R.id.tvproduct2Deta);
+        tvsize = view.findViewById(R.id.tvsize2Deta);
+        tvcolour = view.findViewById(R.id.tvcolourDeta);
+        tvprice = view.findViewById(R.id.tvprice2Deta);
+        tvdescription = view.findViewById(R.id.tvdescri2Deta);
+        GoBack = view.findViewById(R.id.gobackDetails);
+        ivproductPhoto = view.findViewById(R.id.ivProductdeta);
+        btnBuy = view.findViewById(R.id.btnBuydetail);
+
+        // Call init method to set data
+        init();
+
+        return view;    }
     @Override
     public void onStart() {
         super.onStart();
         init();
-        ImageView ivproductphoto4 = getView().findViewById(R.id.ivProductdeta);
-
-        ivproductphoto4.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-
-            public void onClick(View v) {
-                ViewGroup.LayoutParams layoutParams = ivproductphoto4.getLayoutParams();
-                if (isEnlarged) {
-                    layoutParams.height =500;
-                } else {
-                    layoutParams.height = 2200;
-                }
-                ivproductphoto4.setLayoutParams(layoutParams);
-
-                // נשנה את המצב הנוכחי של התמונה
-                isEnlarged = !isEnlarged;
-
-            }
-        });
-
-
     }
     public void init()
     {
 
+        GoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoMenu();
+            }
+        });
 
-        fbs= FirebaseServices.getInstance();
-        tvproduct=getView().findViewById(R.id.tvproduct2Deta);
-        tvsize=getView().findViewById(R.id.tvsize2Deta);
-        tvcolour=getView().findViewById(R.id.tvcolour2Deta);
-        tvprice=getView().findViewById(R.id.tvprice2Deta);
-        tvdescription=getView().findViewById(R.id.tvdescri2Deta);
-        ivproductPhoto = getView().findViewById(R.id.ivProductdeta);
 
         Bundle args = getArguments();
         if (args != null) {
-            myproduct = args.getParcelable("product");
+            myproduct = args.getParcelable("products");
             if (myproduct != null) {
+                Log.d("DetailsFragment", "Product details: " + myproduct.getProduct());
+
                 //String data = myObject.getData();
                 // Now you can use 'data' as needed in FragmentB
                 tvproduct.setText(myproduct.getProduct());
@@ -133,13 +125,19 @@ public class DetailsFragment extends Fragment {
                 }
             }
         }
-        btnBuy = getView().findViewById(R.id.btnBuydetail);
+      //  btnBuy = getView().findViewById(R.id.btnBuydetail);
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /*gotobuy();*/            }
         });
 
+    }
+
+    private void gotoMenu() {
+        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain4,new MenuFragment());
+        ft.commit();
     }
 
 }

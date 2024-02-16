@@ -9,18 +9,16 @@ public class User {
     private String lastName;
     private String username;
     private String phone;
-    private String email;
     private ArrayList<String> favorites;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String username, String phone, String email) {
+    public User(String firstName, String lastName, String username, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.phone = phone;
-        this.email = email;
         this.favorites = new ArrayList<>();
     }
 
@@ -59,14 +57,6 @@ public class User {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String address) {
-        this.email = address;
-    }
-
 
     public ArrayList<String> getFavorites() {
         return favorites;
@@ -83,7 +73,6 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", phone='" + phone + '\'' +
-                ", address='" + email + '\'' +
                 '}';
     }
 }

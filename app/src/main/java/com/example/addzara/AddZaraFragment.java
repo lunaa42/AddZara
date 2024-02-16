@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -41,6 +42,9 @@ public class AddZaraFragment extends Fragment {
     private String imageStr;
     private Button btnAdd;
     private Utils utils;
+    private Uri selectedImageUri;
+    private ImageView goback;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,6 +87,7 @@ public class AddZaraFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -109,6 +114,7 @@ public class AddZaraFragment extends Fragment {
         btnAdd = getView().findViewById(R.id.btnAddAddZaraFragment);
         etDescripton = getView().findViewById(R.id.etDescriptionAddZaraFragment);
         img = getView().findViewById(R.id.ivImgAddZaraFragment);
+        goback = getView().findViewById(R.id.gobackAdd);
 // Enable the button
         btnAdd.setEnabled(true);
 
@@ -127,6 +133,15 @@ public class AddZaraFragment extends Fragment {
             }
         });
         ((MainActivity) getActivity()).pushFragment(new AddZaraFragment());
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4,new MenuFragment());
+                ft.commit();
+            }
+        });
+
     }
 
 
@@ -152,7 +167,7 @@ public class AddZaraFragment extends Fragment {
         }
 
         Zara product1;
-        ZaraItem product2;
+       ZaraItem product2;
         if (fbs.getSelectedImageURL() == null) {
             product1 = new Zara(productname, size, colour, price, description, "");
             product2 = new ZaraItem(productname, size, colour, price, description, "");
@@ -170,28 +185,6 @@ public class AddZaraFragment extends Fragment {
                             Log.e("addToFirestore() - add to collection: ", "Successful!");
                             gotomenu();
 
-                        /*
-                        // Move the try-catch block here
-                        try {
-                            fbs.getFire().collection("product2").add(product2)
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            Log.e("addToFirestore() - add to collection: ", "Successful!");
-                                            gotomenu();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@androidx.annotation.NonNull Exception e) {
-                                            Log.e("addToFirestore() - add to collection: ", e.getMessage());
-                                        }
-                                    });
-                        } catch (Exception ex) {
-                            Log.e("AddZaraFragment: addToFirestore()", ex.getMessage());
-                        }
-
-                         */
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -207,13 +200,14 @@ public class AddZaraFragment extends Fragment {
         }
     }
 
-
-
-
     private void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
-    }
+        if (getContext() != null) {
+            utils.uploadImage(getContext(), selectedImageUri);
+        } else {
+            Log.e("AddZaraFragment", "Context is null");
+        }    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -247,46 +241,6 @@ public class AddZaraFragment extends Fragment {
         }
     }
 
-/*
-  public void uploadImage(Uri selectedImageUri) {
-        if (selectedImageUri != null) {
-            imageStr = "images/" + UUID.randomUUID() + ".jpg"; //+ selectedImageUri.getLastPathSegment();
-            StorageReference imageRef = fbs.getStorage().getReference().child(imageStr);
-
-            if (selectedImageUri != null) {
-                Log.d("ImageUpload", "Selected Image URI: " + selectedImageUri.toString());
-                UploadTask uploadTask = imageRef.putFile(selectedImageUri);
-                Log.d("ImageUpload", "Firebase Storage Path: " + imageStr);
-
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                //selectedImageUri = uri;
-                                fbs.setSelectedImageURL(uri);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@androidx.annotation.NonNull Exception e) {
-
-                            }
-                        });
-                        Toast.makeText(getActivity(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@androidx.annotation.NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Failed to upload image", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                Toast.makeText(getActivity(), "Please choose an image first", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-    }*/
 }
 
 

@@ -87,20 +87,24 @@ public class HomeFragment extends Fragment {
 
         // Find and initialize the BottomNavigationView
         bottomNavigationView = view.findViewById(R.id.bottomnavHome);
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
+                boolean itemSelected = false;
                 if (item.getItemId() == R.id.homenav2) {
                     selectedFragment = new HomeFragment();
+                    itemSelected = true;
                 } else if (item.getItemId() == R.id.menunav2) {
-                    selectedFragment = new AddZaraFragment();
+                    selectedFragment = new MenuFragment();
+                    itemSelected = true;
                 } else if (item.getItemId() == R.id.profilenav2) {
                     selectedFragment = new LoginFragment();
+                    itemSelected = true;
                 } else if (item.getItemId() == R.id.favnav2) {
                     selectedFragment = new FavFragment();
+                    itemSelected = true;
                 }
 
                 if (selectedFragment != null) {
@@ -109,6 +113,12 @@ public class HomeFragment extends Fragment {
                             .replace(R.id.Framelayoutmain4, selectedFragment)
                             .addToBackStack(null) // Optional: Add to back stack if you want to navigate back
                             .commit();
+                }
+
+                // Check if the item was selected
+                if (itemSelected) {
+                    // Set the selected item in the bottom navigation bar
+                    item.setChecked(true);
                 }
 
                 return true;

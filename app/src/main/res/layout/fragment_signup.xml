@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,97 +9,84 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imgbacksignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="?attr/actionModeCloseDrawable"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/UltraLightClassicTextStyle"
+            android:layout_width="166dp"
+            android:layout_height="37dp"
+            android:fontFamily="sans-serif"
+            android:text="PERSONAL DETAILS"
+            android:textColor="#000"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="123dp"
+            tools:layout_editor_absoluteY="80dp" />
+
+        <EditText
+            android:id="@+id/etUsernameSignUp"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="E-MAIL"
+            android:inputType="textEmailAddress"
+            tools:layout_editor_absoluteY="148dp" />
+
         <EditText
             android:id="@+id/etPasswordSignUp"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="13dp"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:hint="NEW PASSWORD"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/firstnamesignup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUsernameSignUp" />
+            tools:layout_editor_absoluteY="230dp" />
+
+        <EditText
+            android:id="@+id/phoneSign"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="PHONE"
+            android:inputType="phone"
+            tools:layout_editor_absoluteY="473dp" />
 
         <Button
             android:id="@+id/btSignupSignup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="161dp"
             android:background="#003E2727"
             android:text="CREATE ACCOUNT"
             android:textColor="#000000"
             android:textColorHighlight="#FFFFFFFF"
             android:textColorLink="#FAF1F1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lastnamesignup" />
-
-        <EditText
-            android:id="@+id/etUsernameSignUp"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="11dp"
-            android:ems="10"
-            android:hint="E-MAIL                                                        "
-            android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/etPasswordSignUp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            tools:layout_editor_absoluteX="121dp"
+            tools:layout_editor_absoluteY="597dp" />
 
         <EditText
             android:id="@+id/firstnamesignup"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="25dp"
+            android:layout_width="410dp"
+            android:layout_height="57dp"
             android:ems="10"
             android:hint="FIRST NAME"
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/lastnamesignup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordSignUp" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="301dp" />
 
         <EditText
             android:id="@+id/lastnamesignup"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="56dp"
+            android:layout_width="399dp"
+            android:layout_height="63dp"
             android:ems="10"
             android:hint="LAST NAME"
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/btSignupSignup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/firstnamesignup" />
-
-        <TextView
-            android:id="@+id/textView2"
-            style="@style/Widget.Material3.MaterialTimePicker.Display.HelperText"
-            android:layout_width="182dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="38dp"
-            android:text="PERSONAL DETAILS"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/etUsernameSignUp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgbacksignup" />
-
-        <ImageView
-            android:id="@+id/imgbacksignup"
-            android:layout_width="40dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="6dp"
-            android:src="?attr/actionModeCloseDrawable"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="387dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

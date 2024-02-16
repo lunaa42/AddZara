@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ElegantTextStyle">
+        <item name="android:fontFamily">sans-serif-light</item> <!-- Light font style -->
+        <item name="android:textColor">#555555</item> <!-- Gray color -->
+        <item name="android:textSize">18sp</item> <!-- Slightly larger text size -->
+        <item name="android:textStyle">italic</item> <!-- Italic font style -->
+        <item name="android:letterSpacing">0.03</item> <!-- Increased letter spacing -->
+    </style>
+
+</resources>

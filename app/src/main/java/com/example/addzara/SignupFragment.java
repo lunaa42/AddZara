@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.firestore.DocumentReference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,12 +29,10 @@ import com.google.firebase.auth.AuthResult;
  * create an instance of this fragment.
  */
 public class SignupFragment extends Fragment {
-    private EditText etUsername,etPassword;
+    private EditText etUsername, etPassword, firstNameEditText, lastNameEditText, etPhone;
     private Button btnSignup;
     private FirebaseServices fbs;
     private ImageView backsymbSignup;
-    private EditText firstname;
-    private EditText lastname;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,23 +92,43 @@ public class SignupFragment extends Fragment {
         etPassword = getView().findViewById(R.id.etPasswordSignUp);
         btnSignup = getView().findViewById(R.id.btSignupSignup);
         backsymbSignup = getView().findViewById(R.id.imgbacksignup);
-        firstname = getView().findViewById(R.id.firstnamesignup);
-        lastname = getView().findViewById(R.id.lastnamesignup);
+        firstNameEditText = getView().findViewById(R.id.firstnamesignup);
+        lastNameEditText = getView().findViewById(R.id.lastnamesignup);
+        etPhone = getView().findViewById(R.id.phoneSign);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Data validation
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if(username.trim().isEmpty() && password.trim().isEmpty()){
-                    Toast.makeText(getActivity(), "Some fields are empty!", Toast.LENGTH_SHORT).show();
+                String firstname = firstNameEditText.getText().toString();
+                String lastname = lastNameEditText.getText().toString();
+                String phone = etPhone.getText().toString();
+                if (username.trim().isEmpty() || password.trim().isEmpty() || firstname.trim().isEmpty() ||
+                        lastname.trim().isEmpty() ||  phone.trim().isEmpty())
+                {
+                    Toast.makeText(getActivity(), "some fields are empty", Toast.LENGTH_SHORT).show();
                     return;
+
                 }
+                User user = new User(firstname, lastname, username, phone);
                 // Signup procedure
                 Task<AuthResult> authResultTask = fbs.getAuth().createUserWithEmailAndPassword(username, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            fbs.getFire().collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    gotoLogin();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("SignupFragment: signupOnClick: ", e.getMessage());
+                                }
+                            });
+                            //
                             Toast.makeText(getActivity(), "You have successfully signed up!", Toast.LENGTH_SHORT).show();
 
                         } else
@@ -115,6 +137,7 @@ public class SignupFragment extends Fragment {
                         }
                     }
                 });
+
             }
         });
         backsymbSignup.setOnClickListener(new View.OnClickListener() {
@@ -126,4 +149,10 @@ public class SignupFragment extends Fragment {
             }
     });
 }
+
+    private void gotoLogin() {
+        FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.Framelayoutmain4,new LoginFragment());
+        ft.commit();
+    }
 }

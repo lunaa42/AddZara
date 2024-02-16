@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="UltraLightClassicTextStyle">
+        <item name="android:textSize">14sp</item> <!-- Decrease text size for a lighter appearance -->
+        <item name="android:textColor">#999999</item> <!-- Very light gray text color -->
+        <item name="android:fontFamily">sans-serif-thin</item> <!-- Use an ultra-light sans-serif font -->
+    </style>
+
+
+
+</resources>

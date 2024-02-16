@@ -13,14 +13,15 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvmenu"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="72dp"
             android:background="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            app:layout_constraintTop_toBottomOf="@+id/ivlogomenu"
+            app:layout_constraintBottom_toTopOf="@+id/bottomnavmenu"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivlogomenu" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/ivlogomenu"
@@ -40,7 +41,7 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomnavmenu"
             android:layout_width="412dp"
-            android:layout_height="66dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
             android:background="#FFFFFF"
@@ -48,7 +49,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvmenu"
             app:menu="@menu/bottom_nav" />
+
+        <ImageView
+            android:id="@+id/addProductMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="152dp"
+            android:layout_marginBottom="482dp"
+            android:src="@android:drawable/ic_menu_add"
+            app:layout_constraintBottom_toTopOf="@+id/bottomnavmenu"
+            app:layout_constraintEnd_toEndOf="@+id/ivlogomenu"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

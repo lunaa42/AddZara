@@ -66,14 +66,18 @@ public class Utils {
                         public void onSuccess(Uri uri) {
                             //selectedImageUri = uri;
                             fbs.setSelectedImageURL(uri);
+                            Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.e("Utils: uploadImage: ", e.getMessage());
+                            Toast.makeText(context, "Image  nooo uploaded successfully", Toast.LENGTH_SHORT).show();
+
                         }
                     });
-                    Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
