@@ -51,10 +51,10 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
                 ft.commit();
             }
 
-            @Override
+          /*  @Override
             public void onItemClick(ZaraItem clickedItem) {
 
-            }
+            }*/
         } ;
     }
 
@@ -94,22 +94,11 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
             // If there is no second product, hide the views for the second product
             holder.hideSecondProduct();
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int clickedPosition = holder.getAdapterPosition();
-                if (clickedPosition != RecyclerView.NO_POSITION) {
-                    ZaraItem clickedItem = zaList.get(clickedPosition);
-                    itemClickListener.onItemClick(clickedItem);
-                }
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return (int) Math.ceil(zaList.size() / 2.0);
+        return zaList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -124,7 +113,7 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
             productImageView1 = itemView.findViewById(R.id.ivzaraItem1);
             productNameTextView2 = itemView.findViewById(R.id.tvProductName2);
             productImageView2 = itemView.findViewById(R.id.ivzaraItem2);
-           /*itemView.setOnClickListener(new View.OnClickListener() {
+          itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
@@ -132,7 +121,7 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
                         itemClickListener.onItemClick(position);
                     }
                 }
-            });*/
+            });
         }
 
 
@@ -186,11 +175,8 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
         public interface OnItemClickListener {
         void onItemClick(int position);
 
-            void onItemClick(ZaraItem clickedItem);
+         // void onItemClick(ZaraItem clickedItem);
         }
-    public interface OnZaraItemClickListener {
-        void onItemClick(ZaraItem item);
-    }
 
     public void setOnItemClickListener(ZaraAdapter.OnItemClickListener listener) {
         this.itemClickListener = listener;

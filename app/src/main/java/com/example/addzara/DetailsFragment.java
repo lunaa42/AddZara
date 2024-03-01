@@ -105,7 +105,7 @@ public class DetailsFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            myproduct = args.getParcelable("products");
+            myproduct = args.getParcelable("product");
             if (myproduct != null) {
                 Log.d("DetailsFragment", "Product details: " + myproduct.getProduct());
 

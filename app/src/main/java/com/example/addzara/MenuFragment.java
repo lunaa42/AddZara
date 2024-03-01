@@ -50,19 +50,6 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void onItemClick(ZaraItem item){
-        DetailsFragment detailsFragment = new DetailsFragment();
-        Bundle args = new Bundle();
-        args.putParcelable("products", item);
-        detailsFragment.setArguments(args);
-
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.Framelayoutmain4, detailsFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-
 
     private void loadDataFromFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -91,6 +78,27 @@ public class MenuFragment extends Fragment {
         rvZaras.setAdapter(adapter);
         // Assuming you have retrieved product data from Firestore and stored it in a List<ZaraItem> productList
         adapter.setZaraItems(product);
+        adapter.setOnItemClickListener(new ZaraAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Handle item click here
+                String selectedItem = product.get(position).getProduct();
+                Toast.makeText(getActivity(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show();
+                Bundle args = new Bundle();
+                args.putParcelable("product", product.get(position)); // or use Parcelable for better performance
+                DetailsFragment cd = new DetailsFragment();
+                cd.setArguments(args);
+                FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4,cd);
+                ft.commit();
+            }
+
+         /*   @Override
+            public void onItemClick(ZaraItem clickedItem) {
+
+
+            }*/
+        });
 
         // Load data from Firestore
         loadDataFromFirestore();
