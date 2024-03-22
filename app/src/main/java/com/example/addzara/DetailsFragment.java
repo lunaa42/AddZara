@@ -49,12 +49,18 @@ public class DetailsFragment extends Fragment {
      * @return A new instance of fragment DetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailsFragment newInstance(ZaraItem item) {
+    public static DetailsFragment newInstance(String param1, String param2) {
         DetailsFragment fragment = new DetailsFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+      /*  DetailsFragment fragment = new DetailsFragment();
         Bundle args = new Bundle();
         args.putParcelable("products", item);
         fragment.setArguments(args);
-        return fragment;
+        return fragment;*/
     }
 
     @Override
@@ -73,19 +79,6 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
 
-        // Initialize views here
-        tvproduct = view.findViewById(R.id.tvproduct2Deta);
-        tvsize = view.findViewById(R.id.tvsize2Deta);
-        tvcolour = view.findViewById(R.id.tvcolourDeta);
-        tvprice = view.findViewById(R.id.tvprice2Deta);
-        tvdescription = view.findViewById(R.id.tvdescri2Deta);
-        GoBack = view.findViewById(R.id.gobackDetails);
-        ivproductPhoto = view.findViewById(R.id.ivProductdeta);
-        btnBuy = view.findViewById(R.id.btnBuydetail);
-
-        // Call init method to set data
-        init();
-
         return view;    }
     @Override
     public void onStart() {
@@ -94,6 +87,18 @@ public class DetailsFragment extends Fragment {
     }
     public void init()
     {
+        // Initialize views here
+        tvproduct = getView().findViewById(R.id.tvproduct2Deta);
+        tvsize = getView().findViewById(R.id.tvsize2Deta);
+        tvcolour = getView().findViewById(R.id.tvcolourDeta);
+        tvprice = getView().findViewById(R.id.tvprice2Deta);
+        tvdescription = getView().findViewById(R.id.tvdescri2Deta);
+        GoBack = getView().findViewById(R.id.gobackDetails);
+        ivproductPhoto = getView().findViewById(R.id.ivProductdeta);
+        btnBuy = getView().findViewById(R.id.btnBuydetail);
+
+        // Call init method to set data
+        init();
 
         GoBack.setOnClickListener(new View.OnClickListener() {
             @Override

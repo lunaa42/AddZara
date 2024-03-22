@@ -89,34 +89,29 @@ public class LoginFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
-                boolean itemSelected = false;
-                if (item.getItemId() == R.id.homenav2) {
-                    selectedFragment = new HomeFragment();
-                    itemSelected = true;
-                } else if (item.getItemId() == R.id.menunav2) {
-                    selectedFragment = new MenuFragment();
-                    itemSelected = true;
-                } else if (item.getItemId() == R.id.profilenav2) {
-                    selectedFragment = new LoginFragment();
-                    itemSelected = true;
-                } else if (item.getItemId() == R.id.favnav2) {
-                    selectedFragment = new FavFragment();
-                    itemSelected = true;
-                }
-
                 if (selectedFragment != null) {
-                    // Replace the current fragment with the selected one
                     requireActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.Framelayoutmain4, selectedFragment)
-                            .addToBackStack(null) // Optional: Add to back stack if you want to navigate back
+                            .addToBackStack(null)
                             .commit();
-                }
 
-                // Check if the item was selected
-                if (itemSelected) {
-                    // Set the selected item in the bottom navigation bar
-                    item.setChecked(true);
+                    // Select the corresponding item in the bottom navigation
+                    switch (selectedFragment.getClass().getSimpleName()) {
+                        case "HomeFragment":
+                            bottomNavigationView.setSelectedItemId(R.id.homenav2);
+                            break;
+                        case "MenuFragment":
+                            bottomNavigationView.setSelectedItemId(R.id.menunav2);
+                            break;
+                        case "LoginFragment":
+                            bottomNavigationView.setSelectedItemId(R.id.profilenav2);
+                            break;
+                        case "FavFragment":
+                            bottomNavigationView.setSelectedItemId(R.id.favnav2);
+                            break;
+                    }
                 }
+                // Check if the item was selected
 
                 return true;
             }
