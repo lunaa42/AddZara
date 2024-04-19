@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     ft.replace(R.id.Framelayoutmain4, new MenuFragment());
                     ft.commit();                }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain4, new HomeFragment());
+        ft.replace(R.id.Framelayoutmain4, new MenuFragment());
         ft.commit();
     }
     public void onBackPressed() {

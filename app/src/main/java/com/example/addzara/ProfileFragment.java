@@ -171,6 +171,7 @@ public class ProfileFragment extends Fragment {
         String lastname = tvLastName.getText().toString();
         String email = tvEmail.getText().toString();
         String phone = tvPhone.getText().toString();
+        fillUserDetails();
 
         tvSignout.setOnClickListener(new View.OnClickListener() {
             @Override

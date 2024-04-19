@@ -233,7 +233,7 @@ public class MenuFragment extends Fragment {
     }
 
 
-    public void updateProductFavoriteStatus(ZaraItem myproduct) {
+    /*public void updateProductFavoriteStatus(ZaraItem myproduct) {
         int position = product.indexOf(myproduct);
         if (position != -1) {
             // Update the item in the productList
@@ -241,5 +241,5 @@ public class MenuFragment extends Fragment {
             // Notify the adapter to update the UI
             adapter.notifyItemChanged(position);
     }
-}
+}*/
 }

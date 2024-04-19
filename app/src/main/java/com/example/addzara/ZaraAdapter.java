@@ -98,11 +98,12 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
         // Bind other views...
 
         // Set favorite icon based on the product's favorite status
+        /* TODO: Yamen
         if (product.isFavorite()) {
             holder.favoriteIcon.setImageResource(R.drawable.bookmark__1_);
         } else {
             holder.favoriteIcon.setImageResource(R.drawable.bookmark__2_);
-        }
+        } */
 
         // Set click listener for the favorite icon
      /*   holder.favoriteIcon.setOnClickListener(new View.OnClickListener() {

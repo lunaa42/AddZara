@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,93 +18,69 @@
             android:layout_width="412dp"
             android:layout_height="66dp"
             app:backgroundTint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSignupLink"
-            app:menu="@menu/bottom_nav" />
+            app:menu="@menu/bottom_nav"
+            tools:layout_editor_absoluteY="666dp" />
 
         <EditText
             android:id="@+id/etUsernameLogin"
             style="@style/Widget.AppCompat.EditText"
-            android:layout_width="213dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="66dp"
+            android:layout_width="423dp"
+            android:layout_height="56dp"
             android:ems="10"
             android:hint="EMAIL.."
             android:inputType="textEmailAddress"
             android:scrollbarStyle="outsideInset"
             android:selectAllOnFocus="false"
             android:singleLine="false"
-            app:layout_constraintBottom_toTopOf="@+id/etPasswordLogin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="151dp" />
 
         <EditText
             android:id="@+id/etPasswordLogin"
-            android:layout_width="225dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="81dp"
-            android:layout_marginBottom="50dp"
+            android:layout_width="465dp"
+            android:layout_height="57dp"
             android:ems="10"
             android:hint="PASSWORD.."
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/btnloginLogin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUsernameLogin" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="246dp" />
 
         <Button
             android:id="@+id/btnloginLogin"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="128dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="64dp"
+            android:layout_height="57dp"
             android:background="#00FFFFFF"
             android:text="LOG IN"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/tvSignupLink"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin" />
+            tools:layout_editor_absoluteX="128dp"
+            tools:layout_editor_absoluteY="355dp" />
 
         <TextView
             android:id="@+id/tvSignupLink"
             style="@style/Widget.AppCompat.TextView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="141dp"
-            android:layout_marginBottom="71dp"
+            android:layout_width="135dp"
+            android:layout_height="57dp"
             android:text="REGISTER"
-            app:layout_constraintBottom_toTopOf="@+id/bottomnavlogin"
-            app:layout_constraintEnd_toStartOf="@+id/tvforgotpasswordLogin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnloginLogin" />
+            tools:layout_editor_absoluteX="166dp"
+            tools:layout_editor_absoluteY="609dp" />
 
         <TextView
             android:id="@+id/tvforgotpasswordLogin"
             style="@style/Widget.AppCompat.TextView"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="128dp"
-            android:layout_marginBottom="129dp"
+            android:layout_width="235dp"
+            android:layout_height="45dp"
             android:text="FORGOT PASSWORD"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvSignupLink"
-            app:layout_constraintTop_toTopOf="@+id/btnloginLogin" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="466dp" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="415dp"
-            android:layout_height="124dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="54dp"
-            android:src="@drawable/screenshot__19___1__removebg_preview"
-            app:layout_constraintBottom_toTopOf="@+id/etUsernameLogin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="157dp"
+            android:layout_height="42dp"
+            android:text="NEED AN ACCOUNT?"
+            tools:layout_editor_absoluteX="9dp"
+            tools:layout_editor_absoluteY="552dp" />
 
         <!-- fragment_your.xml -->
 

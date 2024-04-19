@@ -89,12 +89,12 @@ public class FavFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_fav, container, false);
     }
 
-    private String getUserDisplayName() {
+   /* private String getUserDisplayName() {
         return "User's Name"; // Example: returning a hardcoded name for demonstration
 
-    }
+    }*/
 
-    public void onStart() {
+   /* public void onStart() {
         super.onStart();
         init();
     }
@@ -147,14 +147,14 @@ public class FavFragment extends Fragment {
             public void onFailure(@NonNull Exception e) {
 
             }
-        }); */
+        });
 
 
     
 
 
     }
-
+/*
     private String getUserNameFromAuthentication() {
         // Assuming you're using Firebase Authentication
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -174,9 +174,9 @@ public class FavFragment extends Fragment {
         } else {
             // If the user is not signed in, return a default name
             return "User";
-        }
+        }*/
     }
-
+/*
     public ArrayList<ZaraItem> getProducts() {
 
 
@@ -214,7 +214,7 @@ public class FavFragment extends Fragment {
         }
 
         return products;
-    }
+    }*/
 
  /*   private void loadFavoriteProducts() {
         favoriteProducts.clear();
@@ -224,5 +224,5 @@ public class FavFragment extends Fragment {
             }
         }
         adapter.notifyDataSetChanged();
-    }*/
-}
+    }
+}*/

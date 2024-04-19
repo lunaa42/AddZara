@@ -1,5 +1,8 @@
 package com.example.addzara;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +39,7 @@ public class LoginFragment extends Fragment {
         private TextView tvSignupLink;
         private TextView tvforgotpassword;
         private BottomNavigationView bottomNavigationView;
+        private FirebaseAuth mAuth;
 
         // TODO: Rename parameter arguments, choose names that match
         // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,7 +85,11 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login2, container, false);
-
+        if (mAuth.getCurrentUser() != null) {
+            // User is already logged in, navigate to main activity
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
+        }
         // Initialize BottomNavigationView
         BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottomnavlogin);
 
@@ -104,7 +113,11 @@ public class LoginFragment extends Fragment {
                             bottomNavigationView.setSelectedItemId(R.id.menunav2);
                             break;
                         case "LoginFragment":
-                            bottomNavigationView.setSelectedItemId(R.id.profilenav2);
+                            if (mAuth.getCurrentUser() != null) {
+                                // User is logged in, navigate to profile fragment
+                                selectedFragment = new ProfileFragment();}
+                            else {
+                            bottomNavigationView.setSelectedItemId(R.id.logi);}
                             break;
                         case "FavFragment":
                             bottomNavigationView.setSelectedItemId(R.id.favnav2);
@@ -157,23 +170,32 @@ public class LoginFragment extends Fragment {
                         return;
                     }
                     // Login procedure
-                    Task<AuthResult> authResultTask = fbs.getAuth().signInWithEmailAndPassword(username, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "You have successfully logged in!", Toast.LENGTH_SHORT).show();
-                                gotoProfile();
-
-                            } else
-                            {
-                                Toast.makeText(getActivity(), "Failed to login! Check user or password..", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    mAuth.signInWithEmailAndPassword(username, password)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Save login state to SharedPreferences
+                                        saveLoginState(true);
+                                        Toast.makeText(getActivity(), "You have successfully logged in!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getActivity(), MainActivity.class));
+                                        getActivity().finish();
+                                    } else {
+                                        Toast.makeText(getActivity(), "Failed to login! Check user or password..", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
             });
 
         }
+
+    private void saveLoginState(boolean isLoggedIn) {
+        SharedPreferences preferences = getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", isLoggedIn);
+        editor.apply();
+    }
 
     private void gotoProfile() {
         FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
