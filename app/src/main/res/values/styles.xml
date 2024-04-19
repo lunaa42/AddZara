@@ -6,7 +6,10 @@
         <item name="android:textColor">#999999</item> <!-- Very light gray text color -->
         <item name="android:fontFamily">sans-serif-thin</item> <!-- Use an ultra-light sans-serif font -->
     </style>
-
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Set smaller text size for the hint -->
+        <item name="android:textSize">12sp</item>
+    </style>
 
 
 </resources>

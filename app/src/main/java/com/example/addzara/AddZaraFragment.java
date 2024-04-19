@@ -36,7 +36,7 @@ import java.util.UUID;
  */
 public class AddZaraFragment extends Fragment {
     private FirebaseServices fbs;
-    private EditText etProduct, etSize, etcolour, etPrice, etDescripton;
+    private EditText etProduct, etSize, etcolour, etPrice, etDescripton,etCategory;
     private static final int GALLERY_REQUEST_CODE = 123;
     private ImageView img;
     private String imageStr;
@@ -113,6 +113,7 @@ public class AddZaraFragment extends Fragment {
         etPrice = getView().findViewById(R.id.etPriceAddZaraFragment);
         btnAdd = getView().findViewById(R.id.btnAddAddZaraFragment);
         etDescripton = getView().findViewById(R.id.etDescriptionAddZaraFragment);
+        etCategory = getView().findViewById(R.id.CatergoryADD);
         img = getView().findViewById(R.id.ivImgAddZaraFragment);
         goback = getView().findViewById(R.id.gobackAdd);
 // Enable the button

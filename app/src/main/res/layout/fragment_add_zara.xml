@@ -15,22 +15,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="110dp"
+            android:layout_marginBottom="28dp"
             android:ems="10"
             android:hint="Product.."
             android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etSIzeAddZaraFragment"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/gobackAdd" />
 
         <EditText
             android:id="@+id/etSIzeAddZaraFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginBottom="18dp"
             android:ems="10"
             android:hint="Size.."
             android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etColourAddZaraFragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etProductAddZaraFragment" />
 
@@ -39,10 +41,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginBottom="18dp"
             android:ems="10"
             android:hint="Colour.."
             android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etDescriptionAddZaraFragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etSIzeAddZaraFragment" />
 
@@ -50,27 +53,26 @@
             android:id="@+id/etPriceAddZaraFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="88dp"
+            android:layout_marginBottom="24dp"
             android:autoText="false"
             android:ems="10"
             android:hint="Price.."
             android:inputType="number"
+            app:layout_constraintBottom_toTopOf="@+id/CatergoryADD"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etColourAddZaraFragment" />
+            app:layout_constraintTop_toBottomOf="@+id/etDescriptionAddZaraFragment" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
-            android:layout_marginBottom="82dp"
+            android:layout_marginBottom="134dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etDescriptionAddZaraFragment">
+            app:layout_constraintTop_toBottomOf="@+id/CatergoryADD">
 
             <TextView
                 android:layout_width="120sp"
@@ -100,22 +102,38 @@
             android:id="@+id/etDescriptionAddZaraFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:layout_marginBottom="254dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="18dp"
             android:ems="10"
             android:hint="Description"
             android:inputType="text"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/etPriceAddZaraFragment"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gobackAdd"
-            app:layout_constraintVertical_bias="0.667" />
+            app:layout_constraintTop_toBottomOf="@+id/etColourAddZaraFragment" />
 
         <ImageView
             android:id="@+id/gobackAdd"
             android:layout_width="32dp"
-            android:layout_height="25dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="35dp"
             android:src="@drawable/back_symbol"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="50dp" />
+            app:layout_constraintBottom_toTopOf="@+id/etProductAddZaraFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/CatergoryADD"
+            android:layout_width="165dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="9dp"
+            android:ems="10"
+            android:hint="category"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPriceAddZaraFragment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

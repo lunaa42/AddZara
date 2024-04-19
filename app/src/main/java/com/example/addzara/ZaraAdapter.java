@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,11 +29,12 @@ import java.util.List;
 
 public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> {
     private Context context;
-    private List<ZaraItem> zaList;
+    private  static  ArrayList<ZaraItem> zaList;
     private ZaraAdapter.OnItemClickListener itemClickListener;
     private FirebaseServices fbs;
 
-    public ZaraAdapter(Context context, List<ZaraItem> zaList) {
+
+    public ZaraAdapter(Context context, ArrayList<ZaraItem> zaList) {
         this.context = context;
         this.zaList = zaList;
         this.fbs = FirebaseServices.getInstance();
@@ -51,14 +53,10 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
                 ft.commit();
             }
 
-          /*  @Override
-            public void onItemClick(ZaraItem clickedItem) {
-
-            }*/
         } ;
     }
 
-    public void setZaraItems(List<ZaraItem> zaraItems) {
+    public void setZaraItems(ArrayList<ZaraItem> zaraItems) {
         this.zaList = zaraItems;
         notifyDataSetChanged();
     }
@@ -94,6 +92,33 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
             // If there is no second product, hide the views for the second product
             holder.hideSecondProduct();
         }
+
+        final ZaraItem product = zaList.get(position);
+
+        // Bind other views...
+
+        // Set favorite icon based on the product's favorite status
+        if (product.isFavorite()) {
+            holder.favoriteIcon.setImageResource(R.drawable.bookmark__1_);
+        } else {
+            holder.favoriteIcon.setImageResource(R.drawable.bookmark__2_);
+        }
+
+        // Set click listener for the favorite icon
+     /*   holder.favoriteIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the favorite status of the product
+                product.setFavorite(!product.isFavorite());
+                notifyItemChanged(position);
+
+                // If needed, notify the listener (Activity or Fragment) that the favorite status has changed
+                if (onFavoriteClickListener != null) {
+                    onFavoriteClickListener.onFavoriteClick(product);
+                }
+            }
+        });*/
+
     }
 
     @Override
@@ -102,10 +127,12 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        public ImageSwitcher favoriteIcon;
         private TextView productNameTextView1;
         private ImageView productImageView1;
         private TextView productNameTextView2;
         private ImageView productImageView2;
+       //private Button favoriteButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -175,10 +202,12 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
         public interface OnItemClickListener {
         void onItemClick(int position);
 
-         // void onItemClick(ZaraItem clickedItem);
         }
 
     public void setOnItemClickListener(ZaraAdapter.OnItemClickListener listener) {
         this.itemClickListener = listener;
+    }
+    public static void setFilteredList(ArrayList<ZaraItem> filteredList){
+        zaList = filteredList;
     }
 }

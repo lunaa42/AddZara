@@ -11,6 +11,20 @@ public class ZaraItem implements Parcelable {
     private String price;
     private String description;
     private String photo;
+    private String category;
+    private boolean isFavorite;
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 
     public ZaraItem(String product, String size, String colour, String price, String description, String photo) {
         this.product = product;
@@ -104,6 +118,9 @@ public class ZaraItem implements Parcelable {
 
     public String getPhoto() {
         return photo;
+    }
+    public String getCategory() {
+        return category;
     }
 
     public void setPhoto(String photo) {

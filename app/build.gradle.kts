@@ -64,3 +64,6 @@ android {
         androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     }
 }
+dependencies {
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+}
