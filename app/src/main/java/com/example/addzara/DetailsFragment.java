@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DetailsFragment#newInstance} factory method to
@@ -27,12 +25,10 @@ public class DetailsFragment extends Fragment {
     private static final int REQUEST_CALL_PERMISSION = 2;
     private FirebaseServices fbs;
     private TextView tvproduct,tvsize,tvcolour,tvdescription,tvprice;
-    private ArrayList<ZaraItem> favoriteProducts = new ArrayList<>();
-    private ImageView ivproductPhoto,ivfav;
+    private ImageView ivproductPhoto;
     private ImageView GoBack;
     private ZaraItem myproduct;
     private Button btnBuy;
-    private boolean isFavorite = false; // Initially, the product is not favorited
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -84,32 +80,9 @@ public class DetailsFragment extends Fragment {
         tvprice = view.findViewById(R.id.tvprice2Deta);
         tvdescription = view.findViewById(R.id.tvdescri2Deta);
         GoBack = view.findViewById(R.id.gobackDetails);
-        ivfav = view.findViewById(R.id.favorite_button);
         ivproductPhoto = view.findViewById(R.id.ivProductdeta);
         btnBuy = view.findViewById(R.id.btnBuydetail);
 
-       /* if (myproduct.isFavorite()) {
-            ivfav.setImageResource(R.drawable.bookmark__1_);
-        } else {
-            ivfav.setImageResource(R.drawable.bookmark__2_);
-        }
-        initializeSelectedItem();
-
-        // Assuming you have a favorite button in your layout with the ID "favoriteButton"
-        Button favoriteButton = getView().findViewById(R.id.favorite_button);
-        favoriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the favorite status of the selected item
-                myproduct.setFavorite(!myproduct.isFavorite());
-
-                // Notify the Menu Fragment about the change
-                ((MenuFragment) getParentFragment()).updateProductFavoriteStatus(myproduct);
-
-                // Update the UI of the favorite button based on the new status
-                updateFavoriteButtonUI();
-            }
-        });*/
         // Call init method to set data
         init();
 
@@ -121,8 +94,6 @@ public class DetailsFragment extends Fragment {
     }
     public void init()
     {
-        // Inside the method where the favorite button click is handled
-
 
         GoBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +105,7 @@ public class DetailsFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            myproduct = args.getParcelable("products");
+            myproduct = args.getParcelable("product");
             if (myproduct != null) {
                 Log.d("DetailsFragment", "Product details: " + myproduct.getProduct());
 
@@ -167,39 +138,6 @@ public class DetailsFragment extends Fragment {
         FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.Framelayoutmain4,new MenuFragment());
         ft.commit();
-    }
-
-
-    private boolean toggleFavoriteStatus() {
-            // Toggle the favorite status of the product
-            isFavorite = !isFavorite;
-        if (isFavorite) {
-            favoriteProducts.add(myproduct); // Assuming 'product' is the current product being viewed
-        } else {
-            // If the product is unfavorited, remove it from the list of favorite products
-            favoriteProducts.remove(myproduct); // Assuming 'product' is the current product being viewed
-        }
-            return isFavorite;
-
-        }
-    private void initializeSelectedItem() {
-        // This method should initialize the selectedItem based on the product being viewed
-        // You should replace the code below with your actual implementation
-        // For example, if you pass the product details via arguments, retrieve them here
-        Bundle args = getArguments();
-        if (args != null) {
-            myproduct = args.getParcelable("product"); // Assuming "product" is the key used to pass the product details
-        }
-    }
-
-    private void updateFavoriteButtonUI() {
-        // Update the UI of the favorite button based on the new status
-        Button favoriteButton = getView().findViewById(R.id.favorite_button);
-        if (myproduct.isFavorite()) {
-            favoriteButton.setText("Remove from Favorites");
-        } else {
-            favoriteButton.setText("Add to Favorites");
-        }
     }
 
 }

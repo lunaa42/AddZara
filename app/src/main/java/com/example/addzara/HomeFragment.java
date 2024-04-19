@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
 
         // Start video playback
         v4.start();
-
+/*
         // Find and initialize the BottomNavigationView
         bottomNavigationView = view.findViewById(R.id.bottomnavHome);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment {
 
                 return true;
             }
-        });
+        }); */
 
         return view;
     }
@@ -177,8 +177,42 @@ public class HomeFragment extends Fragment {
             v4.stopPlayback();
             super.onDestroy();
         }*/
+// Find and initialize the BottomNavigationView
+        bottomNavigationView = getActivity().findViewById(R.id.bottomnavHome);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+           @SuppressLint("NonConstantResourceId")
+            @Override
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
+               if (selectedFragment != null) {
+                   requireActivity().getSupportFragmentManager().beginTransaction()
+                           .replace(R.id.Framelayoutmain4, selectedFragment)
+                           .addToBackStack(null)
+                           .commit();
 
+                   // Select the corresponding item in the bottom navigation
+                   switch (selectedFragment.getClass().getSimpleName()) {
+                       case "HomeFragment":
+                           bottomNavigationView.setSelectedItemId(R.id.homenav2);
+                           break;
+                       case "MenuFragment":
+                           bottomNavigationView.setSelectedItemId(R.id.menunav2);
+                           break;
+                       case "LoginFragment":
+                           bottomNavigationView.setSelectedItemId(R.id.profilenav2);
+                           break;
+                       case "FavFragment":
+                           bottomNavigationView.setSelectedItemId(R.id.favnav2);
+                           break;
+                   }
+               }
+                // Check if the item was selected
 
+                return true;
+            }
+        });
+
+        //bottomNavigationView.setSelectedItemId();
     }
 
 };
