@@ -1,29 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AllZaraFragment">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Card Number -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutCardNumber"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:hint="Card Number"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvZaraFragment"
-            android:layout_width="53dp"
-            android:layout_height="207dp"
-            android:layout_marginEnd="60dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="262dp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="231dp"
-            android:layout_height="129dp"
-            android:src="@drawable/images"
-            tools:layout_editor_absoluteX="6dp"
-            tools:layout_editor_absoluteY="46dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+    <!-- Expiry Date -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutExpiryDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textInputLayoutCardNumber"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:hint="Expiry Date (MM/YY)"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextExpiryDate"
+            android:layout_width="301dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- CVC -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutCVC"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textInputLayoutCardNumber"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@id/textInputLayoutExpiryDate"
+        android:layout_weight="1"
+        android:hint="CVC"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextCVC"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Buy Button -->
+    <Button
+        android:id="@+id/buttonBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textInputLayoutCVC"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:text="Buy"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:elevation="4dp" />
+
+</RelativeLayout>

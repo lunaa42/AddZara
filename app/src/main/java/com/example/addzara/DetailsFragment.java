@@ -2,6 +2,8 @@ package com.example.addzara;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -9,11 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,10 +31,15 @@ public class DetailsFragment extends Fragment {
     private static final int PERMISSION_SEND_SMS = 1;
     private static final int REQUEST_CALL_PERMISSION = 2;
     private FirebaseServices fbs;
-    private TextView tvproduct,tvsize,tvcolour,tvdescription,tvprice;
+    private TextView tvproduct,tvcolour,tvdescription,tvprice;
     private ImageView ivproductPhoto;
     private ImageView GoBack;
     private ZaraItem myproduct;
+    Spinner SizeSpinner;
+    private ArrayList<ZaraItem> product;
+    private ZaraAdapter adapter;
+
+    private static final String[] CATEGORIES = {"choose your size","XSMALL","SMALL", "Medium", "LARGE","XLARGE"};
     private Button btnBuy;
 
 
@@ -72,21 +84,47 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
-
-        // Initialize views here
         tvproduct = view.findViewById(R.id.tvproduct2Deta);
-        tvsize = view.findViewById(R.id.tvsize2Deta);
+        SizeSpinner = view.findViewById(R.id.sizeSpinner);
         tvcolour = view.findViewById(R.id.tvcolourDeta);
         tvprice = view.findViewById(R.id.tvprice2Deta);
         tvdescription = view.findViewById(R.id.tvdescri2Deta);
         GoBack = view.findViewById(R.id.gobackDetails);
         ivproductPhoto = view.findViewById(R.id.ivProductdeta);
         btnBuy = view.findViewById(R.id.btnBuydetail);
-
-        // Call init method to set data
         init();
-
         return view;    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Initialize the ZaraAdapter here
+        adapter = new ZaraAdapter(requireContext(), new ArrayList<ZaraItem>());
+
+        Spinner categorySpinner = view.findViewById(R.id.sizeSpinner);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, CATEGORIES);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categoryAdapter);
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedCategory = CATEGORIES[position];
+                Log.d("DetailsFragment", "Selected category: " + selectedCategory);
+
+                ArrayList<ZaraItem> filteredList = new ArrayList<>();
+                // Inside the onItemSelected method of AdapterView.OnItemSelectedListener
+                // For now, we are just setting an empty list to adapter
+                // You may need to modify this to filter products based on selected category
+                adapter.setZaraItems(filteredList);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing if nothing is selected
+            }
+        });
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -112,7 +150,6 @@ public class DetailsFragment extends Fragment {
                 //String data = myObject.getData();
                 // Now you can use 'data' as needed in FragmentB
                 tvproduct.setText(myproduct.getProduct());
-                tvsize.setText(myproduct.getSize());
                 tvcolour.setText(myproduct.getColour());
                 tvprice.setText(myproduct.getPrice() + " ₪");
                 tvdescription.setText(myproduct.getDescription());

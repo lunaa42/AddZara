@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,9 +39,9 @@ public class MenuFragment extends Fragment {
     private ArrayList<ZaraItem> product;
     private RecyclerView rvZaras;
     private ZaraAdapter adapter;
-    private BottomNavigationView bottomNavigationView;
     private ImageView addP;
     private SearchView searchView2;
+    private FirebaseAuth mAuth;
     private static final String[] CATEGORIES = {"WOMEN", "MEN", "BEAUTY"};
     Spinner categorySpinner;
 
@@ -139,39 +140,6 @@ public class MenuFragment extends Fragment {
         // Load data from Firestore
         loadDataFromFirestore();
 
-        bottomNavigationView = getView().findViewById(R.id.bottomnavmenu);
-        // Set BottomNavigationView listener
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-                if (selectedFragment != null) {
-                    requireActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.Framelayoutmain4, selectedFragment)
-                            .addToBackStack(null)
-                            .commit();
-
-                    // Select the corresponding item in the bottom navigation
-                    switch (selectedFragment.getClass().getSimpleName()) {
-                        case "HomeFragment":
-                            bottomNavigationView.setSelectedItemId(R.id.homenav2);
-                            break;
-                        case "MenuFragment":
-                            bottomNavigationView.setSelectedItemId(R.id.menunav2);
-                            break;
-                        case "LoginFragment":
-                            bottomNavigationView.setSelectedItemId(R.id.profilenav2);
-                            break;
-                        case "FavFragment":
-                            bottomNavigationView.setSelectedItemId(R.id.favnav2);
-                            break;
-                    }
-                }
-                // Check if the item was selected
-
-                return true;
-            }
-        });
         addP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

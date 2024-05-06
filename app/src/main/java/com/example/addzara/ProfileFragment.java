@@ -1,7 +1,5 @@
 package com.example.addzara;
 
-import static com.example.addzara.R.id.bottomnavProfile;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,8 +41,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseServices fbs;
     private FirebaseFirestore db;
     private FirebaseAuth mauth;
-    private BottomNavigationView bottomNavigationView;
-
     private boolean flagAlreadyFilled = false;
     private LayoutInflater inflater;
     private ViewGroup container;
@@ -90,7 +86,6 @@ public class ProfileFragment extends Fragment {
         tvPhone = view.findViewById(R.id.tvphoneprofile);
         imgprofile = view.findViewById(R.id.imgprofileprofile);
         tvSignout = view.findViewById(R.id.tvsignoutprofile);
-        bottomNavigationView = view.findViewById(R.id.bottomnavProfile);
 
         // Fill user details
         fillUserDetails();
@@ -120,32 +115,8 @@ public class ProfileFragment extends Fragment {
        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
        // Initialize BottomNavigationView
-       BottomNavigationView bottomNavigationView = view.findViewById(bottomnavProfile);
 
        // Set up item selection listener
-       bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-           @Override
-           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-               Fragment selectedFragment = null;
-               if (item.getItemId() == R.id.homenav2) {
-                   selectedFragment = new HomeFragment();
-               } else if (item.getItemId() == R.id.menunav2) {
-                   selectedFragment = new MenuFragment();
-               } else if (item.getItemId() == R.id.favnav2) {
-                   selectedFragment = new FavFragment();
-               }
-
-               if (selectedFragment != null) {
-                   // Replace the current fragment with the selected one
-                   requireActivity().getSupportFragmentManager().beginTransaction()
-                           .replace(R.id.Framelayoutmain4, selectedFragment)
-                           .addToBackStack(null) // Optional: Add to back stack if you want to navigate back
-                           .commit();
-               }
-
-               return true;
-           }
-       });
 
        return view;
     }
@@ -162,16 +133,10 @@ public class ProfileFragment extends Fragment {
         tvLastName=getView().findViewById(R.id.ConstrainLayout);
         tvEmail=getView().findViewById(R.id.tvemailProfile);
         tvPhone=getView().findViewById(R.id.tvphoneprofile);
-        bottomNavigationView = getView().findViewById(R.id.bottomnavProfile);
         imgprofile=getView().findViewById(R.id.imgprofileprofile);
         tvSignout= getView().findViewById(R.id.tvsignoutprofile);
         db = FirebaseFirestore.getInstance();
         mauth = FirebaseAuth.getInstance();
-        String firstname = tvFirstName.getText().toString();
-        String lastname = tvLastName.getText().toString();
-        String email = tvEmail.getText().toString();
-        String phone = tvPhone.getText().toString();
-        fillUserDetails();
 
         tvSignout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -38,7 +38,6 @@ public class LoginFragment extends Fragment {
         private FirebaseServices fbs;
         private TextView tvSignupLink;
         private TextView tvforgotpassword;
-        private BottomNavigationView bottomNavigationView;
         private FirebaseAuth mAuth;
 
         // TODO: Rename parameter arguments, choose names that match
@@ -85,50 +84,17 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login2, container, false);
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth != null && mAuth.getCurrentUser() != null) {
             // User is already logged in, navigate to main activity
-            startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish();
+            gotoProfile();
+        }
+        if (mAuth == null) {
+            mAuth = FirebaseAuth.getInstance();
         }
         // Initialize BottomNavigationView
-        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottomnavlogin);
 
         // Set up item selection listener
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-                if (selectedFragment != null) {
-                    requireActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.Framelayoutmain4, selectedFragment)
-                            .addToBackStack(null)
-                            .commit();
 
-                    // Select the corresponding item in the bottom navigation
-                    switch (selectedFragment.getClass().getSimpleName()) {
-                        case "HomeFragment":
-                            bottomNavigationView.setSelectedItemId(R.id.homenav2);
-                            break;
-                        case "MenuFragment":
-                            bottomNavigationView.setSelectedItemId(R.id.menunav2);
-                            break;
-                        case "LoginFragment":
-                            if (mAuth.getCurrentUser() != null) {
-                                // User is logged in, navigate to profile fragment
-                                selectedFragment = new ProfileFragment();}
-                            else {
-                            bottomNavigationView.setSelectedItemId(R.id.logi);}
-                            break;
-                        case "FavFragment":
-                            bottomNavigationView.setSelectedItemId(R.id.favnav2);
-                            break;
-                    }
-                }
-                // Check if the item was selected
-
-                return true;
-            }
-        });
 
         return view;
     }
@@ -143,7 +109,6 @@ public class LoginFragment extends Fragment {
             etPassword = getView().findViewById(R.id.etPasswordLogin);
             btnLogin = getView().findViewById(R.id.btnloginLogin);
             tvSignupLink = getView().findViewById(R.id.tvSignupLink);
-            bottomNavigationView = getView().findViewById(R.id.bottomnavlogin);
             tvforgotpassword = getView().findViewById(R.id.tvforgotpasswordLogin);
             tvSignupLink.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -10,7 +10,7 @@
         android:id="@+id/menunav2"
         android:icon="@drawable/hamburger"
 
-       />
+        />
     <item
         android:id="@+id/profilenav2"
         android:icon="@drawable/user"

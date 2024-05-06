@@ -33,9 +33,9 @@
                 android:id="@+id/favorite_button"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/bookmark__1_"
                 android:contentDescription="Favorite"
-                android:onClick="onFavoriteButtonClick" />
+                android:onClick="onFavoriteButtonClick"
+                android:src="@drawable/bookmark__1_" />
         </LinearLayout>
 
         <!-- Car Image -->
@@ -96,11 +96,11 @@
         <!-- Description -->
         <TextView
             android:id="@+id/tvdescriDeta"
+            style="@style/UltraLightClassicTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="DESCRIPTION:"
-            style="@style/UltraLightClassicTextStyle"
             android:textColor="#000000"
             android:textStyle="bold" />
 
@@ -113,21 +113,22 @@
         <!-- Size -->
         <TextView
             android:id="@+id/tvsizeDeta"
+            style="@style/UltraLightClassicTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            style="@style/UltraLightClassicTextStyle"
-            android:textColor="#000000"
             android:text="SIZE:"
+            android:textColor="#000000"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvsize2Deta"
+        <Spinner
+            android:id="@+id/sizeSpinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:layout_height="23dp"
+            android:backgroundTint="#C81818" />
 
         <!-- Buy Button -->
+
         <Button
             android:id="@+id/btnBuydetail"
             style="@style/UltraLightClassicTextStyle"

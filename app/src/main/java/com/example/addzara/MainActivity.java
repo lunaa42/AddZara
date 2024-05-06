@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import com.example.addzara.R;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.addzara.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.squareup.picasso.Picasso;
@@ -20,16 +22,38 @@ import com.squareup.picasso.Picasso;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
-    private Fragment HomeFragment;
+
     private FirebaseServices fbs;
     private Stack<Fragment> fragmentStack = new Stack<>();
     private BottomNavigationView bottomNavigationView;
+    private ActivityMainBinding binding;
     @Override
-            protected void onCreate(Bundle savedInstanceState) {
-              Picasso.setSingletonInstance(new Picasso.Builder(this).build());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomeFragment());
 
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_main);
+        // Access bottomNavigationView after initializing binding
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            // Handle bottom navigation item selection
+            if(item.getItemId()== R.id.homenav2){
+                replaceFragment(new HomeFragment());
+            }
+            if(item.getItemId()== R.id.menunav2){
+                replaceFragment(new MenuFragment());
+            }
+            if(item.getItemId()== R.id.profilenav2){
+                replaceFragment(new LoginFragment());
+            }
+            if(item.getItemId()== R.id.favnav2){
+                replaceFragment(new FavFragment());
+            }
+
+            return true;
+        });
+
+              Picasso.setSingletonInstance(new Picasso.Builder(this).build());
                 fbs = FirebaseServices.getInstance();
                 if (fbs.getCurrentUser() == null) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -60,12 +84,15 @@ public class MainActivity extends AppCompatActivity {
     }
     public void pushFragment(Fragment fragment) {
         fragmentStack.push(fragment);
-        /*
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout, fragment)
-                .commit(); */
+
     }
-        }
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager =getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.Framelayoutmain4,fragment);
+        fragmentTransaction.commit();
+    }
+}
 
 
 

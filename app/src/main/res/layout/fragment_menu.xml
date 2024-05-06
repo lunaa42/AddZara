@@ -12,69 +12,66 @@
 
         <ImageView
             android:id="@+id/ivlogomenu"
-            android:layout_width="416dp"
-            android:layout_height="154dp"
-            android:src="@drawable/remo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="433dp"
+            android:layout_height="162dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/remo"
+            app:layout_constraintBottom_toTopOf="@+id/searchView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             style="@style/SearchViewStyle"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/search_44"
             app:iconifiedByDefault="false"
-            app:queryHint="SEARCH FOR AN ITEM.."
+            app:layout_constraintBottom_toTopOf="@+id/addProductMenu"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivlogomenu"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" />
+            app:queryHint="SEARCH FOR AN ITEM.." />
 
         <!-- Spinner -->
         <Spinner
             android:id="@+id/categorySpinner"
-            android:layout_width="142dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/searchView"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="221dp"
+            app:layout_constraintBottom_toBottomOf="@+id/addProductMenu"
+            app:layout_constraintEnd_toStartOf="@+id/addProductMenu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/addProductMenu" />
 
         <ImageView
             android:id="@+id/addProductMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
             android:src="@android:drawable/ic_menu_add"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            app:layout_constraintBottom_toTopOf="@+id/rvmenu"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp" />
+            app:layout_constraintStart_toEndOf="@+id/categorySpinner"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvmenu"
-            android:layout_width="411dp"
-            android:layout_height="408dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="61dp"
             android:background="#FFFFFF"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categorySpinner"
+            app:layout_constraintTop_toBottomOf="@+id/addProductMenu"
             app:spanCount="2" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomnavmenu"
-            android:layout_width="409dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:background="#FFFFFF"
-            app:backgroundTint="#FFFFFF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvmenu"
-            app:menu="@menu/bottom_nav" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

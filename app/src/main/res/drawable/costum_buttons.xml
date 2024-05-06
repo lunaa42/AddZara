@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- bordered_button.xml -->
+<!-- costum_buttons.xml -->
+<!-- costum_buttons.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <stroke
+        android:width="2dp" /> <!-- Border color and width -->
+    <!-- No corners defined for rectangular shape -->
+    <solid android:color="@android:color/transparent" /> <!-- Transparent background -->
+</shape>
+
