@@ -111,7 +111,9 @@ public class SignupFragment extends Fragment {
                     return;
 
                 }
+                String uid = fbs.getAuth().getCurrentUser().getUid();
                 User user = new User(firstname, lastname, username, phone);
+
                 // Signup procedure
                 Task<AuthResult> authResultTask = fbs.getAuth().createUserWithEmailAndPassword(username, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override

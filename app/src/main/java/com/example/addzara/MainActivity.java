@@ -55,19 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
               Picasso.setSingletonInstance(new Picasso.Builder(this).build());
                 fbs = FirebaseServices.getInstance();
-                if (fbs.getCurrentUser() == null) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.Framelayoutmain4, new LoginFragment());
+                    ft.replace(R.id.Framelayoutmain4, new HomeFragment());
                     ft.commit();
-                }
-                else
-                {
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.Framelayoutmain4, new MenuFragment());
-                    ft.commit();                }
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain4, new MenuFragment());
-        ft.commit();
     }
     public void onBackPressed() {
         if (fragmentStack.size() > 1) {

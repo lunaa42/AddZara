@@ -35,6 +35,10 @@ public class FirebaseServices {
     public Uri getSelectedImageURL() {
         return selectedImageURL;
     }
+    public static FirebaseServices reloadInstance(){
+        instance=new FirebaseServices();
+        return instance;
+    }
 
     public void setSelectedImageURL(Uri selectedImageURL) {
         this.selectedImageURL = selectedImageURL;

@@ -84,17 +84,16 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login2, container, false);
+
+        // Initialize FirebaseAuth if not already initialized
+        mAuth = FirebaseAuth.getInstance();
+
         if (mAuth != null && mAuth.getCurrentUser() != null) {
             // User is already logged in, navigate to main activity
             gotoProfile();
         }
-        if (mAuth == null) {
-            mAuth = FirebaseAuth.getInstance();
-        }
-        // Initialize BottomNavigationView
 
-        // Set up item selection listener
-
+        // Initialize other components and listeners
 
         return view;
     }
@@ -141,10 +140,9 @@ public class LoginFragment extends Fragment {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Save login state to SharedPreferences
+                                        fbs = FirebaseServices.reloadInstance();
                                         saveLoginState(true);
                                         Toast.makeText(getActivity(), "You have successfully logged in!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getActivity(), MainActivity.class));
-                                        getActivity().finish();
                                     } else {
                                         Toast.makeText(getActivity(), "Failed to login! Check user or password..", Toast.LENGTH_SHORT).show();
                                     }
