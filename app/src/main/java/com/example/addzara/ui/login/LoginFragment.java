@@ -1,31 +1,21 @@
 package com.example.addzara.ui.login;
 
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.addzara.FirebaseServices;
-import com.example.addzara.ForgotPasswordFragment;
-import com.example.addzara.SignupFragment;
-import com.example.addzara.databinding.FragmentLogin2Binding;
+import com.example.addzara.authentication.FirebaseServices;
+import com.example.addzara.authentication.ForgotPasswordFragment;
+import com.example.addzara.authentication.SignupFragment;
 
 import com.example.addzara.R;
 import com.google.android.gms.tasks.OnCompleteListener;

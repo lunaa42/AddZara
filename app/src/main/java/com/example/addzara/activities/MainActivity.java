@@ -1,22 +1,21 @@
-package com.example.addzara;
+package com.example.addzara.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import com.example.addzara.R;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 
+import com.example.addzara.R;
+import com.example.addzara.authentication.FirebaseServices;
+import com.example.addzara.authentication.LoginFragment;
 import com.example.addzara.databinding.ActivityMainBinding;
+import com.example.addzara.userInterface.FavFragment;
+import com.example.addzara.userInterface.HomeFragment;
+import com.example.addzara.userInterface.MenuFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.squareup.picasso.Picasso;
 
 import java.util.Stack;

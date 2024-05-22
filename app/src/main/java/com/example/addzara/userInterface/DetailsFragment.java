@@ -1,4 +1,4 @@
-package com.example.addzara;
+package com.example.addzara.userInterface;
 
 import android.os.Bundle;
 
@@ -18,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.addzara.R;
+import com.example.addzara.addData.ZaraItem;
+import com.example.addzara.adapters.ZaraAdapter;
+import com.example.addzara.authentication.FirebaseServices;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

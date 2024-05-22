@@ -1,10 +1,7 @@
-package com.example.addzara;
+package com.example.addzara.userInterface;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 

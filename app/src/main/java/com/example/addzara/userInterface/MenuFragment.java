@@ -1,4 +1,4 @@
-package com.example.addzara;
+package com.example.addzara.userInterface;
 
 import android.os.Bundle;
 
@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.Nullable;
-import com.example.addzara.ZaraAdapter;
 
 
 import android.widget.AdapterView;
@@ -24,15 +22,17 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.addzara.addData.AddZaraFragment;
+import com.example.addzara.R;
+import com.example.addzara.addData.ZaraItem;
+import com.example.addzara.adapters.ZaraAdapter;
+import com.example.addzara.authentication.FirebaseServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class MenuFragment extends Fragment {
     private FirebaseServices fbs;

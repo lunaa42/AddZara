@@ -1,6 +1,5 @@
-package com.example.addzara;
+package com.example.addzara.addData;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 

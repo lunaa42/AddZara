@@ -1,25 +1,19 @@
-package com.example.addzara;
+package com.example.addzara.userInterface;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
-import com.example.addzara.databinding.ActivityMainBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.example.addzara.R;
+import com.example.addzara.authentication.FirebaseServices;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**

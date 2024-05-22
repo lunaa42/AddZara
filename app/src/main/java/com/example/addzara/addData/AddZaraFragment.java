@@ -1,4 +1,4 @@
-package com.example.addzara;
+package com.example.addzara.addData;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -18,16 +18,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.addzara.activities.MainActivity;
+import com.example.addzara.R;
+import com.example.addzara.userInterface.Zara;
+import com.example.addzara.authentication.FirebaseServices;
+import com.example.addzara.userInterface.MenuFragment;
+import com.example.addzara.utils.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
-
-import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.

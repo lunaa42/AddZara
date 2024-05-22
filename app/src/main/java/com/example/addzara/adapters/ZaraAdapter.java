@@ -1,9 +1,6 @@
-package com.example.addzara;
-
-import static com.google.android.material.R.drawable.ic_arrow_back_black_24;
+package com.example.addzara.adapters;
 
 import android.content.Context;
-import android.media.ExifInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,18 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.addzara.userInterface.DetailsFragment;
+import com.example.addzara.activities.MainActivity;
+import com.example.addzara.R;
+import com.example.addzara.addData.ZaraItem;
+import com.example.addzara.authentication.FirebaseServices;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> {

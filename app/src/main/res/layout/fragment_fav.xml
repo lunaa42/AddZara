@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".FavFragment">
+    tools:context=".userInterface.FavFragment">
 
     <!-- Top section with cancel image, favorites button, and user's name -->
 

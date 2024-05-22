@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#F6F6F6"
     android:backgroundTint="#FFFFFF"
-    tools:context=".SignupFragment">
+    tools:context=".authentication.SignupFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

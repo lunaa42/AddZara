@@ -1,4 +1,4 @@
-package com.example.addzara;
+package com.example.addzara.addData;
 
 import android.os.Parcel;
 
