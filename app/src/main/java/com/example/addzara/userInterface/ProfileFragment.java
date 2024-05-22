@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,8 +95,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void fillUserDetails(FirebaseUser user) {
-        String currentUserEmail = getCurrentUserEmail();
-        if (user != null) {
+        //String currentUserEmail = getCurrentUserEmail();
+        /*if (user != null) {
            // Assuming you have a method to get current user's email
             if (currentUserEmail != null) {
                 db.collection("users")
@@ -110,6 +111,7 @@ public class ProfileFragment extends Fragment {
                                        // tvLastName.setText(lastName);
                                         tvEmail.setText(user.getEmail());
                                         tvPhone.setText(user.getPhoneNumber());
+                                        tvFirstName.setText();
                                         // Do something
                                     }
                                 }
@@ -118,6 +120,35 @@ public class ProfileFragment extends Fragment {
                             }
                         });
             }
+        }*/
+        if (user != null) {
+            String currentUserEmail = user.getEmail();
+            db.collection("users")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String userEmail = document.getString("email");
+                                if (userEmail != null && userEmail.equals(currentUserEmail)) {
+                                    // Current user found in database
+                                    String firstName = document.getString("firstName");
+                                    String lastName = document.getString("lastName");
+                                    String phone = document.getString("phone");
+                                    Log.d("ProfileFragment", "User details - First Name: " + firstName + ", Last Name: " + lastName + ", Phone: " + phone);
+
+                                    tvFirstName.setText(firstName);
+                                    tvLastName.setText(lastName);
+                                    tvEmail.setText(currentUserEmail);
+                                    tvPhone.setText(phone);
+                                    break;
+                                }
+                            }
+                        } else {
+                            // Handle failure
+                            Log.e("ProfileFragment", "Error getting documents: ", task.getException());
+
+                        }
+                    });
         }
             // Assuming you have stored user's first and last names in Firestore
 

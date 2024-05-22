@@ -1,5 +1,7 @@
 package com.example.addzara.authentication;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,7 +24,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +38,8 @@ public class SignupFragment extends Fragment {
     private EditText etUsername, etPassword, firstNameEditText, lastNameEditText, etPhone;
     private Button btnSignup;
     private FirebaseServices fbs;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
     private ImageView backsymbSignup;
 
 
@@ -105,7 +112,11 @@ public class SignupFragment extends Fragment {
                 String firstname = firstNameEditText.getText().toString();
                 String lastname = lastNameEditText.getText().toString();
                 String phone = etPhone.getText().toString();
-                if (username.trim().isEmpty() || password.trim().isEmpty() || firstname.trim().isEmpty() ||
+                if (mAuth != null) {
+                    signUpUser(username, password, firstname, lastname, phone);
+                } else {
+                    Log.e(TAG, "FirebaseAuth instance is null");
+                }                if (username.trim().isEmpty() || password.trim().isEmpty() || firstname.trim().isEmpty() ||
                         lastname.trim().isEmpty() ||  phone.trim().isEmpty())
                 {
                     Toast.makeText(getActivity(), "some fields are empty", Toast.LENGTH_SHORT).show();
@@ -116,6 +127,7 @@ public class SignupFragment extends Fragment {
                 User user = new User(firstname, lastname, username, phone);
 
                 // Signup procedure
+                /*
                 Task<AuthResult> authResultTask = fbs.getAuth().createUserWithEmailAndPassword(username, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -134,13 +146,12 @@ public class SignupFragment extends Fragment {
                             //
                             Toast.makeText(getActivity(), "You have successfully signed up!", Toast.LENGTH_SHORT).show();
 
-                        } else
-                        {
+                        } else {
                             Toast.makeText(getActivity(), "Failed to sign up! Check user or password..", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
+*/
             }
         });
         backsymbSignup.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +163,34 @@ public class SignupFragment extends Fragment {
             }
     });
 }
+
+    private void signUpUser(String username, String password, String firstname, String lastname, String phone) {
+
+        mAuth.createUserWithEmailAndPassword(username, password)
+                .addOnCompleteListener(getActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            String uid = user.getUid();
+                            Log.d(TAG, "Signup successful, UID: " + uid);
+
+                            // Create a user object to store in Firestore
+                            User newUser = new User(firstname, lastname, username, phone);
+
+                            // Save user to Firestore
+                            db.collection("users").document(uid).set(newUser)
+                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "User saved to Firestore"))
+                                    .addOnFailureListener(e -> Log.w(TAG, "Error saving user to Firestore", e));
+                        } else {
+                            Log.e(TAG, "FirebaseUser is null after signup");
+                        }
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                    }
+                });
+    }
 
     private void gotoLogin() {
         FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();

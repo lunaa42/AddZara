@@ -170,6 +170,7 @@ public class DetailsFragment extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 /*gotobuy();*/            }
         });
 
