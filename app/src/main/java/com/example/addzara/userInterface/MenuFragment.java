@@ -125,7 +125,7 @@ public class MenuFragment extends Fragment {
                 Toast.makeText(getActivity(), "Clicked: " + selectedItem.getProduct(), Toast.LENGTH_SHORT).show();
 
                 Bundle args = new Bundle();
-                args.putParcelable("products", selectedItem);
+                args.putParcelable("product", selectedItem);
                 DetailsFragment detailsFragment = new DetailsFragment();
                 detailsFragment.setArguments(args);
 

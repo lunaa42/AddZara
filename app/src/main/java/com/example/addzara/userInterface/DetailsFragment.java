@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.addzara.PaymentBottomSheetFragment;
 import com.example.addzara.R;
 import com.example.addzara.addData.ZaraItem;
 import com.example.addzara.adapters.ZaraAdapter;
@@ -171,7 +170,7 @@ public class DetailsFragment extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PaymentBottomSheetFragment bottomSheetFragment = new PaymentBottomSheetFragment();
+                BottomSheetBinding bottomSheetFragment = new BottomSheetBinding();
                 bottomSheetFragment.show(getParentFragmentManager(), bottomSheetFragment.getTag());          }
         });
 

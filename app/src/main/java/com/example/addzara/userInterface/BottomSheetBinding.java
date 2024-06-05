@@ -1,4 +1,4 @@
-package com.example.addzara;
+package com.example.addzara.userInterface;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import com.example.addzara.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class PaymentBottomSheetFragment extends BottomSheetDialogFragment {
+public class BottomSheetBinding  extends BottomSheetDialogFragment {
 
     @Nullable
     @Override
