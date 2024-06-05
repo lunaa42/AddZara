@@ -59,6 +59,7 @@ android {
         implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
         implementation("com.squareup.picasso:picasso:2.71828")
         implementation("com.squareup.picasso:picasso:2.71828")
+        implementation ("com.google.android.material:material:1.4.0")
         testImplementation("junit:junit:4.13.2")
         androidTestImplementation("androidx.test.ext:junit:1.1.5")
         androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
