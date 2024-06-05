@@ -1,0 +1,464 @@
+@startuml
+class com.example.addzara.activities.MainActivity {
+- FirebaseServices fbs
+- Stack<Fragment> fragmentStack
+- BottomNavigationView bottomNavigationView
+- ActivityMainBinding binding
+# void onCreate(Bundle)
++ void onBackPressed()
++ void pushFragment(Fragment)
++ void replaceFragment(Fragment)
+}
+
+
+class com.example.addzara.ui.login.LoginResult {
+- LoggedInUserView success
+- Integer error
+~ LoggedInUserView getSuccess()
+~ Integer getError()
+}
+
+
+class com.example.addzara.data.LoginRepository {
+- {static} LoginRepository instance
+- LoginDataSource dataSource
+- LoggedInUser user
++ {static} LoginRepository getInstance(LoginDataSource)
++ boolean isLoggedIn()
++ void logout()
+- void setLoggedInUser(LoggedInUser)
++ Result<LoggedInUser> login(String,String)
+}
+
+
+class com.example.addzara.data.LoginDataSource {
++ Result<LoggedInUser> login(String,String)
++ void logout()
+}
+
+class com.example.addzara.addData.AddZaraFragment {
+- FirebaseServices fbs
+- EditText etProduct
+- {static} int GALLERY_REQUEST_CODE
+- ImageView img
+- String imageStr
+- Button btnAdd
+- Utils utils
+- Uri selectedImageUri
+- ImageView goback
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} AddZaraFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void connectComponents()
++ void addToFirestore()
+- void openGallery()
++ void onActivityResult(int,int,Intent)
++ void gotomenu()
+}
+
+
+class com.example.addzara.ui.login.LoginViewModelFactory {
++ T create(Class<T>)
+}
+
+class com.example.addzara.data.model.LoggedInUser {
+- String userId
+- String displayName
++ String getUserId()
++ String getDisplayName()
+}
+
+
+class com.example.addzara.userInterface.Zara {
+- String Product
+- String size
++ {static} Creator<Zara> CREATOR
+- String colour
+- String price
+- String description
+- String photo
++ String toString()
++ String getProduct()
++ void setProduct(String)
++ String getSize()
++ void setSize(String)
++ String getColour()
++ void setColour(String)
++ String getPrice()
++ void setPrice(String)
++ String getDescription()
++ void setDescription(String)
++ String getPhoto()
++ void setPhoto(String)
++ int describeContents()
++ void writeToParcel(Parcel,int)
+}
+
+
+class com.example.addzara.userInterface.HomeFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
+- ImageView zaralogo
+- FirebaseServices fbs
+~ FirebaseAuth mAuth
+- VideoView v4
++ {static} HomeFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+}
+
+
+class com.example.addzara.userInterface.FavFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
+- ArrayList<ZaraItem> favoriteProducts
+- FirebaseServices fbs
+- RecyclerView recyclerView
+- ZaraAdapter adapter
+- ImageView cancelimg
+- Button Fav
+- TextView name
++ {static} FavFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+class com.example.addzara.authentication.FirebaseServices {
+- {static} FirebaseServices instance
+- FirebaseAuth auth
+- FirebaseFirestore fire
+- FirebaseStorage storage
+- User currentUser
+- Uri selectedImageURL
++ {static} FirebaseServices getInstance()
++ Uri getSelectedImageURL()
++ {static} FirebaseServices reloadInstance()
++ void setSelectedImageURL(Uri)
++ User getCurrentUser()
++ void setCurrentUser(User)
++ FirebaseAuth getAuth()
++ FirebaseFirestore getFire()
++ FirebaseStorage getStorage()
+}
+
+
+class com.example.addzara.ui.login.LoginFormState {
+- Integer usernameError
+- Integer passwordError
+- boolean isDataValid
+~ Integer getUsernameError()
+~ Integer getPasswordError()
+~ boolean isDataValid()
+}
+
+
+class com.example.addzara.authentication.LoginFragment {
+- EditText etUsername
+- Button btnLogin
+- FirebaseServices fbs
+- TextView tvSignupLink
+- TextView tvforgotpassword
+- FirebaseAuth mAuth
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} LoginFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void saveLoginState(boolean)
+- void gotoProfile()
+- void gotoSignupFragment()
+- void gotoforgotPassFragment()
+}
+
+
+class com.example.addzara.data.Result {
++ String toString()
+}
+
+class com.example.addzara.data.Result$Success {
+- T data
++ T getData()
+}
+
+
+class com.example.addzara.data.Result$Error {
+- Exception error
++ Exception getError()
+}
+
+
+class com.example.addzara.addData.ZaraItem {
+- String product
+- String size
+- String colour
+- String price
+- String description
+- String photo
+- String category
+- boolean isFavorite
++ {static} Creator<User> CREATOR
++ void setCategory(String)
++ boolean isFavorite()
++ void setFavorite(boolean)
++ int describeContents()
++ void writeToParcel(Parcel,int)
++ String getProduct()
++ void setProduct(String)
++ String getSize()
++ void setSize(String)
++ String getColour()
++ void setColour(String)
++ String getPrice()
++ void setPrice(String)
++ String getDescription()
++ void setDescription(String)
++ String getPhoto()
++ String getCategory()
++ void setPhoto(String)
++ String toString()
+}
+
+
+class com.example.addzara.authentication.ForgotPasswordFragment {
+- FirebaseServices fbs
+- EditText etEmail
+- Button btnReset
+- ImageView backsymb
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} ForgotPasswordFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+}
+
+
+class com.example.addzara.userInterface.MenuFragment {
+- FirebaseServices fbs
+- ArrayList<ZaraItem> product
+- RecyclerView rvZaras
+- ZaraAdapter adapter
+- ImageView addP
+- SearchView searchView2
+- FirebaseAuth mAuth
+- {static} String[] CATEGORIES
+~ Spinner categorySpinner
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
+- void loadDataFromFirestore()
++ void onStart()
++ void filterList(String)
+}
+
+
+class com.example.addzara.ui.login.LoginViewModel {
+- MutableLiveData<LoginFormState> loginFormState
+- MutableLiveData<LoginResult> loginResult
+- LoginRepository loginRepository
+~ LiveData<LoginFormState> getLoginFormState()
+~ LiveData<LoginResult> getLoginResult()
++ void login(String,String)
++ void loginDataChanged(String,String)
+- boolean isUserNameValid(String)
+- boolean isPasswordValid(String)
+}
+
+
+class com.example.addzara.ui.login.LoginFragment {
+- EditText etUsername
+- Button btnLogin
+- FirebaseServices fbs
+- TextView tvSignupLink
+- TextView forgotpass
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} LoginFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void gotoSignupFragment()
+- void gotoForgotPassFragment()
+}
+
+
+class com.example.addzara.userInterface.ProfileFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
+- TextView tvFirstName
+- String stFirstName
+- {static} int GALLERY_REQUEST_CODE
+- ImageView imgprofile
+- FirebaseServices fbs
+- FirebaseFirestore db
+- FirebaseAuth mauth
+- boolean flagAlreadyFilled
++ {static} ProfileFragment newInstance(String,String)
++ void onCreate(Bundle)
++ void onViewCreated(View,Bundle)
+- void fillUserDetails(FirebaseUser)
+- String getCurrentUserEmail()
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void navigateToHomeFragment()
+- void navigateToLoginFragment()
++ void onStart()
+- void init()
+}
+
+
+class com.example.addzara.utils.Utils {
+- {static} Utils instance
+- FirebaseServices fbs
+- String imageStr
++ {static} Utils getInstance()
++ void showMessageDialog(Context,String)
++ void uploadImage(Context,Uri)
+}
+
+
+class com.example.addzara.addData.User {
+- String firstName
+- String lastName
+- String username
+- String phone
+- ArrayList<String> favorites
++ String getFirstName()
++ void setFirstName(String)
++ String getLastName()
++ void setLastName(String)
++ String getUsername()
++ void setUsername(String)
++ String getPhone()
++ void setPhone(String)
++ ArrayList<String> getFavorites()
++ void setFavorites(ArrayList<String>)
++ String toString()
+}
+
+
+class com.example.addzara.authentication.SignupFragment {
+- EditText etUsername
+- Button btnSignup
+- FirebaseServices fbs
+- ImageView backsymbSignup
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} SignupFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void gotoLogin()
+}
+
+
+class com.example.addzara.ui.login.LoggedInUserView {
+- String displayName
+~ String getDisplayName()
+}
+
+
+class com.example.addzara.userInterface.DetailsFragment {
+- {static} int PERMISSION_SEND_SMS
+- {static} int REQUEST_CALL_PERMISSION
+- FirebaseServices fbs
+- TextView tvproduct
+- ImageView ivproductPhoto
+- ImageView GoBack
+- ZaraItem myproduct
+~ Spinner SizeSpinner
+- ArrayList<ZaraItem> product
+- ZaraAdapter adapter
+- {static} String[] CATEGORIES
+- Button btnBuy
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} DetailsFragment newInstance(ZaraItem)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onViewCreated(View,Bundle)
++ void onStart()
++ void init()
+- void gotoMenu()
+}
+
+
+class com.example.addzara.adapters.ZaraAdapter {
+- Context context
+- {static} ArrayList<ZaraItem> zaList
+- ZaraAdapter.OnItemClickListener itemClickListener
+- FirebaseServices fbs
++ void setZaraItems(ArrayList<ZaraItem>)
++ MyViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(MyViewHolder,int)
++ int getItemCount()
++ void setOnItemClickListener(ZaraAdapter.OnItemClickListener)
++ {static} void setFilteredList(ArrayList<ZaraItem>)
+}
+
+
+class com.example.addzara.adapters.ZaraAdapter$MyViewHolder {
++ ImageSwitcher favoriteIcon
+- TextView productNameTextView1
+- ImageView productImageView1
+- TextView productNameTextView2
+- ImageView productImageView2
++ void bindProduct1(ZaraItem)
++ void bindProduct2(ZaraItem)
+- void loadImage(String,ImageView)
++ void hideSecondProduct()
+}
+
+
+interface com.example.addzara.adapters.ZaraAdapter$OnItemClickListener {
+~ void onItemClick(int)
+}
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.example.addzara.activities.MainActivity
+androidx.fragment.app.Fragment <|-- com.example.addzara.addData.AddZaraFragment
+com.example.addzara.ui.login.Factory <|.. com.example.addzara.ui.login.LoginViewModelFactory
+android.os.Parcelable <|.. com.example.addzara.userInterface.Zara
+androidx.fragment.app.Fragment <|-- com.example.addzara.userInterface.HomeFragment
+androidx.fragment.app.Fragment <|-- com.example.addzara.userInterface.FavFragment
+androidx.fragment.app.Fragment <|-- com.example.addzara.authentication.LoginFragment
+com.example.addzara.data.Result +.. com.example.addzara.data.Result$Success
+com.example.addzara.data.Result <|-- com.example.addzara.data.Result$Success
+com.example.addzara.data.Result +.. com.example.addzara.data.Result$Error
+com.example.addzara.data.Result <|-- com.example.addzara.data.Result$Error
+android.os.Parcelable <|.. com.example.addzara.addData.ZaraItem
+androidx.fragment.app.Fragment <|-- com.example.addzara.authentication.ForgotPasswordFragment
+androidx.fragment.app.Fragment <|-- com.example.addzara.userInterface.MenuFragment
+androidx.lifecycle.ViewModel <|-- com.example.addzara.ui.login.LoginViewModel
+androidx.fragment.app.Fragment <|-- com.example.addzara.ui.login.LoginFragment
+androidx.fragment.app.Fragment <|-- com.example.addzara.userInterface.ProfileFragment
+androidx.fragment.app.Fragment <|-- com.example.addzara.authentication.SignupFragment
+androidx.fragment.app.Fragment <|-- com.example.addzara.userInterface.DetailsFragment
+com.example.addzara.adapters.Adapter <|-- com.example.addzara.adapters.ZaraAdapter
+com.example.addzara.adapters.ZaraAdapter +.. com.example.addzara.adapters.ZaraAdapter$MyViewHolder
+com.example.addzara.adapters.ViewHolder <|-- com.example.addzara.adapters.ZaraAdapter$MyViewHolder
+com.example.addzara.adapters.ZaraAdapter +.. com.example.addzara.adapters.ZaraAdapter$OnItemClickListener
+@enduml

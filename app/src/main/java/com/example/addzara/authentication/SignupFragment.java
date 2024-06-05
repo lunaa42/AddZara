@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
 /**
@@ -112,34 +113,43 @@ public class SignupFragment extends Fragment {
                     return;
 
                 }
-                String uid = fbs.getAuth().getCurrentUser().getUid();
-                User user = new User(firstname, lastname, username, phone);
-
                 // Signup procedure
-                Task<AuthResult> authResultTask = fbs.getAuth().createUserWithEmailAndPassword(username, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            fbs.getFire().collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    gotoLogin();
+                Task<AuthResult> authResultTask = fbs.getAuth().createUserWithEmailAndPassword(username, password)
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // User creation successful
+                                    FirebaseUser currentUser = fbs.getAuth().getCurrentUser();
+                                    if (currentUser != null) {
+                                        String uid = currentUser.getUid();
+                                        User user = new User(firstname, lastname, username, phone);
+                                        fbs.getFire().collection("users").add(user)
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentReference documentReference) {
+                                                        // User data added successfully
+                                                        gotoLogin();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e("SignupFragment", "Failed to add user data: " + e.getMessage());
+                                                    }
+                                                });
+                                    } else {
+                                        // Handle the case where the current user is null
+                                        Log.e("SignupFragment", "Current user is null");
+                                    }
+                                    Toast.makeText(getActivity(), "You have successfully signed up!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // User creation failed
+                                    Toast.makeText(getActivity(), "Failed to sign up! Check username or password..", Toast.LENGTH_SHORT).show();
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.e("SignupFragment: signupOnClick: ", e.getMessage());
-                                }
-                            });
-                            //
-                            Toast.makeText(getActivity(), "You have successfully signed up!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
-                        } else
-                        {
-                            Toast.makeText(getActivity(), "Failed to sign up! Check user or password..", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
 
             }
         });

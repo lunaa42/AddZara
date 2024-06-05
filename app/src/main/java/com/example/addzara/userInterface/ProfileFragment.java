@@ -103,13 +103,20 @@ public class ProfileFragment extends Fragment {
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String userEmail = document.getString("email");
+                                    String userEmail = document.getString("username");
                                     if (userEmail != null && userEmail.equals(currentUserEmail)) {
-                                        // Current user found in database
-                                        //tvFirstName.setText(ge);
-                                       // tvLastName.setText(lastName);
-                                        tvEmail.setText(user.getEmail());
-                                        tvPhone.setText(user.getPhoneNumber());
+
+
+
+                                        String firstName = document.getString("firstName");
+                                        String lastName = document.getString("lastName");
+                                        String email = document.getString("username");
+                                        String phone = document.getString("phone");
+
+                                        tvFirstName.setText(firstName);
+                                        tvLastName.setText(lastName);
+                                        tvEmail.setText(email);
+                                        tvPhone.setText(phone);
                                         // Do something
                                     }
                                 }
