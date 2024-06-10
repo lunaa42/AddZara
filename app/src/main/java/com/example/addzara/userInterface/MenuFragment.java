@@ -57,6 +57,7 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         rvZaras = view.findViewById(R.id.rvmenu);
         categorySpinner = view.findViewById(R.id.categorySpinner);
+        categorySpinner.setSelection(0);
         return view;
 
     }

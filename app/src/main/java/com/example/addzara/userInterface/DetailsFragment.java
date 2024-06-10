@@ -1,12 +1,6 @@
 package com.example.addzara.userInterface;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.addzara.R;
-import com.example.addzara.addData.ZaraItem;
 import com.example.addzara.adapters.ZaraAdapter;
+import com.example.addzara.addData.User;
+import com.example.addzara.addData.ZaraItem;
 import com.example.addzara.authentication.FirebaseServices;
 import com.squareup.picasso.Picasso;
 
@@ -43,6 +44,8 @@ public class DetailsFragment extends Fragment {
     private ArrayList<ZaraItem> product;
     private ZaraAdapter adapter;
 
+    private ImageView favoriteImageView ;
+    private boolean isFavorite = false;
     private static final String[] CATEGORIES = {"choose your size","XSMALL","SMALL", "Medium", "LARGE","XLARGE"};
     private Button btnBuy;
 
@@ -89,6 +92,8 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         tvproduct = view.findViewById(R.id.tvproduct2Deta);
+        favoriteImageView = view.findViewById(R.id.favorite_button);
+        fbs = FirebaseServices.getInstance();
         SizeSpinner = view.findViewById(R.id.sizeSpinner);
         tvcolour = view.findViewById(R.id.tvcolourDeta);
         tvprice = view.findViewById(R.id.tvprice2Deta);
@@ -137,6 +142,16 @@ public class DetailsFragment extends Fragment {
     public void init()
     {
 
+
+        favoriteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle click on favorite button
+                toggleFavorite();
+            }
+
+           
+        });
         GoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,11 +185,94 @@ public class DetailsFragment extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetBinding bottomSheetFragment = new BottomSheetBinding();
-                bottomSheetFragment.show(getParentFragmentManager(), bottomSheetFragment.getTag());          }
+                BottomSheetBinding BottomSheetBinding = new BottomSheetBinding();
+                BottomSheetBinding.show(getParentFragmentManager(), BottomSheetBinding.getTag());          }
         });
 
     }
+
+    private void toggleFavorite() {
+        
+            // Check if the product is already in the favorite list
+            if (isFavorite) {
+                // Remove the product from the favorite list
+                removeFromFavorites();
+            } else {
+                // Add the product to the favorite list
+                addToFavorites();
+            }
+
+            // Toggle the favorite state
+            isFavorite = !isFavorite;
+
+            // Update the favorite button icon
+            updateFavoriteButtonIcon();
+        }
+
+    private void addToFavorites() {
+        User currentUser = fbs.getCurrentUser();
+
+        // Check if the user is logged in
+        if (currentUser != null) {
+            // Get the list of favorites from the current user
+            ArrayList<String> favorites = currentUser.getFavorites();
+
+            // Check if the product is not already in the favorites list
+            if (!favorites.contains(myproduct.getProduct())) {
+                // Add the product to the favorites list
+                favorites.add(myproduct.getProduct());
+
+                // Update the favorites data in Firestore
+                fbs.updateUserFavorites(currentUser.getFirstName(), favorites);
+
+                // Notify the user that the product has been added to favorites
+                Toast.makeText(getActivity(), "Added to favorites", Toast.LENGTH_SHORT).show();
+            } else {
+                // Notify the user that the product is already in favorites
+                Toast.makeText(getActivity(), "Product already in favorites", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Notify the user to log in first
+            Toast.makeText(getActivity(), "Please log in to add to favorites", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateFavoriteButtonIcon() {
+        if (isFavorite) {
+            favoriteImageView.setImageResource(R.drawable.bookmark__2_);
+        } else {
+            favoriteImageView.setImageResource(R.drawable.bookmark__1_);
+        }
+    }
+
+    private void removeFromFavorites() { // Get the current user
+        User currentUser = fbs.getCurrentUser();
+
+        // Check if the user is logged in
+        if (currentUser != null) {
+            // Get the list of favorites from the current user
+            ArrayList<String> favorites = currentUser.getFavorites();
+
+            // Check if the product is in the favorites list
+            if (favorites.contains(myproduct.getProduct())) {
+                // Remove the product from the favorites list
+                favorites.remove(myproduct.getProduct());
+
+                // Update the favorites data in Firestore
+                fbs.updateUserFavorites(currentUser.getFirstName(), favorites);
+
+                // Notify the user that the product has been removed from favorites
+                Toast.makeText(getActivity(), "Removed from favorites", Toast.LENGTH_SHORT).show();
+            } else {
+                // Notify the user that the product is not in favorites
+                Toast.makeText(getActivity(), "Product not in favorites", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Notify the user to log in first
+            Toast.makeText(getActivity(), "Please log in to remove from favorites", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void gotoMenu() {
         FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();

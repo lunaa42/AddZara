@@ -1,11 +1,22 @@
 package com.example.addzara.authentication;
 
+
+
 import android.net.Uri;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.addzara.addData.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+
+import java.util.ArrayList;
 
 public class FirebaseServices {
     private static FirebaseServices instance;
@@ -55,28 +66,33 @@ public class FirebaseServices {
     public FirebaseStorage getStorage() {
         return storage;
     }
-  /*  public void getCurrentObjectUser(UserCallback callback) {        ArrayList<User> usersInternal = new ArrayList<>();
-        fire.collection("users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
-                    User user = dataSnapshot.toObject(User.class);
-                    if (auth.getCurrentUser() != null && auth.getCurrentUser().getEmail().equals(user.getUsername())) {
-                        usersInternal.add(user);
+    public void updateUserFavorites(String userId, ArrayList<String> favorites) {
+        // Assuming you have a "users" collection in your Firestore database
+        // Update the "favorites" field for the user document with the specified userId
 
+        // Get a reference to the Firestore database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Reference to the user document
+        DocumentReference userRef = db.collection("users").document(userId);
+
+        // Update the "favorites" field in the user document
+        userRef
+                .update("favorites", favorites)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Handle success
+
+                    //    Log.d(TAG, "User favorites updated successfully!");
                     }
-                }
-                if (usersInternal.size() > 0)
-                    currentUser = usersInternal.get(0);
-
-                callback.onUserLoaded(currentUser);
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-    }*/
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        //Log.d(TAG, "Error updating user favorites", e);
+                    }
+                });
+    }
 }

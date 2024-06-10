@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Handler handler;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -79,7 +83,20 @@ public class HomeFragment extends Fragment {
 
         // Start video playback
         v4.start();
-
+        // Move the code that requires getParentFragmentManager() here
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Check if the fragment is still attached to the activity
+                if (isAdded()) {
+                    // Switch to another fragment here
+                    FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                    ft.replace(R.id.Framelayoutmain4, new MenuFragment());
+                    ft.commit();
+                }
+            }
+        }, 30000); // Delay in milliseconds (30 seconds)
         return view;
     }
 
@@ -117,21 +134,17 @@ public class HomeFragment extends Fragment {
                 mediaPlayer.setLooping(true);
             }
         });
-        /*@Override
-        protected void onResume();{
-            v4.resume();
-            super.onResume();
-        }
-        @Override
-                protected void onPause(){
-            v4.suspend();
-            super.onPause();
-        };
-        @Override
-        protected void onDestroy(){
-            v4.stopPlayback();
-            super.onDestroy();
-        }*/
+        /*handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Switch to another fragment here
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4, new MenuFragment());
+                ft.commit();
+            }
+        }, 30000); // Delay in milliseconds (30 seconds)
+*/
 
     }
 

@@ -1,21 +1,34 @@
 package com.example.addzara.userInterface;
 
+
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.addzara.R;
+import com.example.addzara.addData.User;
 import com.example.addzara.addData.ZaraItem;
 import com.example.addzara.adapters.ZaraAdapter;
 import com.example.addzara.authentication.FirebaseServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -34,13 +47,12 @@ public class FavFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ArrayList<ZaraItem> favoriteProducts;
+    private RecyclerView recyclerView ;
     private FirebaseServices fbs;
-    private RecyclerView recyclerView;
-    private ZaraAdapter adapter;
-    private ImageView cancelimg;
-    private Button Fav;
-    private TextView name;
+    private ZaraAdapter myAdapter;
+    private ArrayList<ZaraItem> products;
+    private TextView userNameTextView;
+
 
 
     public FavFragment() {
@@ -78,104 +90,72 @@ public class FavFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fav, container, false);
+        View view = inflater.inflate(R.layout.fragment_fav, container, false);
+        recyclerView = view.findViewById(R.id.favoritesRecyclerView);
+        userNameTextView = view.findViewById(R.id.userNameTextView);
+        return view;
     }
 
-   /* private String getUserDisplayName() {
-        return "User's Name"; // Example: returning a hardcoded name for demonstration
 
-    }*/
 
-   /* public void onStart() {
+ public void onStart() {
         super.onStart();
         init();
     }
 
     private void init() {
 
-        recyclerView = getView().findViewById(R.id.favoritesRecyclerView);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            StringBuilder userNameList = new StringBuilder();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                // Assuming the user's name is stored under the "name" field
+                                String userName = document.getString("name");
+                                if (userName != null) {
+                                    userNameList.append(userName).append("\n");
+                                }
+                            }
+                            // Set user's name list to the TextView
+                            userNameTextView.setText(userNameList.toString());
+                        } else {
+                          //  Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
         fbs = FirebaseServices.getInstance();
-        favoriteProducts = new ArrayList<>();
+        products = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        favoriteProducts = getProducts();
-        adapter = new ZaraAdapter(getActivity(), favoriteProducts);
-        name = getView().findViewById(R.id.userNameTextView);
+        products = getCars();
+        myAdapter = new ZaraAdapter(getActivity(), products);
 
-        // Assuming you have a method to retrieve the user's name
-        String userName = getUserNameFromAuthentication(); // Replace this with your logic to retrieve the user's name
-
-        // Set the user's name to the TextView
-        name.setText(userName);
-        adapter.setOnItemClickListener(new ZaraAdapter.OnItemClickListener() {
+        myAdapter.setOnItemClickListener(new ZaraAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
+            public void onItemClick ( int position){
                 // Handle item click here
-                String selectedItem = favoriteProducts.get(position).getProduct();
+                String selectedItem = products.get(position).getProduct();
                 Toast.makeText(getActivity(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show();
                 Bundle args = new Bundle();
-                args.putParcelable("product", favoriteProducts.get(position)); // or use Parcelable for better performance
+                args.putParcelable("product", products.get(position)); // or use Parcelable for better performance
                 DetailsFragment cd = new DetailsFragment();
                 cd.setArguments(args);
-                FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.Framelayoutmain4,cd);
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Framelayoutmain4, cd);
                 ft.commit();
             }
         });
-/*
-        fbs.getFire().collection("cars").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot dataSnapshot: queryDocumentSnapshots.getDocuments()){
-                    Car car= dataSnapshot.toObject(Car.class);
-                    list.add(car);
-                }
-
-
-                myAdapter.notifyDataSetChanged();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-
-
-    
-
-
     }
-/*
-    private String getUserNameFromAuthentication() {
-        // Assuming you're using Firebase Authentication
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Check if the user is signed in
-        if (user != null) {
-            // Get the user's display name
-            String displayName = user.getDisplayName();
-
-            // Check if the display name is not null or empty
-            if (displayName != null && !displayName.isEmpty()) {
-                return displayName;
-            } else {
-                // If the display name is null or empty, return a default name
-                return "User";
-            }
-        } else {
-            // If the user is not signed in, return a default name
-            return "User";
-        }*/
-    }
-/*
-    public ArrayList<ZaraItem> getProducts() {
-
-
-        ArrayList<ZaraItem> products = new ArrayList<>();
-
+    private ArrayList<ZaraItem> getCars() {
+        ArrayList<ZaraItem> products2 = new ArrayList<>();
         try {
-            products.clear();
+            products2.clear();
             fbs.getFire().collection("products")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -187,34 +167,20 @@ public class FavFragment extends Fragment {
                                     if (u != null) {
                                         ZaraItem product = document.toObject(ZaraItem.class);
                                         if (u.getFavorites().contains(product.getProduct()))
-                                            products.add(document.toObject(ZaraItem.class));
+                                            products2.add(document.toObject(ZaraItem.class));
                                     }
                                 }
-
-                                ZaraAdapter adapter = new ZaraAdapter(getActivity(), products);
+                                ZaraAdapter adapter = new ZaraAdapter(getActivity(), products2);
                                 recyclerView.setAdapter(adapter);
-                                //addUserToCompany(companies, user);
                             } else {
-                                //Log.e("AllRestActivity: readData()", "Error getting documents.", task.getException());
+                                // Handle error
                             }
                         }
                     });
+        } catch (Exception e) {
+            // Handle exception
         }
-        catch (Exception e)
-        {
-            Log.e("getCompaniesMap(): ", e.getMessage());
-        }
-
-        return products;
-    }*/
-
- /*   private void loadFavoriteProducts() {
-        favoriteProducts.clear();
-        for (ZaraItem product : ) {
-            if (product.isFavorite()) {
-                favoriteProducts.add(product);
-            }
-        }
-        adapter.notifyDataSetChanged();
+        return products2;
     }
-}*/
+
+}

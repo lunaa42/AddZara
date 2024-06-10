@@ -16,8 +16,10 @@ import android.widget.TextView;
 import com.example.addzara.R;
 import com.example.addzara.authentication.FirebaseServices;
 import com.example.addzara.authentication.LoginFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -105,19 +107,17 @@ public class ProfileFragment extends Fragment {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     String userEmail = document.getString("username");
                                     if (userEmail != null && userEmail.equals(currentUserEmail)) {
-
-
-
                                         String firstName = document.getString("firstName");
                                         String lastName = document.getString("lastName");
                                         String email = document.getString("username");
                                         String phone = document.getString("phone");
 
+
+                                        // Populate TextViews with retrieved first and last names
                                         tvFirstName.setText(firstName);
                                         tvLastName.setText(lastName);
                                         tvEmail.setText(email);
                                         tvPhone.setText(phone);
-                                        // Do something
                                     }
                                 }
                             } else {
@@ -135,7 +135,7 @@ public class ProfileFragment extends Fragment {
                 Picasso...
              */
 
-           /* FirebaseFirestore.getInstance().collection("users")
+         /* FirebaseFirestore.getInstance().collection("users")
                     .document(user.getUid())
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -195,7 +195,7 @@ public class ProfileFragment extends Fragment {
 
     private void navigateToHomeFragment() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.Framelayoutmain4, new HomeFragment());
+        ft.replace(R.id.Framelayoutmain4, new LoginFragment());
         ft.commit();
     }
 
