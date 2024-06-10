@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.addzara.R;
+import com.example.addzara.activities.MainActivity;
 import com.example.addzara.addData.User;
 import com.example.addzara.addData.ZaraItem;
 import com.example.addzara.adapters.ZaraAdapter;
@@ -181,6 +182,16 @@ public class FavFragment extends Fragment {
             // Handle exception
         }
         return products2;
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        User u = ((MainActivity)getActivity()).getUserDataObject();
+        if (u != null)
+            fbs.updateUser(u); // updating favorites
+
+
     }
 
 }
