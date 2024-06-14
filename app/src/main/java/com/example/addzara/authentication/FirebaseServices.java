@@ -31,6 +31,7 @@ public class FirebaseServices {
 
     private Uri selectedImageURL;
 
+
     public FirebaseServices(){
         auth=FirebaseAuth.getInstance();
         fire=FirebaseFirestore.getInstance();
@@ -108,35 +109,23 @@ public class FirebaseServices {
         return fire;
     }
 
+
     public FirebaseStorage getStorage() {
         return storage;
     }
     public void updateUserFavorites(String userId, ArrayList<String> favorites) {
-        // Assuming you have a "users" collection in your Firestore database
-        // Update the "favorites" field for the user document with the specified userId
-
-        // Get a reference to the Firestore database
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Reference to the user document
-        DocumentReference userRef = db.collection("users").document(userId);
-
-        // Update the "favorites" field in the user document
-        userRef
+        fire.collection("users").document(userId)
                 .update("favorites", favorites)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Handle success
-
-                        Log.d("TAG", "User favorites updated successfully!");
+                        Log.d("FirebaseServices", "Favorites updated successfully.");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Handle failure
-                        Log.d("TAG", "Error updating user favorites", e);
+                        Log.e("FirebaseServices", "Error updating favorites", e);
                     }
                 });
     }

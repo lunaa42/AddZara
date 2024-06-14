@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> {
     private Context context;
     private  static  ArrayList<ZaraItem> zaList;
+    private androidx.cardview.widget.CardView secondProductContainer; // Use CardView
+
     private ZaraAdapter.OnItemClickListener itemClickListener;
     private FirebaseServices fbs;
 
@@ -70,29 +73,29 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        // Calculate the index of the first product in the pair
         int firstProductIndex = position * 2;
 
-        // Check if the first product index is within bounds
         if (firstProductIndex < zaList.size()) {
-            // Get the first product in the pair
             ZaraItem firstProduct = zaList.get(firstProductIndex);
-            // Bind data for the first product
             holder.bindProduct1(firstProduct);
+            holder.itemView.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(firstProductIndex);
+                }
+            });
         }
 
-        // Check if there is a second product in the pair
         if (firstProductIndex + 1 < zaList.size()) {
-            // Get the second product in the pair
             ZaraItem secondProduct = zaList.get(firstProductIndex + 1);
-            // Bind data for the second product
             holder.bindProduct2(secondProduct);
+            holder.secondProductContainer.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(firstProductIndex + 1);
+                }
+            });
         } else {
-            // If there is no second product, hide the views for the second product
             holder.hideSecondProduct();
         }
-
-        final ZaraItem product = zaList.get(position);
 
         // Bind other views...
 
@@ -123,11 +126,14 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return zaList.size();
+        return (int) Math.ceil(zaList.size() / 2.0); // Round up to handle odd number of items
+
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageSwitcher favoriteIcon;
+        public CardView secondProductContainer;
         private TextView productNameTextView1;
         private ImageView productImageView1;
         private TextView productNameTextView2;
@@ -140,11 +146,13 @@ public class ZaraAdapter extends RecyclerView.Adapter<ZaraAdapter.MyViewHolder> 
             productImageView1 = itemView.findViewById(R.id.ivzaraItem1);
             productNameTextView2 = itemView.findViewById(R.id.tvProductName2);
             productImageView2 = itemView.findViewById(R.id.ivzaraItem2);
-          itemView.setOnClickListener(new View.OnClickListener() {
+            secondProductContainer = itemView.findViewById(R.id.cardView2);
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION && itemClickListener != null) {
+                       // ZaraItem clickedProduct = zaList.get(position);
                         itemClickListener.onItemClick(position);
                     }
                 }

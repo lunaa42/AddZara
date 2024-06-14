@@ -17,6 +17,7 @@ public class ZaraItem implements Parcelable {
         this.category = category;
     }
 
+
     public boolean isFavorite() {
         return isFavorite;
     }

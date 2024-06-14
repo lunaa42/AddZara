@@ -1,22 +1,18 @@
 package com.example.addzara.userInterface;
 
-
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.addzara.R;
 import com.example.addzara.activities.MainActivity;
@@ -26,6 +22,8 @@ import com.example.addzara.adapters.ZaraAdapter;
 import com.example.addzara.authentication.FirebaseServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,42 +31,25 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FavFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FavFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private RecyclerView recyclerView ;
+    private RecyclerView recyclerView;
     private FirebaseServices fbs;
     private ZaraAdapter myAdapter;
+    private TextView current;
+    private FirebaseAuth firebaseAuth;
     private ArrayList<ZaraItem> products;
     private TextView userNameTextView;
-
-
 
     public FavFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FavFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static FavFragment newInstance(String param1, String param2) {
         FavFragment fragment = new FavFragment();
         Bundle args = new Bundle();
@@ -88,8 +69,7 @@ public class FavFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fav, container, false);
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
@@ -97,14 +77,20 @@ public class FavFragment extends Fragment {
         return view;
     }
 
-
-
- public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         init();
     }
 
     private void init() {
+        current = getView().findViewById(R.id.usercurrentname);
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String userID = currentUser.getUid();
+        fbs = FirebaseServices.getInstance();
+        products = new ArrayList<>();
+        loadFavorites();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
@@ -113,18 +99,14 @@ public class FavFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            StringBuilder userNameList = new StringBuilder();
                             for (DocumentSnapshot document : task.getResult()) {
-                                // Assuming the user's name is stored under the "name" field
-                                String userName = document.getString("name");
-                                if (userName != null) {
-                                    userNameList.append(userName).append("\n");
+                                String firstName = document.getString("firstName");
+                                if (firstName != null) {
+                                    current.setText(firstName);
                                 }
                             }
-                            // Set user's name list to the TextView
-                            userNameTextView.setText(userNameList.toString());
                         } else {
-                          //  Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -133,65 +115,108 @@ public class FavFragment extends Fragment {
         products = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        products = getCars();
-        myAdapter = new ZaraAdapter(getActivity(), products);
 
-        myAdapter.setOnItemClickListener(new ZaraAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick ( int position){
-                // Handle item click here
-                String selectedItem = products.get(position).getProduct();
-                Toast.makeText(getActivity(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show();
-                Bundle args = new Bundle();
-                args.putParcelable("product", products.get(position)); // or use Parcelable for better performance
-                DetailsFragment cd = new DetailsFragment();
-                cd.setArguments(args);
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.Framelayoutmain4, cd);
-                ft.commit();
-            }
-        });
+        getFavoriteProducts();
     }
 
-    private ArrayList<ZaraItem> getCars() {
-        ArrayList<ZaraItem> products2 = new ArrayList<>();
-        try {
-            products2.clear();
-            fbs.getFire().collection("products")
+    private void loadFavorites() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            FirebaseFirestore.getInstance().collection("users")
+                    .document(currentUser.getUid())
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    User u = fbs.getCurrentUser();
-                                    if (u != null) {
-                                        ZaraItem product = document.toObject(ZaraItem.class);
-                                        if (u.getFavorites().contains(product.getProduct()))
-                                            products2.add(document.toObject(ZaraItem.class));
+                    .addOnSuccessListener(documentSnapshot -> {
+                        ArrayList<String> favoriteIds = (ArrayList<String>) documentSnapshot.get("favorites");
+                        if (favoriteIds != null) {
+                            fetchFavoriteProducts(favoriteIds);
+                        }
+                    })
+                    .addOnFailureListener(e -> Log.e("FavFragment", "Error loading favorites", e));
+        }
+    }
+
+    private void fetchFavoriteProducts(ArrayList<String> favoriteIds) {
+        FirebaseFirestore.getInstance().collection("products")
+                .whereIn("productId", favoriteIds)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            ZaraItem item = document.toObject(ZaraItem.class);
+                            products.add(item);
+                        }
+                        setupRecyclerView();
+                    } else {
+                        Log.e("FavFragment", "Error fetching favorite products", task.getException());
+                    }
+                });
+    }
+
+    private void setupRecyclerView() {
+        myAdapter = new ZaraAdapter(getActivity(), products);
+        myAdapter.setOnItemClickListener(position -> {
+            ZaraItem selectedItem = products.get(position);
+            Toast.makeText(getActivity(), "Clicked: " + selectedItem.getProduct(), Toast.LENGTH_SHORT).show();
+            Bundle args = new Bundle();
+            args.putParcelable("product", selectedItem);
+            DetailsFragment detailsFragment = new DetailsFragment();
+            detailsFragment.setArguments(args);
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.Framelayoutmain4, detailsFragment);
+            ft.commit();
+        });
+        recyclerView.setAdapter(myAdapter);
+    }
+
+
+    private void getFavoriteProducts() {
+        fbs.getFire().collection("products")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            products.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                User u = fbs.getCurrentUser();
+                                if (u != null) {
+                                    ZaraItem product = document.toObject(ZaraItem.class);
+                                    if (u.getFavorites().contains(product.getProduct())) {
+                                        products.add(product);
                                     }
                                 }
-                                ZaraAdapter adapter = new ZaraAdapter(getActivity(), products2);
-                                recyclerView.setAdapter(adapter);
-                            } else {
-                                // Handle error
                             }
+                            myAdapter = new ZaraAdapter(getActivity(), products);
+                            recyclerView.setAdapter(myAdapter);
+
+                            myAdapter.setOnItemClickListener(new ZaraAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    ZaraItem selectedItem = products.get(position);
+                                    Toast.makeText(getActivity(), "Clicked: " + selectedItem.getProduct(), Toast.LENGTH_SHORT).show();
+                                    Bundle args = new Bundle();
+                                    args.putParcelable("product", selectedItem);
+                                    DetailsFragment detailsFragment = new DetailsFragment();
+                                    detailsFragment.setArguments(args);
+                                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                    ft.replace(R.id.Framelayoutmain4, detailsFragment);
+                                    ft.addToBackStack(null);
+                                    ft.commit();
+                                }
+                            });
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
                         }
-                    });
-        } catch (Exception e) {
-            // Handle exception
-        }
-        return products2;
+                    }
+                });
     }
+
     @Override
     public void onPause() {
         super.onPause();
-
-        User u = ((MainActivity)getActivity()).getUserDataObject();
-        if (u != null)
-            fbs.updateUser(u); // updating favorites
-
-
+        User u = ((MainActivity) getActivity()).getUserDataObject();
+        if (u != null) {
+            fbs.updateUser(u);
+        }
     }
-
 }

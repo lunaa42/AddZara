@@ -37,16 +37,18 @@
             app:queryHint="SEARCH FOR AN ITEM.." />
 
         <!-- Spinner -->
+
         <Spinner
             android:id="@+id/categorySpinner"
-            android:layout_width="167dp"
-            android:layout_height="33dp"
+            android:layout_width="176dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="221dp"
             app:layout_constraintBottom_toBottomOf="@+id/addProductMenu"
             app:layout_constraintEnd_toStartOf="@+id/addProductMenu"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/addProductMenu" />
+            app:layout_constraintTop_toTopOf="@+id/addProductMenu"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/addProductMenu"

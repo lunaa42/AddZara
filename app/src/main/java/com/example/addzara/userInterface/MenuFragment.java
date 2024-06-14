@@ -112,7 +112,39 @@ public class MenuFragment extends Fragment {
         adapter.setOnItemClickListener(new ZaraAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                int row = position ; // Calculate the row index
+
+                // Calculate the correct position in the adapter based on the layout structure
+                int row = position / 2; // Calculate the row index
+                int column = position % 2; // Calculate the column index
+
+                // Calculate the index of the product in the product list based on the selected category
+                String selectedCategory = categorySpinner.getSelectedItem().toString();
+                int productIndex = getProductIndex(selectedCategory, row, column);
+
+                if (productIndex != -1 && productIndex < product.size()) {
+                    ZaraItem selectedItem = product.get(productIndex);
+                    // Toggle the favorite status of the selected item
+                    selectedItem.setFavorite(!selectedItem.isFavorite());
+                    // Notify the adapter to update the UI
+                    adapter.notifyItemChanged(position);
+                    Log.d("MenuFragment", "Selected item: " + selectedItem.toString());
+
+                    Toast.makeText(getActivity(), "Clicked: " + selectedItem.getProduct(), Toast.LENGTH_SHORT).show();
+
+                    Bundle args = new Bundle();
+                    args.putParcelable("product", selectedItem);
+                    DetailsFragment detailsFragment = new DetailsFragment();
+                    detailsFragment.setArguments(args);
+
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.Framelayoutmain4, detailsFragment);
+                    ft.commit();
+                } else {
+                    Log.e("MenuFragment", "Invalid product index or category");
+                    Toast.makeText(getActivity(), "Invalid product", Toast.LENGTH_SHORT).show();
+                }
+            }
+              /*  int row = position ; // Calculate the row index
                 int column = position % 2; // Calculate the column index
 
                 int productIndex = row * 2 + column;
@@ -134,7 +166,7 @@ public class MenuFragment extends Fragment {
                 ft.replace(R.id.Framelayoutmain4, detailsFragment);
                 ft.commit();
 
-            }
+            }*/
 
         });
 
@@ -156,6 +188,15 @@ public class MenuFragment extends Fragment {
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, CATEGORIES);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoryAdapter);
+        int position = getPosition("WOMEN", CATEGORIES);
+        if (position != -1) {
+            categorySpinner.setSelection(position);
+        } else {
+
+            Toast.makeText(getActivity(), "NOT FOUND: " , Toast.LENGTH_SHORT).show();
+        }
+
+
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -186,6 +227,31 @@ public class MenuFragment extends Fragment {
 
 
     }
+
+    private int getProductIndex(String selectedCategory, int row, int column) {
+        // Iterate through the product list to find the index of the product based on the selected category, row, and column
+        int count = 0;
+        for (ZaraItem item : product) {
+            if (item.getCategory().equalsIgnoreCase(selectedCategory)) {
+                if (count / 2 == row && count % 2 == column) {
+                    return count;
+                }
+                count++;
+            }
+        }
+        return -1; // Product not found
+    }
+
+    private int getPosition(String item, String[] array) {
+            for (int i = 0; i < array.length; i++) {
+                if (array[i].equals(item)) {
+                    return i;
+                }
+            }
+            return -1; // Item not found
+        }
+
+
 
     public void filterList(String newText) {
         ArrayList<ZaraItem> filteredList = new ArrayList<>();

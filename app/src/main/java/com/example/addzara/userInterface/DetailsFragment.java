@@ -137,8 +137,23 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        checkInitialFavoriteStatus();
+
         init();
     }
+
+    private void checkInitialFavoriteStatus() {
+        User currentUser = fbs.getCurrentUser();
+        if(currentUser!=null){
+            ArrayList<String> favorites = currentUser.getFavorites();
+
+            if(favorites.contains(myproduct.getProduct())){
+                favoriteImageView.setImageResource(R.drawable.bookmark__2_);
+                isFavorite=true;
+            }
+        }
+    }
+
     public void init()
     {
 
@@ -206,7 +221,7 @@ public class DetailsFragment extends Fragment {
             isFavorite = !isFavorite;
 
             // Update the favorite button icon
-            updateFavoriteButtonIcon();
+         //   updateFavoriteButtonIcon();
         }
 
     private void addToFavorites() {
@@ -227,6 +242,8 @@ public class DetailsFragment extends Fragment {
 
                 // Notify the user that the product has been added to favorites
                 Toast.makeText(getActivity(), "Added to favorites", Toast.LENGTH_SHORT).show();
+                favoriteImageView.setImageResource(R.drawable.bookmark__2_);
+                isFavorite = true;
             } else {
                 // Notify the user that the product is already in favorites
                 Toast.makeText(getActivity(), "Product already in favorites", Toast.LENGTH_SHORT).show();
@@ -237,13 +254,13 @@ public class DetailsFragment extends Fragment {
         }
     }
 
-    private void updateFavoriteButtonIcon() {
+  /*  private void updateFavoriteButtonIcon() {
         if (isFavorite) {
             favoriteImageView.setImageResource(R.drawable.bookmark__2_);
         } else {
             favoriteImageView.setImageResource(R.drawable.bookmark__1_);
         }
-    }
+    }*/
 
     private void removeFromFavorites() { // Get the current user
         User currentUser = fbs.getCurrentUser();
@@ -260,7 +277,7 @@ public class DetailsFragment extends Fragment {
 
                 // Update the favorites data in Firestore
                 fbs.updateUserFavorites(currentUser.getFirstName(), favorites);
-
+                favoriteImageView.setImageResource(R.drawable.bookmark__1_);
                 // Notify the user that the product has been removed from favorites
                 Toast.makeText(getActivity(), "Removed from favorites", Toast.LENGTH_SHORT).show();
             } else {
